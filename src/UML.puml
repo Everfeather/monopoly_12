@@ -2,7 +2,7 @@
 
 'https://plantuml.com/class-diagram
 skinparam classAttributeIconSize 0
-
+Property -|> GameBoardSquare
 
 enum Piece{
     -HORSE,SHOE,CAR,BOAT
@@ -68,13 +68,14 @@ abstract class GameBoardSquare{
 class Property {
     -int setSize
     -int cost
-    -int houseCost
-    -int hotelCost
+    -int buildingCost
     -int rent
     -PropertyType propertyType
-    -int numHouses
-    -int numHotels
+    -int numBuildings
     -Player owner
+    +get() *
+    +buildingPurchased()
+
 }
 
 
