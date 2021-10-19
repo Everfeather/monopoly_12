@@ -25,7 +25,8 @@ class Player{
     -int turnsInJail
     + get() *
     + set() *
-    + Boolean hasPropertySet()
+    + ArrayList<PropertyType> hasPropertySet()
+    + void addProperty()
 }
 
 class Die{
