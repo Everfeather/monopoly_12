@@ -1,0 +1,81 @@
+@startuml
+
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+
+
+enum Piece{
+    -HORSE,SHOE,CAR,BOAT
+}
+
+enum PropertyType{
+    -BROWN,LIGHTBLUE,PINK,ORANGE,RED,YELLOW,GREEN,BLUE,RAILROAD,UTILITY
+}
+
+enum SquareType{
+    -PROPERTY,GO,FREEPARKING,JAIL,GOTOJAIL,TAX,EMPTY
+}
+
+class Player{
+    -Piece playerPiece
+    -int balance
+    -HashMap<Property,Colour> properties
+    -int currentPos
+    -Boolean inJail
+    -int turnsInJail
+    + get() *
+    + set() *
+    + Boolean hasPropertySet()
+}
+
+class Die{
+    -int curNum
+    +roll()
+    +getCurNum()
+}
+
+class Board{
+    - int BOARDSIZE
+    - gameBoardSquare[] board
+    + addSquare()
+}
+
+class GameController{
+    -Board board
+    -die[2] dice
+    -scanner in
+    -Player[] players
+    +void run()
+    +void turn()
+    +int rollDice()
+    +void jailTurn()
+    +void passGo()
+    +void buyProperty()
+    +void buyBuilding()
+    +void payRent()
+    +void payTax()
+    +void goneBankrupt()
+    +void win()
+    +void printBoardState()
+
+}
+
+abstract class GameBoardSquare{
+    -squareType type
+    -String name
+}
+
+class Property {
+    -int setSize
+    -int cost
+    -int houseCost
+    -int hotelCost
+    -int rent
+    -PropertyType propertyType
+    -int numHouses
+    -int numHotels
+    -Player owner
+}
+
+
+@enduml
