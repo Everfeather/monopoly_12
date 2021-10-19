@@ -68,14 +68,6 @@ public class Player {
         this.turnsInJail = turnsInJail;
     }
 
-    public HashMap<PropertyType, Integer> getSets() {
-        return sets;
-    }
-
-    public void setSets(HashMap<PropertyType, Integer> sets) {
-        this.sets = sets;
-    }
-
     public boolean hasPropertySet(Property property){
        int num = 0;
        int setSize = property.getColourSetSize();
