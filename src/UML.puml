@@ -30,9 +30,11 @@ class Player{
 }
 
 class Die{
-    -int curNum
+    - {static} MAX = 6
+    - {static} MIN = 1
+    -int rollValue
     +roll()
-    +getCurNum()
+    +getRollValue()
 }
 
 class Board{
