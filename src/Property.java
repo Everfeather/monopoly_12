@@ -10,7 +10,7 @@ public class Property extends GameBoardSquare {
     private int numBuildings;
 
     public Property(String name, int cost, int colourSetSize, PropertyType propertyType) {
-        super(squareType.PROPERTY,name);
+        super(SquareType.PROPERTY,name);
         this.colourSetSize = colourSetSize;
         this.cost = cost;
         this.propertyType = propertyType;
