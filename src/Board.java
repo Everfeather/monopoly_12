@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Board{
+public class Board extends GameBoardSquare{
 	private static final int BOARDSIZE = 40;
 	private ArrayList <GameBoardSquare> board;
 
