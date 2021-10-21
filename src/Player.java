@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Player {
@@ -7,11 +6,13 @@ public class Player {
     private int balance;
     private HashMap<Property,PropertyType> properties;
     private int currentPos;
-    private Boolean inJail;
+    private boolean inJail;
     private int turnsInJail;
+    private boolean bankrupt;
 
-    public Player(Piece p){
+    public Player(Piece p, boolean bankrupt){
         this.playerPiece = p;
+        this.bankrupt = bankrupt;
         this.balance = 1500;
         this.properties = new HashMap<Property, PropertyType>();
         this.currentPos = 0;
@@ -66,6 +67,14 @@ public class Player {
 
     public void setTurnsInJail(int turnsInJail) {
         this.turnsInJail = turnsInJail;
+    }
+
+    public boolean isBankrupt() {
+        return bankrupt;
+    }
+
+    public void setBankrupt(boolean bankrupt) {
+        this.bankrupt = bankrupt;
     }
 
     public boolean hasPropertySet(Property property){
