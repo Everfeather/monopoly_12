@@ -1,4 +1,4 @@
-public enum SquareType {
+public enum PropertyType {
     PROPERTY,
     GO,
     FREEPARKING,
