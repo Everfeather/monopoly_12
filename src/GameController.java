@@ -21,25 +21,32 @@ public class GameController {
 
     }
 
-    public void turn(){
-        counter++;
-        if(counter > MAXNUMPLAYERS){
-            counter -= players.length;
+    public void nextTurn(){
+        boolean canPlay = false;
+        while(!canPlay){
+            counter++;
+            if(counter > MAXNUMPLAYERS){
+                counter -= players.length;
+            }
+            if(!players[counter % players.length].isBankrupt()){
+                curPlayer = players[counter % players.length];
+                canPlay = true;
+            }
         }
-        curPlayer = players[counter % players.length];
+
     }
 
-    public void payRent(Player payee,Player payer,Property property){
+    public void payRent(Player payee,Property property){
         int cost = property.getCost();
 
-        if(payer.getBalance() >= cost){
-            payer.decreaseBalance(cost);
+        if(curPlayer.getBalance() >= cost){
+            curPlayer.decreaseBalance(cost);
             payee.increaseBalance(cost);
         }else{
-            payee.increaseBalance(payer.getBalance());
-            payer.decreaseBalance(cost);
+            payee.increaseBalance(curPlayer.getBalance());
+            curPlayer.decreaseBalance(cost);
             System.out.println("You cannot afford rent, you have gone bankrupt!");
-            payer.setBankrupt(true);
+            curPlayer.setBankrupt(true);
         }
     }
 
@@ -66,7 +73,7 @@ public class GameController {
             //Check which player has won
 
             //Change player turn
-            turn();
+            nextTurn();
 
         }
 

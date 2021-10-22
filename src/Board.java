@@ -1,8 +1,9 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
 	private static final int BOARDSIZE = 40;
-	private ArrayList <GameBoardSquare> board;
+	private List board;
 
 	
 	public Board(){
@@ -10,7 +11,6 @@ public class Board {
 	}
 
 	public void addSquare(GameBoardSquare square){
-		
 		this.board.add(square);
 	}
 
