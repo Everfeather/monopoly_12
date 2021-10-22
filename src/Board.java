@@ -13,5 +13,13 @@ public class Board {
 		
 		this.board.add(square);
 	}
+
+	public int getSize(){
+		return board.size();
+	}
+
+	public GameBoardSquare getSquare(int index){
+		return board.get(index);
+	}
 	
 }
