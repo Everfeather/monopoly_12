@@ -5,5 +5,7 @@ public abstract class GameBoardSquare{
 		this.type = type;
 		this.name = name;
 	}
-	
+	public String getName(){
+		return this.name;
+	}
 }

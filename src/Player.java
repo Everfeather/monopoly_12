@@ -33,8 +33,11 @@ public class Player {
         return balance;
     }
 
-    public void setBalance(int balance) {
-        this.balance = balance;
+    public void increaseBalance(int amount){
+        this.balance += amount;
+    }
+    public void decreaseBalance(int amount){
+        this.balance -= amount;
     }
 
     public HashMap<Property, PropertyType> getProperties() {
@@ -86,10 +89,7 @@ public class Player {
                 num++;
             }
         }
-        if (num == setSize){
-            return true;
-        }
-        return false;
+        return num == setSize;
     }
 
     public void addProperty(Property prop){
