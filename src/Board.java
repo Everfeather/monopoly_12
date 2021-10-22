@@ -6,11 +6,9 @@ public class Board {
 
 	
 	public Board(){
-		this.board = new ArrayList<GameBoardSquare>(BOARDSIZE);
-		//this.board = new Arraylist<GameBoardSquare>();
-
-		
+		this.board = new ArrayList<GameBoardSquare>();
 	}
+
 	public void addSquare(GameBoardSquare square){
 		
 		this.board.add(square);
