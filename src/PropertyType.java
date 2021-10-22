@@ -1,9 +1,12 @@
 public enum PropertyType {
-    PROPERTY,
-    GO,
-    FREEPARKING,
-    JAIL,
-    GOTOJAIL,
-    TAX,
-    EMPTY
+    BROWN,
+    LIGHTBLUE,
+    PINK,
+    ORANGE,
+    RED,
+    YELLOW,
+    GREEN,
+    BLUE,
+    RAILROAD,
+    UTILITY
 }

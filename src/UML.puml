@@ -4,14 +4,14 @@
 skinparam classAttributeIconSize 0
 
 
-Property -|> GameBoardSquare
-Property --> PropertyType
+'Property -|> GameBoardSquare
+'Property --> PropertyType
 
-Player -> Piece
+'Player -> Piece
 
-SpecialSquare --up|> GameBoardSquare
+'SpecialSquare --up|> GameBoardSquare
 
-GameBoardSquare -> SquareType
+'GameBoardSquare -> SquareType
 
 enum Piece{
     -HORSE,SHOE,CAR,BOAT
@@ -58,7 +58,7 @@ class GameController{
     -scanner in
     -Player[] players
     +void run()
-    +void turn()
+    +Player turn()
     +int rollDice()
     +void jailTurn()
     +void passGo()
