@@ -25,9 +25,7 @@ public class GameController {
         boolean canPlay = false;
         while(!canPlay){
             counter++;
-            if(counter > MAXNUMPLAYERS){
-                counter -= players.length;
-            }
+
             if(!players[counter % players.length].isBankrupt()){
                 curPlayer = players[counter % players.length];
                 canPlay = true;
