@@ -32,8 +32,8 @@ public class GameController {
         while(!canPlay){
             counter++;
 
-            if(!players[counter % players.length].isBankrupt()){
-                curPlayer = players[counter % players.length];
+            if(!players.get(counter % players.size()).isBankrupt()){
+                curPlayer = players.get(counter % players.size());
                 canPlay = true;
             }
         }
@@ -132,8 +132,9 @@ public class GameController {
             //Check if someone owns the square
             boolean notOwned = true;
             if(squareLanded instanceof Property) {
-
-
+                for(Player p: players){
+                    if (p.getProperties().containsKey((Property)squareLanded)) {
+                        notOwned = false;
                         System.out.println("You landed on " + p.getPlayerPiece() + "'s property!");
                         System.out.println("Pay $" + ((Property)squareLanded).getRent());
 
@@ -172,9 +173,5 @@ public class GameController {
 
         return false;
     }
-
-                for (Player p : players) {
-                    if (p.getProperties().containsKey((Property)squareLanded)) {
-                        notOwned = false;
 
 }
