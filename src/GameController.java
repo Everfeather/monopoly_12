@@ -92,7 +92,7 @@ public class GameController {
                 System.out.println("Invalid choice! Random piece will be given");
                 chosenPiece = 0;
             }
-            Player addedPlayer = new Player(availablePieces.remove(chosenPiece, STARTINGBALANCE);
+            Player addedPlayer = new Player(availablePieces.remove(chosenPiece), STARTINGBALANCE);
             players.add(addedPlayer);
             System.out.println("You have the " + addedPlayer.getPlayerPiece());
 
