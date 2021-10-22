@@ -3,11 +3,11 @@ import java.util.List;
 
 public class Board {
 	private static final int BOARDSIZE = 40;
-	private List board;
+	private List<GameBoardSquare> board;
 
 	
 	public Board(){
-		this.board = new ArrayList<GameBoardSquare>();
+		this.board = new ArrayList<>();
 		SpecialSquare emptySquare = new SpecialSquare("empty",SquareType.EMPTY);
 		Property Mediterranean_Avenue = new Property("Mediterranean Avenue",60,2,PropertyType.BROWN);
 		Property Baltic_Avenue = new Property("Baltic Avenue",60,2,PropertyType.BROWN);

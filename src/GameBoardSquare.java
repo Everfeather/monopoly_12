@@ -8,4 +8,9 @@ public abstract class GameBoardSquare{
 	public String getName(){
 		return this.name;
 	}
+
+	public String toString(){
+		String outputString = "Name: " + this.name + "\nType: " + this.type;
+		return outputString;
+	}
 }

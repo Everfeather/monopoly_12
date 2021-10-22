@@ -56,8 +56,9 @@ class GameController{
     -Board board
     -die[2] dice
     -scanner in
-    -Player[] players
+    -List<Player> players
     +void run()
+    +void initializePlayers()
     +Player turn()
     +int rollDice()
     +void jailTurn()

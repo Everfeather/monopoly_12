@@ -10,10 +10,10 @@ public class Player {
     private int turnsInJail;
     private boolean bankrupt;
 
-    public Player(Piece p, boolean bankrupt){
+    public Player(Piece p, int balance){
         this.playerPiece = p;
-        this.bankrupt = bankrupt;
-        this.balance = 1500;
+        this.bankrupt = false;
+        this.balance = balance;
         this.properties = new HashMap<Property, PropertyType>();
         this.currentPos = 0;
         this.inJail = false;
