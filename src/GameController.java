@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class GameController {
     private static final int MAXNUMPLAYERS = 4;
+    private Scanner in;
     private int counter = 0;
     private Board board;
     private Die[] dice;
@@ -10,8 +11,18 @@ public class GameController {
     private Player curPlayer;
 
 
-    public void Turn(){
-    counter++;
+    public GameController(){
+        in = new Scanner(System.in);
+        dice = new Die[2];
+        dice[0] = new Die();
+        dice[1] = new Die();
+
+        //Create board here
+
+    }
+
+    public void turn(){
+        counter++;
         if(counter > MAXNUMPLAYERS){
             counter -= players.length;
         }
@@ -31,4 +42,36 @@ public class GameController {
             payer.setBankrupt(true);
         }
     }
+
+    public void initializePlayers(){
+        //TODO
+    }
+    
+    public boolean win(){
+        return false;
+    }
+
+    public boolean run(){
+        //Initialize players (get names and pieces)
+        initializePlayers();
+        boolean gameRunning = true;
+
+        while(gameRunning){
+            //play turn
+
+
+
+            //Check if a player has won
+            gameRunning = win();
+            //Check which player has won
+
+            //Change player turn
+            turn();
+
+        }
+
+        return false;
+    }
+
+
 }
