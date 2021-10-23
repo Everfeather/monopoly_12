@@ -1,8 +1,5 @@
 import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class GameController {
     private static final int MAXNUMPLAYERS = 4;
@@ -98,7 +95,33 @@ public class GameController {
 
         }
     }
-    
+    public int rollDice(){
+        int sum =0;
+        for(Die d: dice){
+            sum = sum + d.roll();
+
+        }
+        return sum;
+
+    }
+
+    public void goneBankrupt(Player curPlayer){
+        if(curPlayer.getBalance() == 0){
+            curPlayer.setBankrupt(true);
+            curPlayer.getProperties().clear();
+            //HashMap<Property, PropertyType> properties = curPlayer.getProperties();
+
+
+        }
+    }
+    /*
+    public void printBoard(){
+
+
+    }
+    */
+     
+
     public boolean win(){
         for (Player p : players){
             if (p.isBankrupt() != true){
