@@ -4,14 +4,20 @@
 skinparam classAttributeIconSize 0
 
 
-'Property -|> GameBoardSquare
-'Property --> PropertyType
+Property -|> GameBoardSquare
+Property *-- "1" PropertyType
 
-'Player -> Piece
+Player *-- "1" Piece
 
-'SpecialSquare --up|> GameBoardSquare
+GameController o-- "1" Board
+GameController o-- "n" Player
+GameController o-- "2" Die
 
-'GameBoardSquare -> SquareType
+Board *-- "40" GameBoardSquare
+
+SpecialSquare --up|> GameBoardSquare
+
+GameBoardSquare *-- "1" SquareType
 
 enum Piece{
     -HORSE,SHOE,CAR,BOAT
@@ -26,76 +32,121 @@ enum SquareType{
 }
 
 class Player{
-    -Piece playerPiece
-    -int balance
-    -HashMap<Property,Colour> properties
-    -int currentPos
-    -Boolean inJail
-    -int turnsInJail
-    + get() *
-    + set() *
-    + ArrayList<PropertyType> hasPropertySet()
-    + void addProperty()
+    - playerPiece: Piece
+    - balance: int
+    - properties: HashMap<Property,PropertyType>
+    - currentPos: int
+    - inJail: Boolean
+    - turnsInJail: int
+    - bankrupt: boolean
+
+    + Player(Piece, int):
+    + getPlayerPiece(): Piece
+    + setPlayerPiece(Piece):
+    + getBalance(): int
+    + increaseBalance(int):
+    + decreaseBalance(int):
+    + getProperties(): HashMap<Property, PropertyType>
+    + setProperties(HashMap<Property, PropertyType>):
+    + getCurrentPos(): int
+    + setCurrentPos(int):
+    + getInJail(): boolean
+    + setInJail(boolean):
+    + getTurnsInJail(): int
+    + setTurnsInJail(int):
+    + isBankrupt(): boolean
+    + setBankrupt(boolean):
+    + hasPropertySet(Property): boolean
+    + addProperty(Property):
 }
 
 class Die{
-    - {static} MAX = 6
-    - {static} MIN = 1
-    -int rollValue
+    - {static} MAX: int = 6
+    - {static} MIN: int = 1
+    -rollValue: int
+    +Die():
     +roll()
     +getRollValue()
 }
 
 class Board{
-    - int BOARDSIZE
-    - gameBoardSquare[] board
-    + addSquare()
+    - {static} BOARDSIZE: int = 40
+    - board: gameBoardSquare[]
+
+    + Board():
+    + addSquare():
+    + getSize(): int
+    + getSquare(int): GameBoardSquare
+    + getBoard(): List<GameBoardSquare>
 }
 
 class GameController{
-    -Board board
-    -die[2] dice
-    -scanner in
-    -List<Player> players
-    +void run()
-    +void initializePlayers()
-    +Player turn()
-    +int rollDice()
-    +void jailTurn()
-    +void passGo()
-    +void buyProperty(Player, Property)
-    +void buyBuilding()
-    +void payRent()
-    +void payTax()
-    +void goneBankrupt()
-    +void win()
-    +void printBoardState()
+    - {static} MAXNUMPLAYERS: int = 4
+    - {static} STARTINGBALANCE: int = 1500
+    - counter: int
+    - curPlayer Player
+    -board Board
+    -dice Die[2]
+    -in: Scanner
+    -players: List<Player>
+
+    +GameController()
+    +run(): boolean
+    +initializePlayers():
+    +turn(): Player
+    +rollDice(): int
+    `+jailTurn():
+    `+passGo():
+    +buyProperty(Player, Property):
+    `+void buyBuilding()
+    +payRent():
+    `+void payTax()
+    +goneBankrupt():
+    +win():
+    +printBoardState():
 
 }
 
 abstract class GameBoardSquare{
-    -squareType type
-    -String name
+    -type: SquareType
+    -name: String
+
+    + GameBoardSquare(SquareType, String):
+    + getName(): String
+    + toString(): String
+
 }
 
 class Property {
-    -int setSize
-    -int cost
-    -int buildingCost
-    -int rent
-    -PropertyType propertyType
-    -int numBuildings
-    -Player owner
-    +get() *
-    +buildingPurchased()
+    - colourSetSize: int
+    - cost: int
+    - buildingCost: int
+    - rent: int
+    - owner: Player
+    - propertyType: PropertyType
+    - numBuildings: int
+
+    + Property(String, int, int, PropertyType):
+    + buildingPurchased():
+    + getColourSize(): int
+    + getCost(): int
+    + getBuildingCost(): int
+    + getRent(): int
+    + getOwner(): Player
+    + getPropertyType(): PropertyType
+    + getNumBuildings(): int
+    + setNull():
+    + toString(): String
+
 
 }
 
 class SpecialSquare{
+    + SpecialSquare(String, SquareType)
 
 }
 
-class View{
-    +void printGameState()
-}
+'class View{
+'    +void printGameState()
+'}
 @enduml

@@ -3,7 +3,7 @@ import java.util.*;
 
 public class GameController {
     private static final int MAXNUMPLAYERS = 4;
-    private static final int STARTINGBALANCE = 200;
+    private static final int STARTINGBALANCE = 1500;
     private Scanner in;
     private int counter = 0;
     private Board board;
@@ -128,8 +128,6 @@ public class GameController {
         }
 
     }
-
-
 
     public boolean win(){
         int bankruptPLayers = 0;

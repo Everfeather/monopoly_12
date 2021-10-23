@@ -56,11 +56,11 @@ public class Player {
         this.currentPos = currentPos;
     }
 
-    public Boolean getInJail() {
+    public boolean getInJail() {
         return inJail;
     }
 
-    public void setInJail(Boolean inJail) {
+    public void setInJail(boolean inJail) {
         this.inJail = inJail;
     }
 
