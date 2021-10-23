@@ -3,7 +3,7 @@ import java.util.*;
 
 public class GameController {
     private static final int MAXNUMPLAYERS = 4;
-    private static final int STARTINGBALANCE = 1500;
+    private static final int STARTINGBALANCE = 200;
     private Scanner in;
     private int counter = 0;
     private Board board;
@@ -108,11 +108,16 @@ public class GameController {
     }
 
     public void goneBankrupt(){
+        HashMap<Property, PropertyType> properties = curPlayer.getProperties();
         if(curPlayer.getBalance() == 0){
             curPlayer.setBankrupt(true);
             // TODO: loop through the properties owned by the curplayer and set all to null
+            for(Property key: properties.keySet()){
+                key.setNull();
+            }
             curPlayer.getProperties().clear();
             System.out.println(curPlayer.getPlayerPiece() + "is Bankrupt");
+
 
         }
     }

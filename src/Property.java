@@ -57,6 +57,10 @@ public class Property extends GameBoardSquare {
         return numBuildings;
     }
 
+    public void setNull() {
+        this.owner = null;
+    }
+
     @Override
     public String toString() {
         if (this.owner == null) {
