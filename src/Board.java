@@ -88,14 +88,8 @@ public class Board {
 	public GameBoardSquare getSquare(int index){
 		return board.get(index);
 	}
-
 	public List<GameBoardSquare> getBoard() {
 		return board;
 	}
-
-	public void setBoard(List<GameBoardSquare> board) {
-		this.board = board;
-	}
-
-
+	
 }

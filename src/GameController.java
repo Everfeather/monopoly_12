@@ -18,7 +18,7 @@ public class GameController {
         dice[0] = new Die();
         dice[1] = new Die();
         players = new ArrayList<>();
-
+        board = new Board();
 
         //Create board here
 
@@ -105,22 +105,34 @@ public class GameController {
 
     }
 
-    public void goneBankrupt(Player curPlayer){
+    public void goneBankrupt(){
         if(curPlayer.getBalance() == 0){
             curPlayer.setBankrupt(true);
             curPlayer.getProperties().clear();
-            //HashMap<Property, PropertyType> properties = curPlayer.getProperties();
-
+            System.out.println(curPlayer.getPlayerPiece() + "is Bankrupt");
 
         }
     }
-    /*
+
     public void printBoard(){
+        HashMap<Integer, Player> positions = new HashMap<>();
+        List<String> output = null;
+        for(Player p: players){
+            positions.put(p.getCurrentPos(), p); // puts player's position in hashmap, position is the key, player is the value
+        }
+        int index = 0;
+        for(GameBoardSquare b: board.getBoard()){
+            if(positions.containsKey(index)){
+                output.add(String.format("Player: %s \n %s",positions.get(index).getPlayerPiece(), b.toString()));
+            }
+            else{
+                output.add(b.toString());
+            }
 
-
+        }
     }
-    */
-     
+
+
 
     public boolean win(){
         for (Player p : players){
