@@ -94,7 +94,9 @@ public class GameController {
             System.out.println("You have the " + addedPlayer.getPlayerPiece());
 
         }
+        curPlayer = players.get(0);
     }
+
     public int rollDice(){
         int sum =0;
         for(Die d: dice){
@@ -108,6 +110,7 @@ public class GameController {
     public void goneBankrupt(){
         if(curPlayer.getBalance() == 0){
             curPlayer.setBankrupt(true);
+            // TODO: loop through the properties owned by the curplayer and set all to null
             curPlayer.getProperties().clear();
             System.out.println(curPlayer.getPlayerPiece() + "is Bankrupt");
 
@@ -115,32 +118,26 @@ public class GameController {
     }
 
     public void printBoard(){
-        HashMap<Integer, Player> positions = new HashMap<>();
-        List<String> output = null;
         for(Player p: players){
-            positions.put(p.getCurrentPos(), p); // puts player's position in hashmap, position is the key, player is the value
+            System.out.println(String.format("Player: %s \n Position: %s \n", p.getPlayerPiece().toString(), board.getSquare(p.getCurrentPos())));
         }
-        int index = 0;
-        for(GameBoardSquare b: board.getBoard()){
-            if(positions.containsKey(index)){
-                output.add(String.format("Player: %s \n %s",positions.get(index).getPlayerPiece(), b.toString()));
-            }
-            else{
-                output.add(b.toString());
-            }
 
-        }
     }
 
 
 
     public boolean win(){
-        for (Player p : players){
-            if (p.isBankrupt() != true){
-                return false;
+        int bankruptPLayers = 0;
+        for (Player p : players) {
+            if (curPlayer.isBankrupt() == false && p.isBankrupt() == true) {
+                bankruptPLayers ++;
             }
         }
-        return true;
+
+        if (bankruptPLayers == players.size() - 1){
+            return true;
+        }
+        return false;
     }
 
     public void buyProperty(Player p, Property prop){
@@ -161,7 +158,7 @@ public class GameController {
 
             //Roll Dice
             int movement = rollDice();
-            String movementMessage = "You rolled a: " + movement;
+            String movementMessage = String.format("%s rolled a: %s", curPlayer.getPlayerPiece().toString(),  movement);
             if(dice[0].getRollValue() == dice[1].getRollValue()){
                 endTurn = false;
                 movementMessage += " DOUBLES!!";
@@ -174,6 +171,11 @@ public class GameController {
             GameBoardSquare squareLanded = board.getSquare(landedSquareIndex);
             System.out.println("You landed on: ");
             System.out.println(squareLanded);
+
+            System.out.println("Would you like to view board state? (Y/N)");
+            if(in.nextLine().toLowerCase().equals("y")){
+                printBoard();
+            }
 
             //Check if someone owns the square
             boolean notOwned = true;
@@ -195,7 +197,7 @@ public class GameController {
                 if (notOwned) {
                     //Decide to buy
                     System.out.println("No one owns this property, would you like to buy it? (Y/N)");
-                    if(in.nextLine().toLowerCase().equals("Y")){
+                    if(in.nextLine().toLowerCase().equals("y")){
                         if (curPlayer.getBalance() < ((Property) squareLanded).getCost()){
                             System.out.println("You cannot afford this property...");
                         }else {
@@ -211,8 +213,9 @@ public class GameController {
             goneBankrupt();
 
             //Check if a player has won
-            gameRunning = win();
+            gameRunning = !win();
             //Check which player has won
+
 
             //Change player turn
             if(endTurn) {
@@ -221,7 +224,17 @@ public class GameController {
 
         }
 
+        nextTurn();
+
+        System.out.println(String.format("%s has won the game!", curPlayer.getPlayerPiece().toString()));
+
         return false;
+    }
+
+    public static void main(String[] args) {
+        GameController gc = new GameController();
+
+        gc.run();
     }
 
 }

@@ -58,8 +58,13 @@ public class Property extends GameBoardSquare {
     }
 
     @Override
-    public String toString(){
-        return String.format("Name:%s Cost: %d Number of Buildings: %d Rent: %d Owner: %s",
-                this.getName(),this.getCost(),this.getNumBuildings(),this.getRent(),this.getOwner().getPlayerPiece().toString());
+    public String toString() {
+        if (this.owner == null) {
+            return String.format("Name:%s Cost: %d Number of Buildings: %d Rent: %d Owner: Unowned",
+                    this.getName(), this.getCost(), this.getNumBuildings(), this.getRent() );
+        } else {
+            return String.format("Name:%s Cost: %d Number of Buildings: %d Rent: %d Owner: %s",
+                    this.getName(), this.getCost(), this.getNumBuildings(), this.getRent(), this.getOwner().getPlayerPiece().toString());
+        }
     }
 }
