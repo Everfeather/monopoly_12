@@ -63,7 +63,7 @@ class GameController{
     +int rollDice()
     +void jailTurn()
     +void passGo()
-    +void buyProperty()
+    +void buyProperty(Player, Property)
     +void buyBuilding()
     +void payRent()
     +void payTax()

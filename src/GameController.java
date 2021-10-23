@@ -100,7 +100,18 @@ public class GameController {
     }
     
     public boolean win(){
-        return false;
+        for (Player p : players){
+            if (p.isBankrupt() != true){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void buyProperty(Player p, Property prop){
+        int val = prop.getCost();
+        p.decreaseBalance(val);
+        p.addProperty(prop);
     }
 
     public boolean run(){
@@ -150,7 +161,11 @@ public class GameController {
                     //Decide to buy
                     System.out.println("No one owns this property, would you like to buy it? (Y/N)");
                     if(in.nextLine().toLowerCase().equals("Y")){
-                        buyProperty();
+                        if (curPlayer.getBalance() < ((Property) squareLanded).getCost()){
+                            System.out.println("You cannot afford this property...");
+                        }else {
+                            buyProperty(curPlayer, (Property) squareLanded);
+                        }
                     } else {
                         System.out.println("You did not buy the property...");
                     }
