@@ -6,8 +6,10 @@ skinparam classAttributeIconSize 0
 
 Property -|> GameBoardSquare
 Property *-- "1" PropertyType
+Property o-- "1" Player
 
 Player *-- "1" Piece
+Player o-- "n" Property
 
 GameController o-- "1" Board
 GameController o-- "n" Player
@@ -90,7 +92,7 @@ class GameController{
     -players: List<Player>
 
     +GameController()
-    +run(): boolean
+    +run():
     +initializePlayers():
     +turn(): Player
     +rollDice(): int
@@ -134,7 +136,8 @@ class Property {
     + getOwner(): Player
     + getPropertyType(): PropertyType
     + getNumBuildings(): int
-    + setNull():
+    + removeOwner():
+    + setOwner(Player):
     + toString(): String
 
 

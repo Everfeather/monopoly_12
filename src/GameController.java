@@ -1,21 +1,31 @@
 import java.sql.SQLOutput;
 import java.util.*;
 
-/**
+/** Controls the Monopoly game
  * @author Team 12
  * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
  */
 public class GameController {
+    /** The maximum number of players allowed */
     private static final int MAXNUMPLAYERS = 4;
+    /** Starting balance of the players */
     private static final int STARTINGBALANCE = 1500;
+    /** Scanner to allow input from terminal */
     private Scanner in;
+    /** Counter to help decide player turn */
     private int counter = 0;
+    /** Contains the board of the game */
     private Board board;
+    /** Contains the dice to be used */
     private Die[] dice;
+    /** List of players */
     private List<Player> players;
+    /** The current player*/
     private Player curPlayer;
 
-
+    /**
+     * Only and default constructor for Gamecontroller
+     */
     public GameController(){
         in = new Scanner(System.in);
         dice = new Die[2];
@@ -23,11 +33,11 @@ public class GameController {
         dice[1] = new Die();
         players = new ArrayList<>();
         board = new Board();
-
-        //Create board here
-
     }
 
+    /**
+     * Sets current player to the next player in order to change the turn
+     */
     public void nextTurn(){
         boolean canPlay = false;
         while(!canPlay){
@@ -41,6 +51,11 @@ public class GameController {
 
     }
 
+    /**
+     * Pays rent
+     * @param payee The player to be paid
+     * @param property The property whose rent will be paid
+     */
     public void payRent(Player payee,Property property){
         int cost = property.getCost();
 
@@ -55,6 +70,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Creates players and allows them to choose their own piece
+     */
     public void initializePlayers(){
         System.out.println("Number of Players: ");
         String playerString = in.nextLine();
@@ -66,7 +84,7 @@ public class GameController {
             playerNum = 3;
         }
 
-        if(playerNum < 2 || playerNum > 4){
+        if(playerNum < 2 || playerNum > MAXNUMPLAYERS){
             System.out.println("Invalid player count!! 3 players being added");
             playerNum = 3;
         }
@@ -101,6 +119,10 @@ public class GameController {
         curPlayer = players.get(0);
     }
 
+    /**
+     * Rolls all the dice
+     * @return The sum of all dice rolls
+     */
     public int rollDice(){
         int sum =0;
         for(Die d: dice){
@@ -111,6 +133,9 @@ public class GameController {
 
     }
 
+    /**
+     * Checks if the player is bankrupt
+     */
     public void goneBankrupt(){
         HashMap<Property, PropertyType> properties = curPlayer.getProperties();
         if(curPlayer.getBalance() == 0){
@@ -126,6 +151,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Prints each players' current position and their current square
+     */
     public void printBoard(){
         for(Player p: players){
             System.out.println(String.format("Player: %s \nPosition: %s \n", p.getPlayerPiece().toString(), board.getSquare(p.getCurrentPos())));
@@ -133,6 +161,10 @@ public class GameController {
 
     }
 
+    /**
+     * Checks if a player wins
+     * @return True if a player has won, false otherwise
+     */
     public boolean win(){
         int bankruptPLayers = 0;
         for (Player p : players) {
@@ -147,6 +179,11 @@ public class GameController {
         return false;
     }
 
+    /**
+     * Buys a property
+     * @param p The player buying the property
+     * @param prop The property to be bought
+     */
     public void buyProperty(Player p, Property prop){
         int val = prop.getCost();
         p.decreaseBalance(val);
@@ -154,7 +191,10 @@ public class GameController {
         prop.setOwner(p);
     }
 
-    public boolean run(){
+    /**
+     * Runs the game
+     */
+    public void run(){
         //Initialize players (get names and pieces)
         initializePlayers();
         boolean gameRunning = true;
@@ -235,10 +275,12 @@ public class GameController {
         nextTurn();
 
         System.out.println(String.format("%s has won the game!", curPlayer.getPlayerPiece().toString()));
-
-        return false;
     }
 
+    /**
+     * Main function
+     * @param args
+     */
     public static void main(String[] args) {
         GameController gc = new GameController();
 

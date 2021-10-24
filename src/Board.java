@@ -1,14 +1,18 @@
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/** Represents the Board
  * @author Daniel Wang
  */
 public class Board {
+	/** Maximum number of squares on the board */
 	private static final int BOARDSIZE = 40;
+	/** The list of GameBoardSquare objects */
 	private List<GameBoardSquare> board;
 
-	
+	/**
+	 * Default, only constructor. Defines board
+	 */
 	public Board(){
 		this.board = new ArrayList<>();
 		SpecialSquare emptySquare = new SpecialSquare("empty",SquareType.EMPTY);
@@ -74,23 +78,37 @@ public class Board {
 		addSquare(Park_Place);
 		addSquare(emptySquare); //LuxuryTax
 		addSquare(Boardwalk);
-
-
-
-
 	}
 
+	/**
+	 * Adds a square to the board
+	 * @param square The GameBoardSquare to be added
+	 */
 	public void addSquare(GameBoardSquare square){
 		this.board.add(square);
 	}
 
+	/**
+	 * Returns the size of the board
+	 * @return
+	 */
 	public int getSize(){
 		return board.size();
 	}
 
+	/**
+	 * Returns the square at a certain index
+	 * @param index The position of the square to be taken
+	 * @return The square at the certain index
+	 */
 	public GameBoardSquare getSquare(int index){
 		return board.get(index);
 	}
+
+	/**
+	 * Returns the entire board
+	 * @return All squares on the board
+	 */
 	public List<GameBoardSquare> getBoard() {
 		return board;
 	}
