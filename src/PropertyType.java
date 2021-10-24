@@ -1,4 +1,4 @@
-/**
+/** Represents the different property types found in monopoly
  * @author Daniel Wang
  */
 public enum PropertyType {
