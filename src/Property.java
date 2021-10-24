@@ -60,17 +60,20 @@ public class Property extends GameBoardSquare {
         return numBuildings;
     }
 
-    public void setNull() {
+    public void removeOwner() {
         this.owner = null;
+    }
+    public void setOwner(Player owner){
+        this.owner = owner;
     }
 
     @Override
     public String toString() {
         if (this.owner == null) {
-            return String.format("Name:%s Cost: %d Number of Buildings: %d Rent: %d Owner: Unowned",
+            return String.format("%s \nCost: %d \nNumber of Buildings: %d \nRent: %d \nOwner: Unowned",
                     this.getName(), this.getCost(), this.getNumBuildings(), this.getRent() );
         } else {
-            return String.format("Name:%s Cost: %d Number of Buildings: %d Rent: %d Owner: %s",
+            return String.format("%s \nCost: %d \nNumber of Buildings: %d \nRent: %d \nOwner: %s",
                     this.getName(), this.getCost(), this.getNumBuildings(), this.getRent(), this.getOwner().getPlayerPiece().toString());
         }
     }

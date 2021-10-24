@@ -13,7 +13,7 @@ public abstract class GameBoardSquare{
 	}
 
 	public String toString(){
-		String outputString = "Name: " + this.name + "\nType: " + this.type;
-		return outputString;
+		return this.name + "\nType: " + this.type;
+
 	}
 }
