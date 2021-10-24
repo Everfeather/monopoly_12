@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Daniel Wang
+ */
 public class Board {
 	private static final int BOARDSIZE = 40;
 	private List<GameBoardSquare> board;

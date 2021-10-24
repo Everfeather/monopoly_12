@@ -1,6 +1,10 @@
 import java.sql.SQLOutput;
 import java.util.*;
 
+/**
+ * @author Team 12
+ * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
+ */
 public class GameController {
     private static final int MAXNUMPLAYERS = 4;
     private static final int STARTINGBALANCE = 1500;

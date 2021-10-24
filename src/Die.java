@@ -1,5 +1,8 @@
 import java.util.Random;
 
+/**
+ * @author Giancarlo Salvador
+ */
 public class Die {
 
     static final int MAX = 6;

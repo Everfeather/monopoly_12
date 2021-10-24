@@ -1,3 +1,6 @@
+/**
+ * @author Giancarlo Salvador
+ */
 public enum SquareType {
 	PROPERTY,
 	GO,

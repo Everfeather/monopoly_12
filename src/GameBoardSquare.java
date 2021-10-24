@@ -1,3 +1,6 @@
+/** Represents a square on the monopoly board
+ * @author Daniel Wang
+ */
 public abstract class GameBoardSquare{
 	private SquareType type;
 	private String name;

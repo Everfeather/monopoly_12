@@ -1,3 +1,6 @@
+/**
+ * @author Spencer Antliff
+ */
 public class Property extends GameBoardSquare {
 
 

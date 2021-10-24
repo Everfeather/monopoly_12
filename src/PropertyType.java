@@ -1,3 +1,6 @@
+/**
+ * @author Daniel Wang
+ */
 public enum PropertyType {
     BROWN,
     LIGHTBLUE,

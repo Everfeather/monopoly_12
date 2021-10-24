@@ -47,7 +47,6 @@ class Player{
     + increaseBalance(int):
     + decreaseBalance(int):
     + getProperties(): HashMap<Property, PropertyType>
-    + setProperties(HashMap<Property, PropertyType>):
     + getCurrentPos(): int
     + setCurrentPos(int):
     + getInJail(): boolean
