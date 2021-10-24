@@ -154,7 +154,7 @@ public class GameController {
     /**
      * Prints each players' current position and their current square
      */
-    public void printBoard(){
+    public void printBoardState(){
         for(Player p: players){
             System.out.println(String.format("Player: %s \nPosition: %s \n", p.getPlayerPiece().toString(), board.getSquare(p.getCurrentPos())));
         }
@@ -220,9 +220,14 @@ public class GameController {
             System.out.print(String.format("%s landed on: ",curPlayer.getPlayerPiece()));
             System.out.println(squareLanded);
 
+            System.out.println(String.format("Would %s like to view their player info? (Y/N)",curPlayer.getPlayerPiece()));
+            if(in.nextLine().toLowerCase().equals("y")){
+                System.out.println(curPlayer);;
+            }
+
             System.out.println(String.format("Would %s like to view board state? (Y/N)",curPlayer.getPlayerPiece()));
             if(in.nextLine().toLowerCase().equals("y")){
-                printBoard();
+                printBoardState();
             }
 
             //Check if someone owns the square

@@ -180,7 +180,7 @@ public class Player {
 
     @Override
     public String toString(){
-        String s = String.format("\nPlayer: %s\nBalance: %d\n",this.getPlayerPiece(),this.getBalance());
+        String s = String.format("\nPlayer: %s\nBalance: %d\nProperties:\n",this.getPlayerPiece(),this.getBalance());
         for(Property p: this.properties.keySet()){
             s += p;
         }
