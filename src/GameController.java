@@ -50,7 +50,7 @@ public class GameController {
         }else{
             payee.increaseBalance(curPlayer.getBalance());
             curPlayer.decreaseBalance(cost);
-            System.out.println("You cannot afford rent, you have gone bankrupt!");
+            System.out.println(String.format("%s cannot afford rent, %s has gone bankrupt!",curPlayer.getPlayerPiece(),curPlayer.getPlayerPiece()));
             curPlayer.setBankrupt(true);
         }
     }
@@ -117,7 +117,7 @@ public class GameController {
             curPlayer.setBankrupt(true);
             // TODO: loop through the properties owned by the curplayer and set all to null
             for(Property key: properties.keySet()){
-                key.setNull();
+                key.removeOwner();
             }
             curPlayer.getProperties().clear();
             System.out.println(curPlayer.getPlayerPiece() + "is Bankrupt");
@@ -128,7 +128,7 @@ public class GameController {
 
     public void printBoard(){
         for(Player p: players){
-            System.out.println(String.format("Player: %s \n Position: %s \n", p.getPlayerPiece().toString(), board.getSquare(p.getCurrentPos())));
+            System.out.println(String.format("Player: %s \nPosition: %s \n", p.getPlayerPiece().toString(), board.getSquare(p.getCurrentPos())));
         }
 
     }
@@ -136,7 +136,7 @@ public class GameController {
     public boolean win(){
         int bankruptPLayers = 0;
         for (Player p : players) {
-            if (curPlayer.isBankrupt() == false && p.isBankrupt() == true) {
+            if (!curPlayer.isBankrupt()  && p.isBankrupt()) {
                 bankruptPLayers ++;
             }
         }
@@ -151,6 +151,7 @@ public class GameController {
         int val = prop.getCost();
         p.decreaseBalance(val);
         p.addProperty(prop);
+        prop.setOwner(p);
     }
 
     public boolean run(){
@@ -176,10 +177,10 @@ public class GameController {
             int landedSquareIndex = (movement + curPlayer.getCurrentPos()) % board.getSize();
             curPlayer.setCurrentPos(landedSquareIndex);
             GameBoardSquare squareLanded = board.getSquare(landedSquareIndex);
-            System.out.println("You landed on: ");
+            System.out.print(String.format("%s landed on: ",curPlayer.getPlayerPiece()));
             System.out.println(squareLanded);
 
-            System.out.println("Would you like to view board state? (Y/N)");
+            System.out.println(String.format("Would %s like to view board state? (Y/N)",curPlayer.getPlayerPiece()));
             if(in.nextLine().toLowerCase().equals("y")){
                 printBoard();
             }
@@ -203,15 +204,15 @@ public class GameController {
                 //BUY property
                 if (notOwned) {
                     //Decide to buy
-                    System.out.println("No one owns this property, would you like to buy it? (Y/N)");
+                    System.out.println(String.format("No one owns this property, would %s like to buy it? (Y/N)",curPlayer.getPlayerPiece()));
                     if(in.nextLine().toLowerCase().equals("y")){
                         if (curPlayer.getBalance() < ((Property) squareLanded).getCost()){
-                            System.out.println("You cannot afford this property...");
+                            System.out.println(String.format("%s cannot afford this property...",curPlayer.getPlayerPiece()));
                         }else {
                             buyProperty(curPlayer, (Property) squareLanded);
                         }
                     } else {
-                        System.out.println("You did not buy the property...");
+                        System.out.println(String.format("%s did not buy the property...",curPlayer.getPlayerPiece()));
                     }
                 }
             }
