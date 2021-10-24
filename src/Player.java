@@ -177,4 +177,13 @@ public class Player {
     public void addProperty(Property prop){
         this.properties.put(prop, prop.getPropertyType());
     }
+
+    @Override
+    public String toString(){
+        String s = String.format("\nPlayer: %s\nBalance: %d\nProperties:\n",this.getPlayerPiece(),this.getBalance());
+        for(Property p: this.properties.keySet()){
+            s += p;
+        }
+        return s;
+    }
 }

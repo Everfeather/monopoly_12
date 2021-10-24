@@ -19,11 +19,13 @@ public class Property extends GameBoardSquare {
     private int numBuildings;
 
     /**
-     * Only constructor
+     * constructor
      * @param name The name of the property
      * @param cost The initial cost of the property
      * @param colourSetSize The size of the property set
      * @param propertyType The property type
+     * rent is 10% of cost, building cost is 55% of cost.
+     *owner starts as null and numBuildings is 0
      */
     public Property(String name, int cost, int colourSetSize, PropertyType propertyType) {
         super(SquareType.PROPERTY,name);
