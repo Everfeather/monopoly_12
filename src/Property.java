@@ -12,6 +12,15 @@ public class Property extends GameBoardSquare {
     private PropertyType propertyType;
     private int numBuildings;
 
+    /**
+     * constructor for the property object, rent is 10% of the cost and buildingCost is 55% of the cost.
+     * owner is initialized as null, since no one owns it.
+     * numBuildings is the number of buildings that have been purchased, and starts at 0.
+     * @param name Name of the property
+     * @param cost How much it costs to buy the property
+     * @param colourSetSize How many properties share the same propertyType aka colour
+     * @param propertyType The colour of the property, or if it is a railroad/utility
+     */
     public Property(String name, int cost, int colourSetSize, PropertyType propertyType) {
         super(SquareType.PROPERTY,name);
         this.colourSetSize = colourSetSize;
@@ -24,9 +33,9 @@ public class Property extends GameBoardSquare {
     }
 
     /**
-     * This methode changes the relevant attributes of the property accordingly when a building is purchased.
+     * buildingPurchased changes the relevant attributes of the property accordingly when a building is purchased.
      * increases the number of buildings by 1.
-     * increases the rent.
+     * increases the rent by 40%.
      */
     public void buildingPurchased(){
         this.numBuildings ++;
@@ -63,6 +72,7 @@ public class Property extends GameBoardSquare {
     public void removeOwner() {
         this.owner = null;
     }
+
     public void setOwner(Player owner){
         this.owner = owner;
     }
@@ -70,10 +80,10 @@ public class Property extends GameBoardSquare {
     @Override
     public String toString() {
         if (this.owner == null) {
-            return String.format("%s \nCost: %d \nNumber of Buildings: %d \nRent: %d \nOwner: Unowned",
+            return String.format("%s \nCost: %d \nNumber of Buildings: %d \nRent: %d \nOwner: Unowned\n",
                     this.getName(), this.getCost(), this.getNumBuildings(), this.getRent() );
         } else {
-            return String.format("%s \nCost: %d \nNumber of Buildings: %d \nRent: %d \nOwner: %s",
+            return String.format("%s \nCost: %d \nNumber of Buildings: %d \nRent: %d \nOwner: %s\n",
                     this.getName(), this.getCost(), this.getNumBuildings(), this.getRent(), this.getOwner().getPlayerPiece().toString());
         }
     }
