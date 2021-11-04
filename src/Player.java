@@ -186,4 +186,52 @@ public class Player {
         }
         return s;
     }
+
+    /**
+     * Checks if the player is bankrupt
+     */
+    public void goneBankrupt(){
+        HashMap<Property, PropertyType> properties = this.getProperties();
+        if(this.getBalance() == 0){
+            this.setBankrupt(true);
+            // TODO: loop through the properties owned by the curplayer and set all to null
+            for(Property key: properties.keySet()){
+                key.removeOwner();
+            }
+            this.getProperties().clear();
+            System.out.println(this.getPlayerPiece() + "is Bankrupt");
+
+
+        }
+    }
+
+    /**
+     * Buys a property
+     * @param prop The property to be bought
+     */
+    public void buyProperty( Property prop){
+        int val = prop.getCost();
+        this.decreaseBalance(val);
+        this.addProperty(prop);
+        prop.setOwner(this);
+    }
+
+    /**
+     * Pays rent
+     * @param payee The player to be paid
+     * @param property The property whose rent will be paid
+     */
+    public void payRent(Player payee,Property property){
+        int cost = property.getCost();
+
+        if(this.getBalance() >= cost){
+            this.decreaseBalance(cost);
+            payee.increaseBalance(cost);
+        }else{
+            payee.increaseBalance(this.getBalance());
+            this.decreaseBalance(cost);
+            System.out.println(String.format("%s cannot afford rent, %s has gone bankrupt!",this.getPlayerPiece(),this.getPlayerPiece()));
+            this.setBankrupt(true);
+        }
+    }
 }

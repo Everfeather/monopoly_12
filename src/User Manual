@@ -4,7 +4,7 @@ Welcome to Monopoly by team 12!!
 
 Thank you for choosing our game, we hope you enjoy.
 
-To get started please run the main function at the end of the GameController.java file.
+To get started please run the main function at the end of the GameModel.java file.
 
 Congrats! you have officially started monopoly. As you can see it is a CLI based version of the game.
 

@@ -1,11 +1,10 @@
-import java.sql.SQLOutput;
 import java.util.*;
 
 /** Controls the Monopoly game
  * @author Team 12
  * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
  */
-public class GameController {
+public class GameModel {
     /** The maximum number of players allowed */
     private static final int MAXNUMPLAYERS = 4;
     /** Starting balance of the players */
@@ -26,7 +25,7 @@ public class GameController {
     /**
      * Only and default constructor for Gamecontroller
      */
-    public GameController(){
+    public GameModel(){
         in = new Scanner(System.in);
         dice = new Die[2];
         dice[0] = new Die();
@@ -51,24 +50,7 @@ public class GameController {
 
     }
 
-    /**
-     * Pays rent
-     * @param payee The player to be paid
-     * @param property The property whose rent will be paid
-     */
-    public void payRent(Player payee,Property property){
-        int cost = property.getCost();
 
-        if(curPlayer.getBalance() >= cost){
-            curPlayer.decreaseBalance(cost);
-            payee.increaseBalance(cost);
-        }else{
-            payee.increaseBalance(curPlayer.getBalance());
-            curPlayer.decreaseBalance(cost);
-            System.out.println(String.format("%s cannot afford rent, %s has gone bankrupt!",curPlayer.getPlayerPiece(),curPlayer.getPlayerPiece()));
-            curPlayer.setBankrupt(true);
-        }
-    }
 
     /**
      * Creates players and allows them to choose their own piece
@@ -133,23 +115,7 @@ public class GameController {
 
     }
 
-    /**
-     * Checks if the player is bankrupt
-     */
-    public void goneBankrupt(){
-        HashMap<Property, PropertyType> properties = curPlayer.getProperties();
-        if(curPlayer.getBalance() == 0){
-            curPlayer.setBankrupt(true);
-            // TODO: loop through the properties owned by the curplayer and set all to null
-            for(Property key: properties.keySet()){
-                key.removeOwner();
-            }
-            curPlayer.getProperties().clear();
-            System.out.println(curPlayer.getPlayerPiece() + "is Bankrupt");
 
-
-        }
-    }
 
     /**
      * Prints each players' current position and their current square
@@ -179,17 +145,7 @@ public class GameController {
         return false;
     }
 
-    /**
-     * Buys a property
-     * @param p The player buying the property
-     * @param prop The property to be bought
-     */
-    public void buyProperty(Player p, Property prop){
-        int val = prop.getCost();
-        p.decreaseBalance(val);
-        p.addProperty(prop);
-        prop.setOwner(p);
-    }
+
 
     /**
      * Runs the game
@@ -240,7 +196,7 @@ public class GameController {
                         System.out.println("Pay $" + ((Property)squareLanded).getRent());
 
                         //Pay rent
-                        payRent(p, (Property)squareLanded);
+                        curPlayer.payRent(p, (Property)squareLanded);
 
                         break;
                     }
@@ -254,7 +210,7 @@ public class GameController {
                         if (curPlayer.getBalance() < ((Property) squareLanded).getCost()){
                             System.out.println(String.format("%s cannot afford this property...",curPlayer.getPlayerPiece()));
                         }else {
-                            buyProperty(curPlayer, (Property) squareLanded);
+                            curPlayer.buyProperty((Property) squareLanded);
                         }
                     } else {
                         System.out.println(String.format("%s did not buy the property...",curPlayer.getPlayerPiece()));
@@ -263,7 +219,7 @@ public class GameController {
             }
 
             //Checks if current player has gone bankrupt
-            goneBankrupt();
+            curPlayer.goneBankrupt();
 
             //Check if a player has won
             gameRunning = !win();
@@ -287,7 +243,7 @@ public class GameController {
      * @param args
      */
     public static void main(String[] args) {
-        GameController gc = new GameController();
+        GameModel gc = new GameModel();
 
         gc.run();
     }
