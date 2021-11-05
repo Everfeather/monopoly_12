@@ -16,7 +16,7 @@ public class GameModel {
     /** Contains the board of the game */
     private Board board;
     /** Contains the dice to be used */
-    private Die[] dice;
+    private Dice dice;
     /** List of players */
     private List<Player> players;
     /** The current player*/
@@ -26,10 +26,8 @@ public class GameModel {
      * Only and default constructor for Gamecontroller
      */
     public GameModel(){
+        dice = new Dice();
         in = new Scanner(System.in);
-        dice = new Die[2];
-        dice[0] = new Die();
-        dice[1] = new Die();
         players = new ArrayList<>();
         board = new Board();
     }
@@ -101,19 +99,7 @@ public class GameModel {
         curPlayer = players.get(0);
     }
 
-    /**
-     * Rolls all the dice
-     * @return The sum of all dice rolls
-     */
-    public int rollDice(){
-        int sum =0;
-        for(Die d: dice){
-            sum = sum + d.roll();
 
-        }
-        return sum;
-
-    }
 
 
 
@@ -161,9 +147,14 @@ public class GameModel {
             endTurn = true;
 
             //Roll Dice
-            int movement = rollDice();
+            int movement = dice.rollDice();
+
+
+
+
+
             String movementMessage = String.format("%s rolled a: %s", curPlayer.getPlayerPiece().toString(),  movement);
-            if(dice[0].getRollValue() == dice[1].getRollValue()){
+            if(dice.checkDouble()){
                 endTurn = false;
                 movementMessage += " DOUBLES!!";
             }
