@@ -38,46 +38,46 @@ public class Board {
 		Property Pennsylvania_Avenue = new Property("Pennsylvania Avenue", 320, 3,PropertyType.GREEN);
 		Property Park_Place = new Property("Park Place", 350, 2,PropertyType.BLUE);
 		Property Boardwalk = new Property("Boardwalk", 400, 2,PropertyType.BLUE);
-		addSquare(emptySquare); //GO
-		addSquare(Mediterranean_Avenue);
-		addSquare(emptySquare); //community chest
-		addSquare(Baltic_Avenue);
-		addSquare(emptySquare); //income tax
-		addSquare(emptySquare); //reading railroad
-		addSquare(Oriental_Avenue);
-		addSquare(emptySquare); //chance
-		addSquare(Vermont_Avenue);
-		addSquare(Connecticut_Avenue);
-		addSquare(emptySquare); //jail
-		addSquare(St_Charles_Place);
-		addSquare(emptySquare); //Electric Company
-		addSquare(States_Avenue);
-		addSquare(Virginia_Avenue);
-		addSquare(emptySquare); // Pennsylvania Railroad
-		addSquare(St_James_Place);
-		addSquare(emptySquare); // Community Chest
-		addSquare(Tennessee_Avenue);
-		addSquare(New_York_Avenue);
-		addSquare(emptySquare); //Free Parking
-		addSquare(Kentucky_Avenue);
-		addSquare(emptySquare); //chance
-		addSquare(Indiana_Avenue);
-		addSquare(Illinois_Avenue);
-		addSquare(emptySquare); //B. & O. Railroad
-		addSquare(Atlantic_Avenue);
-		addSquare(Ventnor_Avenue);
-		addSquare(emptySquare); //Water Works
-		addSquare(Marvin_Gardens);
-		addSquare(emptySquare); //goToJail
-		addSquare(Pacific_Avenue);
-		addSquare(North_Carolina_Avenue);
-		addSquare(emptySquare); //Community Chest
-		addSquare(Pennsylvania_Avenue);
-		addSquare(emptySquare); //Short Line (railroad)
-		addSquare(emptySquare); //chance
-		addSquare(Park_Place);
-		addSquare(emptySquare); //LuxuryTax
-		addSquare(Boardwalk);
+		addSquare(emptySquare); //GO 0
+		addSquare(Mediterranean_Avenue); // 1
+		addSquare(emptySquare); //community chest 2
+		addSquare(Baltic_Avenue); // 3
+		addSquare(emptySquare); //income tax 4
+		addSquare(emptySquare); //reading railroad 5
+		addSquare(Oriental_Avenue); // 6
+		addSquare(emptySquare); //chance 7
+		addSquare(Vermont_Avenue); // 8
+		addSquare(Connecticut_Avenue); // 9
+		addSquare(emptySquare); //jail 10
+		addSquare(St_Charles_Place); //11
+		addSquare(emptySquare); //Electric Company 12
+		addSquare(States_Avenue); // 13
+		addSquare(Virginia_Avenue); // 14
+		addSquare(emptySquare); // Pennsylvania Railroad 15
+		addSquare(St_James_Place); // 16
+		addSquare(emptySquare); // Community Chest 17
+		addSquare(Tennessee_Avenue); //18
+		addSquare(New_York_Avenue); //19
+		addSquare(emptySquare); //Free Parking 20
+		addSquare(Kentucky_Avenue); //21
+		addSquare(emptySquare); //chance 22
+		addSquare(Indiana_Avenue); //23
+		addSquare(Illinois_Avenue); //24
+		addSquare(emptySquare); //B. & O. Railroad 25
+		addSquare(Atlantic_Avenue); // 26
+		addSquare(Ventnor_Avenue); //27
+		addSquare(emptySquare); //Water Works 28
+		addSquare(Marvin_Gardens); //29
+		addSquare(emptySquare); //goToJail 30
+		addSquare(Pacific_Avenue); //31
+		addSquare(North_Carolina_Avenue); //32
+		addSquare(emptySquare); //Community Chest 33
+		addSquare(Pennsylvania_Avenue); //34
+		addSquare(emptySquare); //Short Line (railroad) 35
+		addSquare(emptySquare); //chance 36
+		addSquare(Park_Place); //37
+		addSquare(emptySquare); //LuxuryTax 38
+		addSquare(Boardwalk); //39
 	}
 
 	/**
