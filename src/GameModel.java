@@ -1,10 +1,13 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 /** Controls the Monopoly game
+ * @deprecated for milestone 2
  * @author Team 12
  * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
  */
-public class GameModel {
+public class GameModel implements ActionListener {
     /** The maximum number of players allowed */
     private static final int MAXNUMPLAYERS = 4;
     /** Starting balance of the players */
@@ -239,4 +242,8 @@ public class GameModel {
         gc.run();
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }
