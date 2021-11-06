@@ -3,7 +3,6 @@ import java.awt.event.ActionListener;
 import java.util.*;
 
 /** Controls the Monopoly game
- * @deprecated for milestone 2
  * @author Team 12
  * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
  */
@@ -275,10 +274,4 @@ public class GameModel {
 
  payRent_turn
      */
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
   }
