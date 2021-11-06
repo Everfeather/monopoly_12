@@ -52,11 +52,12 @@ public class SpecialSquarePanel extends JPanel{
         c.weightx = 1;
         c.gridx = 0;
         c.gridy = 0;
-        this.add(name,c);
+        //this.add(name,c);
         c.weighty = 1;
 
         c.gridy = 1;
         c.ipady = 40;
+        c.ipadx = 40;
         c.gridheight = 3;
         this.add(specialSquarePopUp, c);
     }

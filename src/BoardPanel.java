@@ -8,10 +8,13 @@ import java.util.ArrayList;
 public class BoardPanel extends JPanel {
     Board board;
     Dice dice;
+    ArrayList<JPanel> squares;
     public BoardPanel(Board board,Dice dice){
         super(new GridBagLayout());
         this.board = board;
         this.dice = dice;
+        this.squares = new ArrayList<JPanel>();
+        
 
         GridBagConstraints c = new GridBagConstraints();
         //from top left to bottom right, property name and position in board array
@@ -84,6 +87,7 @@ public class BoardPanel extends JPanel {
         c.gridheight = 9;
         JTextPane diceRollPane = new JTextPane();
         diceRollPane.setText(String.format("You Rolled: %d",dice.getRollValue()));
+        diceRollPane.setEditable(false);
         //centering diceRollText text
         StyledDocument style = diceRollPane.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
@@ -229,23 +233,24 @@ public class BoardPanel extends JPanel {
         //0
         c.gridx = 10;
         c.gridy = 10;
-
+        this.add(new SpecialSquarePanel((SpecialSquare) board.getBoard().get(5)), c);
         this.setSize(600,600);
     }
-    /*
+
     public static void main(String[] args) {
         Board board = new Board();
         Dice dice = new Dice();
         JPanel pane = new BoardPanel(board,dice);
         JFrame frame = new JFrame();
-        frame.setSize(700,700);
+        frame.setSize(600,600);
         //frame.setBackground(Color.BLACK);
         frame.add(pane);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
+        frame.pack();
         frame.setVisible(true);
 
     }
 
-     */
+
 }
