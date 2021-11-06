@@ -33,8 +33,22 @@ public class GameModel {
         in = new Scanner(System.in);
         players = new ArrayList<>();
         board = new Board();
+
+        List<Piece> availablePieces = new ArrayList<>();
+        availablePieces.add(Piece.HORSE);
+        availablePieces.add(Piece.SHOE);
+        availablePieces.add(Piece.CAR);
+        availablePieces.add(Piece.BOAT);
+        for( int i = 0; i < MAXNUMPLAYERS; i++){
+            Player addedPlayer = new Player(availablePieces.remove(0), STARTINGBALANCE);
+            players.add(addedPlayer);
+        }
+        curPlayer = players.get(0);
     }
 
+    public Player getCurrentPlayer(){
+        return this.curPlayer;
+    }
     /**
      * Sets current player to the next player in order to change the turn
      */
@@ -51,12 +65,38 @@ public class GameModel {
 
     }
 
+    /**
+     * Checks if a player wins
+     * @return True if the current player has won, false otherwise
+     */
+    public boolean win(){
+        int bankruptPLayers = 0;
+        for (Player p : players) {
+            if (!curPlayer.isBankrupt()  && p.isBankrupt()) {
+                bankruptPLayers ++;
+            }
+        }
+
+        if (bankruptPLayers == players.size() - 1){
+            return true;
+        }
+        return false;
+    }
+    public Board getBoard(){
+        return this.board;
+    }
+    public Dice getDice(){
+        return this.dice;
+    }
+
 
 
     /**
      * Creates players and allows them to choose their own piece
      */
+    /*
     public void initializePlayers(){
+
         System.out.println("Number of Players: ");
         String playerString = in.nextLine();
         int playerNum;
@@ -100,7 +140,10 @@ public class GameModel {
 
         }
         curPlayer = players.get(0);
-    }
+
+        }
+         */
+
 
 
 
@@ -109,6 +152,7 @@ public class GameModel {
     /**
      * Prints each players' current position and their current square
      */
+    /*
     public void printBoardState(){
         for(Player p: players){
             System.out.println(String.format("Player: %s \nPosition: %s \n", p.getPlayerPiece().toString(), board.getSquare(p.getCurrentPos())));
@@ -116,29 +160,16 @@ public class GameModel {
 
     }
 
-    /**
-     * Checks if a player wins
-     * @return True if a player has won, false otherwise
      */
-    public boolean win(){
-        int bankruptPLayers = 0;
-        for (Player p : players) {
-            if (!curPlayer.isBankrupt()  && p.isBankrupt()) {
-                bankruptPLayers ++;
-            }
-        }
 
-        if (bankruptPLayers == players.size() - 1){
-            return true;
-        }
-        return false;
-    }
+
 
 
 
     /**
      * Runs the game
      */
+    /*
     public void run(){
         //Initialize players (get names and pieces)
         initializePlayers();
@@ -232,14 +263,22 @@ public class GameModel {
         System.out.println(String.format("%s has won the game!", curPlayer.getPlayerPiece().toString()));
     }
 
-    /**
-     * Main function
-     * @param args
+
      */
+    
+    /*
     public static void main(String[] args) {
         GameModel gc = new GameModel();
 
         gc.run();
     }
 
-}
+ payRent_turn
+     */
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+  }

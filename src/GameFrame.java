@@ -46,7 +46,7 @@ public class GameFrame extends JFrame implements GameView {
         c.ipady = 50;
 
         //Adding the board
-        board = new BoardPanel(new Board(), new Dice());
+        board = new BoardPanel(model.getBoard(), model.getDice());
         c.gridx = 0;
         c.gridy = 0;
         c.gridheight = 3;
