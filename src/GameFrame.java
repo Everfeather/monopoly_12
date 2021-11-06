@@ -126,4 +126,8 @@ public class GameFrame extends JFrame implements GameView {
         new GameFrame();
     }
 
+    @Override
+    public void update(MonopolyEvent event) {
+
+    }
 }
