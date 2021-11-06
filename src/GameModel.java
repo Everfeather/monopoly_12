@@ -23,6 +23,8 @@ public class GameModel {
     private List<Player> players;
     /** The current player*/
     private Player curPlayer;
+    /** List of views*/
+    private List<GameView> views;
 
     /**
      * Only and default constructor for Gamecontroller
@@ -43,6 +45,7 @@ public class GameModel {
             players.add(addedPlayer);
         }
         curPlayer = players.get(0);
+        this.views = new ArrayList<>();
     }
 
     public Player getCurrentPlayer(){
@@ -88,13 +91,20 @@ public class GameModel {
         return this.dice;
     }
 
+    public void addGameView(GameView view){
+        views.add(view);
+    }
 
+    public void removeGameView(GameView view){
+        views.remove(view);
+    }
 
     /**
      * Creates players and allows them to choose their own piece
      */
-    /*
+//    /*
     public void initializePlayers(){
+
 
         System.out.println("Number of Players: ");
         String playerString = in.nextLine();
@@ -141,11 +151,23 @@ public class GameModel {
         curPlayer = players.get(0);
 
         }
-         */
+//         */
+
+    public boolean update(Boolean gameRunning, boolean endTurn){
+        //Checks if current player has gone bankrupt
+        this.curPlayer.goneBankrupt();
+
+        //Check if a player has won
+        gameRunning = !win();
+        //Check which player has won
 
 
-
-
+        //Change player turn
+        if(endTurn) {
+            this.nextTurn();
+        }
+        return gameRunning;
+    }
 
 
     /**
@@ -242,18 +264,7 @@ public class GameModel {
                 }
             }
 
-            //Checks if current player has gone bankrupt
-            curPlayer.goneBankrupt();
-
-            //Check if a player has won
-            gameRunning = !win();
-            //Check which player has won
-
-
-            //Change player turn
-            if(endTurn) {
-                nextTurn();
-            }
+            gameRunning = this.update(gameRunning, endTurn);
 
         }
 

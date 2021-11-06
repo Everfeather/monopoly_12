@@ -30,6 +30,8 @@ public class GameFrame extends JFrame implements GameView {
         //TODO: find number of players:
         model = new GameModel();
 
+        model.addGameView(this);
+
         //DEBUG VALUES
         this.numPlayers = 4;
         playerPanels = new JPanel[numPlayers];
@@ -78,13 +80,11 @@ public class GameFrame extends JFrame implements GameView {
 
         JButton rollButton = new JButton("Roll!");
         rollButton.setActionCommand("roll");
-        rollButton.addActionListener(model);
         buttonPanel.add(rollButton);
 
         JButton buyButton = new JButton("Buy");
         buyButton.setEnabled(false);
         buyButton.setActionCommand("buy");
-        buyButton.addActionListener(model);
         buttonPanel.add(buyButton);
 
         botPanel.add(buttonPanel);
@@ -120,10 +120,6 @@ public class GameFrame extends JFrame implements GameView {
         JLabel propertyLabel = new JLabel("<html>Properties:<br/>");
         curInfo.add(propertyLabel);
         playerInfo.put("property", propertyLabel);
-    }
-
-    public void update(MonopolyEvent event){
-
     }
 
     public static void main(String[] args){

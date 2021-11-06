@@ -11,5 +11,12 @@ public class GameController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String actionCommand = e.getActionCommand();
+
+        switch(actionCommand){
+            case "roll" -> model.getDice().roll();
+            case "buy" -> model.getCurrentPlayer().buyProperty((Property) model.getBoard().getSquare(model.getCurrentPlayer().getCurrentPos()));
+            //TODO: add init case
+        }
     }
 }
