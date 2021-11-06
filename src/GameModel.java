@@ -7,7 +7,7 @@ import java.util.*;
  * @author Team 12
  * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
  */
-public class GameModel implements ActionListener {
+public class GameModel {
     /** The maximum number of players allowed */
     private static final int MAXNUMPLAYERS = 4;
     /** Starting balance of the players */
@@ -273,10 +273,12 @@ public class GameModel implements ActionListener {
         gc.run();
     }
 
+ payRent_turn
      */
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
-}
+
+  }
