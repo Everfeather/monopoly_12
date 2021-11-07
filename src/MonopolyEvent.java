@@ -25,6 +25,10 @@ public class MonopolyEvent extends EventObject {
         super(source);
         this.type = type;
     }
+    public MonopolyEvent(Board source, EventType type) {
+        super(source);
+        this.type = type;
+    }
 
     public Player getPlayer() {
         return player;

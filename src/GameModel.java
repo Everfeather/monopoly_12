@@ -132,14 +132,15 @@ public class GameModel {
 
     public void movePlayer(){
         System.out.println(curPlayer.getPlayerPiece() + " is moving");
-
+        System.out.println("board 1: " + this.board);
         board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
 
         int landedSquareIndex = (getDice().getRollValue() + curPlayer.getCurrentPos()) % board.getSize();
         curPlayer.setCurrentPos(landedSquareIndex);
 
         board.getBoard().get(landedSquareIndex).addPlayerToSquare(curPlayer);
-        System.out.println("printing player peices on square:");
+        System.out.println("please don't be empty " + board.getBoard().get(landedSquareIndex).getPlayersOnSquare());
+        System.out.println("printing player pieces on square:");
         for(Player p : board.getBoard().get(landedSquareIndex).getPlayersOnSquare()){
             System.out.println(p.getPlayerPiece());
         }

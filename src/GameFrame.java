@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class GameFrame extends JFrame implements GameView {
 
+
+
     private BoardPanel board;
     private JPanel contentPane;
     //private ArrayList<HashMap<String, JLabel>> infoLabels;
@@ -33,6 +35,7 @@ public class GameFrame extends JFrame implements GameView {
         model = new GameModel();
         model.addGameView(this);
 
+
         GameController gc = new GameController(model);
 
         //DEBUG VALUES
@@ -52,6 +55,7 @@ public class GameFrame extends JFrame implements GameView {
 
         //Adding the board
         board = new BoardPanel(model.getBoard(), model.getDice());
+
         c.gridx = 0;
         c.gridy = 0;
         c.gridheight = 3;
@@ -167,51 +171,37 @@ public class GameFrame extends JFrame implements GameView {
 
             }
             case ROLL -> {
-                //System.out.println(model.getDice().rollValue);
-                //TODO: get player position, change button label
                 this.board.diceRollPane.setText(model.getCurrentPlayer().getPlayerPiece().toString() + " Rolled a " + model.getDice().rollValue);
-                //System.out.println("Rolled a " + model.getDice().rollValue);
-                int index = model.getCurrentPlayer().getCurrentPos();
-                
-                for (JPanel p : this.board.squares) {
-
-                    if(p instanceof SpecialSquarePanel){
-                        String s = "";
-                        //System.out.println("instance of special square");
-                        for(Player player : ((SpecialSquarePanel) p).specialSquare.getPlayersOnSquare()){
-                            System.out.println(player.getPlayerPiece());
-                            switch (player.getPlayerPiece()) {
-                                case CAR -> s += " c ";
-                                case BOAT -> s += " b ";
-                                case SHOE -> s += " s ";
-                                case HORSE -> s += " h ";
-                            }
+                System.out.println("bruh");
+                int count = 0;
+                System.out.println("board 2: " + this.board);
+                for(GameBoardSquare bs : this.model.getBoard().getBoard()){
+                    String s = "";
+                    for(Player p : bs.getPlayersOnSquare()){
+                        switch (p.getPlayerPiece()) {
+                            case CAR -> s   += "c";
+                            case BOAT -> s  += "b";
+                            case SHOE -> s  += "s";
+                            case HORSE -> s += "h";
                         }
-                        System.out.println("Button label: " + s);
-                        ((SpecialSquarePanel) p).getSpecialSquarePopUp().setText(s);
-                    }
-                    if(p instanceof PropertyPanel){
-                        String s = "";
-                        //System.out.println("instance of property panel");
-                        for (Player player : ((PropertyPanel) p).getProperty().getPlayersOnSquare()) {
-                            System.out.println(player.getPlayerPiece());
-                            //System.out.println(player.getPlayerPiece().toString());
-                            switch (player.getPlayerPiece()) {
-                                case CAR -> s += " c ";
-                                case BOAT -> s += " b ";
-                                case SHOE -> s += " s ";
-                                case HORSE -> s += " h ";
-                            }
-                        }
-                        System.out.println("Button label: " + s);
-                        ((PropertyPanel) p).getPropertyInfoPopUp().setText(s);
-                    }
 
+                    }
+                    System.out.println("S is : " + s);
+                    if(this.getBoardPanel().getSquares().get(count) instanceof PropertyPanel){
+                        PropertyPanel square = (PropertyPanel) this.getBoardPanel().getSquares().get(count);
+                        square.getPropertyInfoPopUp().setText(s);
+                    }else{
+                        SpecialSquarePanel square = (SpecialSquarePanel) this.getBoardPanel().getSquares().get(count);
+                        square.getSpecialSquarePopUp().setText(s);
+                    }
+                    count++;
                 }
-                System.out.println("end of roll method");
             }
-
 
     }
 }
+
+    public BoardPanel getBoardPanel() {
+        return board;
+    }
 }

@@ -9,13 +9,30 @@ public class Board {
 	private static final int BOARDSIZE = 40;
 	/** The list of GameBoardSquare objects */
 	private List<GameBoardSquare> board;
-
 	/**
 	 * Default, only constructor. Defines board
 	 */
 	public Board(){
 		this.board = new ArrayList<>();
-		SpecialSquare emptySquare = new SpecialSquare("empty",SquareType.EMPTY);
+
+		SpecialSquare Go = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare comChest2 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare inTax4 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare RR5 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare chance7 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare jail = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare elecComp12 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare PR15 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare comChest17 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare freeParking = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare chance22 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare BOR25 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare WW28 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare goToJail = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare comChest33 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare SLR35 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare chance36 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare luxTax38 = new SpecialSquare("empty",SquareType.EMPTY);
 		Property Mediterranean_Avenue = new Property("Mediterranean Avenue",60,2,PropertyType.BROWN);
 		Property Baltic_Avenue = new Property("Baltic Avenue",60,2,PropertyType.BROWN);
 		Property Oriental_Avenue = new Property("Oriental Avenue", 100, 3,PropertyType.LIGHTBLUE);
@@ -38,45 +55,45 @@ public class Board {
 		Property Pennsylvania_Avenue = new Property("Pennsylvania Avenue", 320, 3,PropertyType.GREEN);
 		Property Park_Place = new Property("Park Place", 350, 2,PropertyType.BLUE);
 		Property Boardwalk = new Property("Boardwalk", 400, 2,PropertyType.BLUE);
-		addSquare(emptySquare); //GO 0
+		addSquare(Go); //GO 0
 		addSquare(Mediterranean_Avenue); // 1
-		addSquare(emptySquare); //community chest 2
+		addSquare(comChest2); //community chest 2
 		addSquare(Baltic_Avenue); // 3
-		addSquare(emptySquare); //income tax 4
-		addSquare(emptySquare); //reading railroad 5
+		addSquare(inTax4); //income tax 4
+		addSquare(RR5); //reading railroad 5
 		addSquare(Oriental_Avenue); // 6
-		addSquare(emptySquare); //chance 7
+		addSquare(chance7); //chance 7
 		addSquare(Vermont_Avenue); // 8
 		addSquare(Connecticut_Avenue); // 9
-		addSquare(emptySquare); //jail 10
+		addSquare(jail); //jail 10
 		addSquare(St_Charles_Place); //11
-		addSquare(emptySquare); //Electric Company 12
+		addSquare(elecComp12); //Electric Company 12
 		addSquare(States_Avenue); // 13
 		addSquare(Virginia_Avenue); // 14
-		addSquare(emptySquare); // Pennsylvania Railroad 15
+		addSquare(PR15); // Pennsylvania Railroad 15
 		addSquare(St_James_Place); // 16
-		addSquare(emptySquare); // Community Chest 17
+		addSquare(comChest17); // Community Chest 17
 		addSquare(Tennessee_Avenue); //18
 		addSquare(New_York_Avenue); //19
-		addSquare(emptySquare); //Free Parking 20
+		addSquare(freeParking); //Free Parking 20
 		addSquare(Kentucky_Avenue); //21
-		addSquare(emptySquare); //chance 22
+		addSquare(chance22); //chance 22
 		addSquare(Indiana_Avenue); //23
 		addSquare(Illinois_Avenue); //24
-		addSquare(emptySquare); //B. & O. Railroad 25
+		addSquare(BOR25); //B. & O. Railroad 25
 		addSquare(Atlantic_Avenue); // 26
 		addSquare(Ventnor_Avenue); //27
-		addSquare(emptySquare); //Water Works 28
+		addSquare(WW28); //Water Works 28
 		addSquare(Marvin_Gardens); //29
-		addSquare(emptySquare); //goToJail 30
+		addSquare(goToJail); //goToJail 30
 		addSquare(Pacific_Avenue); //31
 		addSquare(North_Carolina_Avenue); //32
-		addSquare(emptySquare); //Community Chest 33
+		addSquare(comChest33); //Community Chest 33
 		addSquare(Pennsylvania_Avenue); //34
-		addSquare(emptySquare); //Short Line (railroad) 35
-		addSquare(emptySquare); //chance 36
+		addSquare(SLR35); //Short Line (railroad) 35
+		addSquare(chance36); //chance 36
 		addSquare(Park_Place); //37
-		addSquare(emptySquare); //LuxuryTax 38
+		addSquare(luxTax38); //LuxuryTax 38
 		addSquare(Boardwalk); //39
 	}
 
@@ -112,5 +129,4 @@ public class Board {
 	public List<GameBoardSquare> getBoard() {
 		return board;
 	}
-	
 }
