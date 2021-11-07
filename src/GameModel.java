@@ -9,6 +9,8 @@ import java.util.*;
 public class GameModel {
     /** The maximum number of players allowed */
     private static final int MAXNUMPLAYERS = 4;
+
+
     /** Starting balance of the players */
     private static final int STARTINGBALANCE = 1500;
     /** Scanner to allow input from terminal */
@@ -19,6 +21,9 @@ public class GameModel {
     private Board board;
     /** Contains the dice to be used */
     private Dice dice;
+
+
+
     /** List of players */
     private List<Player> players;
     /** The current player*/
@@ -34,7 +39,15 @@ public class GameModel {
         in = new Scanner(System.in);
         players = new ArrayList<>();
         board = new Board();
+        this.views = new ArrayList<>();
+    }
 
+    public void initializeGame(){
+        System.out.println("initializeGame called");
+        dice = new Dice();
+        in = new Scanner(System.in);
+        players = new ArrayList<>();
+        board = new Board();
         List<Piece> availablePieces = new ArrayList<>();
         availablePieces.add(Piece.HORSE);
         availablePieces.add(Piece.SHOE);
@@ -45,9 +58,16 @@ public class GameModel {
             players.add(addedPlayer);
         }
         curPlayer = players.get(0);
-        this.views = new ArrayList<>();
+        if(views.size() > 0){
+            System.out.println("views not empty");
+        }else{
+            System.out.println("views empty????");
+        }
+        curPlayer = players.get(0);
+        for(GameView v: this.views){
+            v.update(new MonopolyEvent(this,MonopolyEvent.EventType.INIT));
+        }
     }
-
     public Player getCurrentPlayer(){
         return this.curPlayer;
     }
@@ -87,6 +107,11 @@ public class GameModel {
     public Board getBoard(){
         return this.board;
     }
+
+    public static int getSTARTINGBALANCE() {
+        return STARTINGBALANCE;
+    }
+
     public Dice getDice(){
         return this.dice;
     }
@@ -103,6 +128,45 @@ public class GameModel {
      * Creates players and allows them to choose their own piece
      */
 //    /*
+
+    public void movePlayer(){
+        System.out.println(curPlayer.getPlayerPiece() + " is moving");
+
+        board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
+
+        int landedSquareIndex = (getDice().getRollValue() + curPlayer.getCurrentPos()) % board.getSize();
+        curPlayer.setCurrentPos(landedSquareIndex);
+
+        board.getBoard().get(landedSquareIndex).addPlayerToSquare(curPlayer);
+        System.out.println("printing player peices on square:");
+        for(Player p : board.getBoard().get(landedSquareIndex).getPlayersOnSquare()){
+            System.out.println(p.getPlayerPiece());
+        }
+        for(GameView v: this.views){
+            v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
+        }
+
+    }
+    public List<Player> getPlayers() {
+        return players;
+    }
+    public boolean update(Boolean gameRunning, boolean endTurn){
+        //Checks if current player has gone bankrupt
+        this.curPlayer.goneBankrupt();
+
+        //Check if a player has won
+        gameRunning = !win();
+        //Check which player has won
+
+
+        //Change player turn
+        if(endTurn) {
+            this.nextTurn();
+        }
+        return gameRunning;
+    }
+
+
     public void initializePlayers(){
 
 
@@ -153,21 +217,9 @@ public class GameModel {
         }
 //         */
 
-    public boolean update(Boolean gameRunning, boolean endTurn){
-        //Checks if current player has gone bankrupt
-        this.curPlayer.goneBankrupt();
-
-        //Check if a player has won
-        gameRunning = !win();
-        //Check which player has won
 
 
-        //Change player turn
-        if(endTurn) {
-            this.nextTurn();
-        }
-        return gameRunning;
-    }
+
 
 
     /**

@@ -8,6 +8,7 @@ public class SpecialSquarePanel extends JPanel{
 
     GameBoardSquare specialSquare;
 
+    JButton specialSquarePopUp;
     public SpecialSquarePanel(SpecialSquare specialSquare){
         super(new GridBagLayout());
         this.specialSquare = specialSquare;
@@ -26,7 +27,7 @@ public class SpecialSquarePanel extends JPanel{
         name.setText(specialSquare.getName());
 
         //information on specialSquare
-        JButton specialSquarePopUp = new JButton();
+        specialSquarePopUp = new JButton();
 
         specialSquarePopUp.addActionListener(e -> {
             String s = specialSquare.toString();
@@ -60,5 +61,8 @@ public class SpecialSquarePanel extends JPanel{
         c.ipadx = 40;
         c.gridheight = 3;
         this.add(specialSquarePopUp, c);
+    }
+    public JButton getSpecialSquarePopUp() {
+        return specialSquarePopUp;
     }
 }

@@ -29,10 +29,7 @@ public class Dice {
      * Rolls the die
      * @return The random number between MIN and MAX inclusive
      */
-    public int roll(){
-        rollValue = rand.nextInt((MAX - MIN) + 1) + MIN;
-        return rollValue;
-    }
+
 
     /**
      * Getter for the rollValue field
@@ -51,7 +48,7 @@ public class Dice {
      * @return The sum of all dice rolls
      *
      */
-    public int rollDice(){
+    public void rollDice(){
         int sum = 0;
         for(int i : dice){
             i = rand.nextInt((MAX - MIN) + 1) + MIN;
@@ -60,7 +57,7 @@ public class Dice {
 
         roll_double = dice[0] == dice[1];
 
-        return sum;
+        rollValue = sum;
     }
 
 
