@@ -102,7 +102,7 @@ public class GameModel {
     /**
      * Creates players and allows them to choose their own piece
      */
-//    /*
+    /*
     public void initializePlayers(){
 
 
@@ -151,7 +151,7 @@ public class GameModel {
         curPlayer = players.get(0);
 
         }
-//         */
+         */
 
     public boolean update(Boolean gameRunning, boolean endTurn){
         //Checks if current player has gone bankrupt
