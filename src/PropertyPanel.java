@@ -5,8 +5,8 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 
 public class PropertyPanel extends JPanel {
-    GameBoardSquare property;
-
+    private GameBoardSquare property;
+    private JButton propertyInfoPopUp;
     public PropertyPanel(Property property) {
         super(new GridBagLayout());
         this.property = property;
@@ -24,7 +24,7 @@ public class PropertyPanel extends JPanel {
         name.setText(property.getName());
 
         //information on property pop up
-        JButton propertyInfoPopUp = new JButton();
+         propertyInfoPopUp = new JButton();
 
         propertyInfoPopUp.addActionListener( e -> {
             String s = property.toString();
@@ -65,7 +65,12 @@ public class PropertyPanel extends JPanel {
         this.add(propertyInfoPopUp, c);
 
     }
-
+    public JButton getPropertyInfoPopUp(){
+        return this.propertyInfoPopUp;
+    }
+    public GameBoardSquare getProperty() {
+        return property;
+    }
     //testing stuff
     /*
     public static void main(String[] args) {

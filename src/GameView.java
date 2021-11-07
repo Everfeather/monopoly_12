@@ -1,4 +1,3 @@
 public interface GameView {
-
-    public void update(MonopolyEvent event);
+    void update(MonopolyEvent event);
 }

@@ -36,6 +36,7 @@ public class Property extends GameBoardSquare {
         this.buildingCost = (int) (cost * 0.55);
         this.owner = null;
         this.numBuildings = 0;
+
     }
 
     /**

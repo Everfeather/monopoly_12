@@ -9,8 +9,9 @@ public class GameFrame extends JFrame implements GameView {
 
     private BoardPanel board;
     private JPanel contentPane;
-    private ArrayList<HashMap<String, JLabel>> infoLabels;
-    private JPanel[] playerPanels;
+    //private ArrayList<HashMap<String, JLabel>> infoLabels;
+    //private JPanel[] playerPanels;
+    private PlayerPanel[] playerPanels;
     private JLabel eventView;
     private int numPlayers;
 
@@ -28,14 +29,16 @@ public class GameFrame extends JFrame implements GameView {
 
         //TODO: Create game info
         //TODO: find number of players:
-        model = new GameModel();
 
+        model = new GameModel();
         model.addGameView(this);
+
+        GameController gc = new GameController(model);
 
         //DEBUG VALUES
         this.numPlayers = 4;
-        playerPanels = new JPanel[numPlayers];
-        infoLabels = new ArrayList<>();
+        playerPanels = new PlayerPanel[numPlayers];
+        //infoLabels = new ArrayList<>();
 
         //Content pane
         contentPane = new JPanel();
@@ -62,10 +65,10 @@ public class GameFrame extends JFrame implements GameView {
             c.gridx = 1 + (i % 2);
             c.gridy = (i < 2) ? 0 : 1;
 
-            playerPanels[i] = new JPanel();
+            playerPanels[i] = new PlayerPanel();
             playerPanels[i].setBackground(bgColour);
-            playerPanels[i] .setLayout(new BoxLayout(playerPanels[i] , BoxLayout.PAGE_AXIS));
-            createInfoPanel(playerPanels[i], i);
+            //playerPanels[i].setLayout(new BoxLayout(playerPanels[i] , BoxLayout.PAGE_AXIS));
+            //createInfoPanel(playerPanels[i], i);
 
             contentPane.add(playerPanels[i], c);
 
@@ -78,16 +81,27 @@ public class GameFrame extends JFrame implements GameView {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(bgColour);
 
+        //Buttons
         JButton rollButton = new JButton("Roll!");
         rollButton.setActionCommand("roll");
+        rollButton.addActionListener(gc);
         buttonPanel.add(rollButton);
 
         JButton buyButton = new JButton("Buy");
         buyButton.setEnabled(false);
         buyButton.setActionCommand("buy");
+        buyButton.addActionListener(gc);
         buttonPanel.add(buyButton);
 
+        JButton initButton = new JButton("New Game");
+        initButton.setActionCommand("init");
+        initButton.addActionListener(gc);
+        buttonPanel.add(initButton);
+
+
+
         botPanel.add(buttonPanel);
+
 
         eventView = new JLabel("Game start!", SwingConstants.CENTER);
         botPanel.add(eventView);
@@ -103,7 +117,7 @@ public class GameFrame extends JFrame implements GameView {
 
     private void createInfoPanel(JPanel curInfo, int index) {
         HashMap<String, JLabel> playerInfo = new HashMap<String, JLabel>();
-        infoLabels.add(playerInfo);
+        //infoLabels.add(playerInfo);
 
         JLabel pieceLabel = new JLabel("Piece: ");
         curInfo.add(pieceLabel);
@@ -128,6 +142,76 @@ public class GameFrame extends JFrame implements GameView {
 
     @Override
     public void update(MonopolyEvent event) {
+        switch (event.getEvent()){
+            case BUY -> {
+
+            }
+            case INIT -> {
+
+                /*
+                int i = 0;
+                for(HashMap p: infoLabels){
+                    p.put("piece", new JLabel(String.format()))
+                }
+
+                 */
+                int i = 0;
+                //System.out.println("updating view");
+                for(PlayerPanel p: playerPanels){
+                    p.setMoney(model.getSTARTINGBALANCE());
+                    p.setPiece(model.getPlayers().get(i).getPlayerPiece().toString());
+                    p.setCurPos(model.getPlayers().get(i).getCurrentPos());
+
+                    i++;
+                }
+
+            }
+            case ROLL -> {
+                //System.out.println(model.getDice().rollValue);
+                //TODO: get player position, change button label
+                this.board.diceRollPane.setText(model.getCurrentPlayer().getPlayerPiece().toString() + " Rolled a " + model.getDice().rollValue);
+                //System.out.println("Rolled a " + model.getDice().rollValue);
+                int index = model.getCurrentPlayer().getCurrentPos();
+                
+                for (JPanel p : this.board.squares) {
+
+                    if(p instanceof SpecialSquarePanel){
+                        String s = "";
+                        //System.out.println("instance of special square");
+                        for(Player player : ((SpecialSquarePanel) p).specialSquare.getPlayersOnSquare()){
+                            System.out.println(player.getPlayerPiece());
+                            switch (player.getPlayerPiece()) {
+                                case CAR -> s += " c ";
+                                case BOAT -> s += " b ";
+                                case SHOE -> s += " s ";
+                                case HORSE -> s += " h ";
+                            }
+                        }
+                        System.out.println("Button label: " + s);
+                        ((SpecialSquarePanel) p).getSpecialSquarePopUp().setText(s);
+                    }
+                    if(p instanceof PropertyPanel){
+                        String s = "";
+                        //System.out.println("instance of property panel");
+                        for (Player player : ((PropertyPanel) p).getProperty().getPlayersOnSquare()) {
+                            System.out.println(player.getPlayerPiece());
+                            //System.out.println(player.getPlayerPiece().toString());
+                            switch (player.getPlayerPiece()) {
+                                case CAR -> s += " c ";
+                                case BOAT -> s += " b ";
+                                case SHOE -> s += " s ";
+                                case HORSE -> s += " h ";
+                            }
+                        }
+                        System.out.println("Button label: " + s);
+                        ((PropertyPanel) p).getPropertyInfoPopUp().setText(s);
+                    }
+
+                }
+                System.out.println("end of roll method");
+            }
+
 
     }
+}
 }
