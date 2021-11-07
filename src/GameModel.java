@@ -127,6 +127,7 @@ public class GameModel {
     /**
      * Creates players and allows them to choose their own piece
      */
+
 //    /*
 
     public void movePlayer(){
@@ -167,6 +168,9 @@ public class GameModel {
         return gameRunning;
     }
 
+
+
+    /*
 
     public void initializePlayers(){
 
@@ -216,7 +220,7 @@ public class GameModel {
         curPlayer = players.get(0);
 
         }
-//         */
+         */
 
 
 
