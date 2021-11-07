@@ -9,12 +9,13 @@ public class Board {
 	private static final int BOARDSIZE = 40;
 	/** The list of GameBoardSquare objects */
 	private List<GameBoardSquare> board;
-
+	private List<GameView> views;
 	/**
 	 * Default, only constructor. Defines board
 	 */
 	public Board(){
 		this.board = new ArrayList<>();
+		this.views = new ArrayList<>();
 		SpecialSquare emptySquare = new SpecialSquare("empty",SquareType.EMPTY);
 		Property Mediterranean_Avenue = new Property("Mediterranean Avenue",60,2,PropertyType.BROWN);
 		Property Baltic_Avenue = new Property("Baltic Avenue",60,2,PropertyType.BROWN);
@@ -112,5 +113,23 @@ public class Board {
 	public List<GameBoardSquare> getBoard() {
 		return board;
 	}
-	
+
+	public void addBoardView(GameView view){
+		views.add(view);
+	}
+
+	public void removeBoardView(GameView view){
+		views.remove(view);
+	}
+
+	public List<List<Player>> findThePlayers(){
+		List<List<Player>> playerLocations = new ArrayList<>();
+		for(GameBoardSquare bs : this.getBoard()){
+			playerLocations.add(bs.getPlayersOnSquare());
+		}
+		for(GameView v: this.views){
+			v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
+		}
+		return playerLocations;
+	}
 }

@@ -33,6 +33,7 @@ public class GameFrame extends JFrame implements GameView {
         model = new GameModel();
         model.addGameView(this);
 
+
         GameController gc = new GameController(model);
 
         //DEBUG VALUES
@@ -52,6 +53,7 @@ public class GameFrame extends JFrame implements GameView {
 
         //Adding the board
         board = new BoardPanel(model.getBoard(), model.getDice());
+        model.addGameView(board);
         c.gridx = 0;
         c.gridy = 0;
         c.gridheight = 3;
@@ -167,19 +169,30 @@ public class GameFrame extends JFrame implements GameView {
 
             }
             case ROLL -> {
+                this.board.diceRollPane.setText(model.getCurrentPlayer().getPlayerPiece().toString() + " Rolled a " + model.getDice().rollValue);
+            }/*
                 //System.out.println(model.getDice().rollValue);
                 //TODO: get player position, change button label
-                this.board.diceRollPane.setText(model.getCurrentPlayer().getPlayerPiece().toString() + " Rolled a " + model.getDice().rollValue);
                 //System.out.println("Rolled a " + model.getDice().rollValue);
                 int index = model.getCurrentPlayer().getCurrentPos();
-                
+                System.out.println("THE MODEL");
+                for(GameBoardSquare n : this.model.getBoard().getBoard()){
+                    System.out.println(n);
+                }
+                System.out.println("THE VIEW");
+                for(GameBoardSquare s : this.board.board.getBoard()){
+                    //System.out.println("Players on square: " + s.getPlayersOnSquare());
+                    System.out.println(s);
+                }
                 for (JPanel p : this.board.squares) {
-
+//                    System.out.println("panel " + p);
                     if(p instanceof SpecialSquarePanel){
+
+                        //System.out.println("SpecialSquare" + ((SpecialSquarePanel) p).getSpecialSquarePopUp());
                         String s = "";
                         //System.out.println("instance of special square");
                         for(Player player : ((SpecialSquarePanel) p).specialSquare.getPlayersOnSquare()){
-                            System.out.println(player.getPlayerPiece());
+                            //System.out.println(player.getPlayerPiece());
                             switch (player.getPlayerPiece()) {
                                 case CAR -> s += " c ";
                                 case BOAT -> s += " b ";
@@ -187,14 +200,15 @@ public class GameFrame extends JFrame implements GameView {
                                 case HORSE -> s += " h ";
                             }
                         }
-                        System.out.println("Button label: " + s);
+                        //System.out.println("Button label: " + s);
                         ((SpecialSquarePanel) p).getSpecialSquarePopUp().setText(s);
                     }
                     if(p instanceof PropertyPanel){
+                        //System.out.println("Property " + ((PropertyPanel) p).getPropertyInfoPopUp());
                         String s = "";
                         //System.out.println("instance of property panel");
                         for (Player player : ((PropertyPanel) p).getProperty().getPlayersOnSquare()) {
-                            System.out.println(player.getPlayerPiece());
+                            //System.out.println(player.getPlayerPiece());
                             //System.out.println(player.getPlayerPiece().toString());
                             switch (player.getPlayerPiece()) {
                                 case CAR -> s += " c ";
@@ -203,14 +217,14 @@ public class GameFrame extends JFrame implements GameView {
                                 case HORSE -> s += " h ";
                             }
                         }
-                        System.out.println("Button label: " + s);
+                        //System.out.println("Button label: " + s);
                         ((PropertyPanel) p).getPropertyInfoPopUp().setText(s);
                     }
 
                 }
                 System.out.println("end of roll method");
             }
-
+*/
 
     }
 }

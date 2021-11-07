@@ -5,7 +5,7 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class BoardPanel extends JPanel {
+public class BoardPanel extends JPanel implements GameView {
     Board board;
     Dice dice;
     ArrayList<JPanel> squares;
@@ -13,6 +13,7 @@ public class BoardPanel extends JPanel {
     public BoardPanel(Board board,Dice dice){
         super(new GridBagLayout());
         this.board = board;
+        board.addBoardView(this);
         this.dice = dice;
         this.squares = new ArrayList<JPanel>();
         for(int i = 0; i < board.getSize(); i++){
@@ -252,6 +253,7 @@ public class BoardPanel extends JPanel {
 
     }
 
+    /*
     public static void main(String[] args) {
         Board board = new Board();
         Dice dice = new Dice();
@@ -268,4 +270,36 @@ public class BoardPanel extends JPanel {
     }
 
 
+     */
+
+    @Override
+    public void update(MonopolyEvent event) {
+        switch (event.getEvent()){
+            case ROLL -> {
+                System.out.println("bruh");
+                int count = 0;
+                for(GameBoardSquare bs : this.board.getBoard()){
+                    String s = "";
+                    for(Player p : bs.getPlayersOnSquare()){
+                        switch (p.getPlayerPiece()) {
+                            case CAR -> s += " c ";
+                            case BOAT -> s += " b ";
+                            case SHOE -> s += " s ";
+                            case HORSE -> s += " h ";
+                        }
+
+                    }
+                    System.out.println("S is : " + s);
+                    if(this.squares.get(count) instanceof PropertyPanel){
+                        PropertyPanel square = (PropertyPanel) this.squares.get(count);
+                        square.getPropertyInfoPopUp().setText(s);
+                    }else{
+                        SpecialSquarePanel square = (SpecialSquarePanel) this.squares.get(count);
+                        square.getSpecialSquarePopUp().setText(s);
+                    }
+                    count++;
+                }
+            }
+        }
+    }
 }

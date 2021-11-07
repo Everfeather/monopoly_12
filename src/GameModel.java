@@ -138,6 +138,7 @@ public class GameModel {
         curPlayer.setCurrentPos(landedSquareIndex);
 
         board.getBoard().get(landedSquareIndex).addPlayerToSquare(curPlayer);
+        System.out.println("please dont be empty " + board.getBoard().get(landedSquareIndex).getPlayersOnSquare());
         System.out.println("printing player peices on square:");
         for(Player p : board.getBoard().get(landedSquareIndex).getPlayersOnSquare()){
             System.out.println(p.getPlayerPiece());
