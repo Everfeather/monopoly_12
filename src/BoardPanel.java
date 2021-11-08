@@ -5,9 +5,14 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class BoardPanel extends JPanel {
+public class BoardPanel extends JPanel  {
     Board board;
     Dice dice;
+
+    public ArrayList<JPanel> getSquares() {
+        return squares;
+    }
+
     ArrayList<JPanel> squares;
     JTextPane diceRollPane;
     public BoardPanel(Board board,Dice dice){
@@ -252,6 +257,7 @@ public class BoardPanel extends JPanel {
 
     }
 
+    /*
     public static void main(String[] args) {
         Board board = new Board();
         Dice dice = new Dice();
@@ -268,4 +274,5 @@ public class BoardPanel extends JPanel {
     }
 
 
+     */
 }

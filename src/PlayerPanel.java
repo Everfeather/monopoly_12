@@ -7,11 +7,21 @@ public class PlayerPanel extends JPanel {
     JLabel pieceLabel;
     JLabel moneyLabel;
     JLabel curPosLabel;
+    private Piece playerPiece;
 
+
+    public void setPlayerPiece(Piece playerPiece) {
+        this.playerPiece = playerPiece;
+    }
+
+    public Piece getPlayerPiece() {
+        return playerPiece;
+    }
 
     List<String> properties;
 
     public PlayerPanel(){
+        this.playerPiece = null;
         this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
         //HashMap<String, JLabel> playerInfo = new HashMap<String, JLabel>();
         //infoLabels.add(playerInfo);
