@@ -20,14 +20,19 @@ public class GameController implements ActionListener {
 
                 model.getDice().rollDice();
                 model.movePlayer();
-
+                //System.out.println("Dice in controller 2: " + model.getDice());
                 System.out.println(model.getCurrentPlayer().getCurrentPos());
             }
-            case "buy" -> model.getCurrentPlayer().buyProperty((Property) model.getBoard().getSquare(model.getCurrentPlayer().getCurrentPos()));
-            //TODO: add init case
+            case "buy" -> {
+                model.buyProperty((Property) model.getBoard().getSquare(model.getCurrentPlayer().getCurrentPos()));
+            }
             case "init" -> {
+
                 model.initializeGame();
                 //System.out.println("game initialized");
+            }
+            case "nextTurn" ->{
+                model.nextTurn();
             }
         }
     }

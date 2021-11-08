@@ -194,13 +194,11 @@ public class Player {
         HashMap<Property, PropertyType> properties = this.getProperties();
         if(this.getBalance() == 0){
             this.setBankrupt(true);
-            // TODO: loop through the properties owned by the curplayer and set all to null
             for(Property key: properties.keySet()){
                 key.removeOwner();
             }
             this.getProperties().clear();
             System.out.println(this.getPlayerPiece() + "is Bankrupt");
-
 
         }
     }
@@ -209,12 +207,7 @@ public class Player {
      * Buys a property
      * @param prop The property to be bought
      */
-    public void buyProperty( Property prop){
-        int val = prop.getCost();
-        this.decreaseBalance(val);
-        this.addProperty(prop);
-        prop.setOwner(this);
-    }
+
 
     /**
      * Pays rent
@@ -222,14 +215,15 @@ public class Player {
      * @param property The property whose rent will be paid
      */
     public void payRent(Player payee,Property property){
-        int cost = property.getCost();
-
-        if(this.getBalance() >= cost){
-            this.decreaseBalance(cost);
-            payee.increaseBalance(cost);
+        //testing val
+//        int rent = property.getBuildingCost();
+        int rent = property.getRent();
+        if(this.getBalance() >= rent){
+            this.decreaseBalance(rent);
+            payee.increaseBalance(rent);
         }else{
             payee.increaseBalance(this.getBalance());
-            this.decreaseBalance(cost);
+            this.decreaseBalance(this.getBalance());
             System.out.println(String.format("%s cannot afford rent, %s has gone bankrupt!",this.getPlayerPiece(),this.getPlayerPiece()));
             this.setBankrupt(true);
         }

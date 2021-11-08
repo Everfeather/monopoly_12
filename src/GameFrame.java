@@ -8,7 +8,10 @@ import java.util.Map;
 public class GameFrame extends JFrame implements GameView {
 
 
-
+    private int ROLL = 0;
+    private int NEXT_TURN = 1;
+    private int BUY = 2;
+    private int NEW_GAME = 3;
     private BoardPanel board;
     private JPanel contentPane;
     //private ArrayList<HashMap<String, JLabel>> infoLabels;
@@ -16,7 +19,7 @@ public class GameFrame extends JFrame implements GameView {
     private PlayerPanel[] playerPanels;
     private JLabel eventView;
     private int numPlayers;
-
+    private ArrayList<JButton> buttons;
     GameModel model;
 
     /** Font for header */
@@ -28,7 +31,7 @@ public class GameFrame extends JFrame implements GameView {
         super("MONOPOLY GAME TIME");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1080,720);
-
+        this.buttons = new ArrayList<JButton>();
         //TODO: Create game info
         //TODO: find number of players:
 
@@ -85,29 +88,40 @@ public class GameFrame extends JFrame implements GameView {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(bgColour);
 
+
+
         //Buttons
         JButton rollButton = new JButton("Roll!");
         rollButton.setActionCommand("roll");
         rollButton.addActionListener(gc);
         buttonPanel.add(rollButton);
+        buttons.add(rollButton);
+
+        JButton nextTurnButton = new JButton("next turn");
+        nextTurnButton.setActionCommand("nextTurn");
+        nextTurnButton.addActionListener(gc);
+        buttonPanel.add(nextTurnButton);
+        buttons.add(nextTurnButton);
 
         JButton buyButton = new JButton("Buy");
         buyButton.setEnabled(false);
         buyButton.setActionCommand("buy");
         buyButton.addActionListener(gc);
         buttonPanel.add(buyButton);
+        buttons.add(buyButton);
 
-        JButton initButton = new JButton("New Game");
+        JButton initButton = new JButton("Start Game");
         initButton.setActionCommand("init");
         initButton.addActionListener(gc);
         buttonPanel.add(initButton);
+        buttons.add(initButton);
 
 
 
         botPanel.add(buttonPanel);
 
 
-        eventView = new JLabel("Game start!", SwingConstants.CENTER);
+        eventView = new JLabel("Welcome to monopoly.", SwingConstants.CENTER);
         botPanel.add(eventView);
 
         c.gridy = 2;
@@ -148,7 +162,43 @@ public class GameFrame extends JFrame implements GameView {
     public void update(MonopolyEvent event) {
         switch (event.getEvent()){
             case BUY -> {
+                Player curP = model.getCurrentPlayer();
+                for(PlayerPanel p : playerPanels){
+                    if(p.getPlayerPiece() == model.getCurrentPlayer().getPlayerPiece()){
+                        p.setMoney(curP.getBalance());
+                    }
+                }
+                //find panel player is on
+                //get the propertyPopUpText
+                //edit it so the player owner is updated
 
+                JPanel panel = this.getBoardPanel().getSquares().get(curP.getCurrentPos());
+                if (panel instanceof PropertyPanel) {
+                    ((PropertyPanel) panel).setPropertyDescription(model.getBoard().getBoard().get(curP.getCurrentPos()).toString());
+                }
+                buttons.get(BUY).setEnabled(false);
+                eventView.setText(curP.getPlayerPiece() + " bought " + model.getBoard().getBoard().get(curP.getCurrentPos()).getName());
+            }
+
+            case NEXT ->{
+                for(JButton b : buttons){
+                    b.setEnabled(true);
+                }
+                buttons.get(NEW_GAME).setEnabled(false);
+                buttons.get(BUY).setEnabled(false);
+
+                eventView.setText(model.getCurrentPlayer().getPlayerPiece() + "'s turn");
+
+
+                buttons.get(NEXT_TURN).setEnabled(false);
+                if(model.getGameOver()){
+                    eventView.setText(model.getCurrentPlayer().getPlayerPiece() + " has Won!");
+                    for(JButton b: buttons){
+                        b.setEnabled(false);
+                    }
+                    JOptionPane.showMessageDialog(null, model.getCurrentPlayer().getPlayerPiece() + " has Won!");
+                    this.dispose();
+                }
             }
             case INIT -> {
 
@@ -164,17 +214,32 @@ public class GameFrame extends JFrame implements GameView {
                 for(PlayerPanel p: playerPanels){
                     p.setMoney(model.getSTARTINGBALANCE());
                     p.setPiece(model.getPlayers().get(i).getPlayerPiece().toString());
+                    p.setPlayerPiece(model.getPlayers().get(i).getPlayerPiece());
                     p.setCurPos(model.getPlayers().get(i).getCurrentPos());
 
                     i++;
                 }
-
+                for(JButton b : buttons){
+                    b.setEnabled(true);
+                }
+                eventView.setText(model.getCurrentPlayer().getPlayerPiece() + "'s turn");
+                buttons.get(NEXT_TURN).setEnabled(false);
+                buttons.get(BUY).setEnabled(false);
+                buttons.get(NEW_GAME).setEnabled(false);
             }
+
             case ROLL -> {
-                this.board.diceRollPane.setText(model.getCurrentPlayer().getPlayerPiece().toString() + " Rolled a " + model.getDice().rollValue);
-                System.out.println("bruh");
+                //disables next turn button
+                buttons.get(BUY).setEnabled(true);
+                //System.out.println("dice 1: " + this.model.getDice());
+                Player curP = model.getCurrentPlayer();
+                for(PlayerPanel p : playerPanels){
+                    if(p.getPlayerPiece() == model.getCurrentPlayer().getPlayerPiece()){
+                        p.setCurPos(curP.getCurrentPos());
+                    }
+                }
+                this.board.diceRollPane.setText(model.getCurrentPlayer().getPlayerPiece().toString() + " Rolled: " + model.getDice().rollValue);
                 int count = 0;
-                System.out.println("board 2: " + this.board);
                 for(GameBoardSquare bs : this.model.getBoard().getBoard()){
                     String s = "";
                     for(Player p : bs.getPlayersOnSquare()){
@@ -186,7 +251,6 @@ public class GameFrame extends JFrame implements GameView {
                         }
 
                     }
-                    System.out.println("S is : " + s);
                     if(this.getBoardPanel().getSquares().get(count) instanceof PropertyPanel){
                         PropertyPanel square = (PropertyPanel) this.getBoardPanel().getSquares().get(count);
                         square.getPropertyInfoPopUp().setText(s);
@@ -196,11 +260,38 @@ public class GameFrame extends JFrame implements GameView {
                     }
                     count++;
                 }
+                if(model.getDice().roll_double){
+                    this.board.diceRollPane.setText(model.getCurrentPlayer().getPlayerPiece().toString() + " Rolled: " + model.getDice().rollValue + ". Nice, doubles!");
+                    //System.out.println(model.getDice().getDiceValues()[0] + " " + model.getDice().getDiceValues()[1]);
+                }else{
+                    System.out.println("No doubles ):");
+                    buttons.get(ROLL).setEnabled(false);
+                    buttons.get(NEXT_TURN).setEnabled(true);
+                }
+                eventView.setText(curP.getPlayerPiece() + " landed on " + model.getBoard().getBoard().get(curP.getCurrentPos()).getName());
+                if(!(model.getBoard().getBoard().get(curP.getCurrentPos()) instanceof SpecialSquare)){
+                    if(((Property)model.getBoard().getBoard().get(curP.getCurrentPos())).getOwner() != null){
+                        buttons.get(BUY).setEnabled(false);
+                        for(PlayerPanel p : playerPanels){
+                            if(p.getPlayerPiece() == model.getCurrentPlayer().getPlayerPiece()){
+                                p.setMoney(curP.getBalance());
+                            }
+                            if(p.getPlayerPiece() == ((Property)model.getBoard().getBoard().get(curP.getCurrentPos())).getOwner().getPlayerPiece()){
+                                p.setMoney(((Property)model.getBoard().getBoard().get(curP.getCurrentPos())).getOwner().getBalance());
+                            }
+                        }
+                    }else{
+                        if(curP.getBalance() < ((Property)model.getBoard().getBoard().get(curP.getCurrentPos())).getCost()){
+                            buttons.get(BUY).setEnabled(false);
+                        }
+                    }
+                }else{
+                    buttons.get(BUY).setEnabled(false);
+                }
             }
 
     }
 }
-
     public BoardPanel getBoardPanel() {
         return board;
     }

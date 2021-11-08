@@ -6,7 +6,7 @@ public class MonopolyEvent extends EventObject {
     private EventType type;
 
     public enum EventType {
-        INIT, UPDATE, BUY, ROLL
+        INIT, NEXT, BUY, ROLL
     };
 
     /**
@@ -15,17 +15,8 @@ public class MonopolyEvent extends EventObject {
      * @param source the object on which the Event initially occurred
      * @throws IllegalArgumentException if source is null
      */
-    public MonopolyEvent(GameModel source, Player player, EventType type) {
-        super(source);
-        this.player = player;
-        this.type = type;
-    }
     //event when no specific player is required
     public MonopolyEvent(GameModel source, EventType type) {
-        super(source);
-        this.type = type;
-    }
-    public MonopolyEvent(Board source, EventType type) {
         super(source);
         this.type = type;
     }
