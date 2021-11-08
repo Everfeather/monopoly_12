@@ -6,18 +6,14 @@ import java.util.Random;
 public class Dice {
 
     /** The maximum value a die can roll */
-    static final int MAX = 6;
+    private static final int MAX = 6;
     /** The minimum a die can roll */
-    static final int MIN = 1;
+    private static final int MIN = 1;
     /** The value of the roll */
-    int rollValue;
+    private int rollValue;
     /** Random number generator */
-    Random rand;
-    boolean roll_double = false;
-
-    public int[] getDiceValues() {
-        return dice;
-    }
+    private Random rand;
+    private boolean roll_double = false;
 
     /** Contains the dice to be used */
     private int[] dice;
@@ -48,7 +44,7 @@ public class Dice {
         this.rollValue = rollValue;
     }
 
-    public boolean checkDouble(){
+    public boolean getRollDouble(){
         return roll_double;
     }
 
@@ -68,6 +64,10 @@ public class Dice {
         roll_double = dice[0] == dice[1];
 
         rollValue = sum;
+    }
+
+    public int[] getDiceValues() {
+        return dice;
     }
 
 

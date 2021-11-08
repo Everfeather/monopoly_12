@@ -4,11 +4,11 @@ import java.util.List;
 
 public class PlayerPanel extends JPanel {
 
-    JLabel pieceLabel;
-    JLabel moneyLabel;
-    JLabel curPosLabel;
+    private JLabel pieceLabel;
+    private JLabel moneyLabel;
+    private JLabel curPosLabel;
     private Piece playerPiece;
-
+    private List<String> properties;
 
     public void setPlayerPiece(Piece playerPiece) {
         this.playerPiece = playerPiece;
@@ -17,8 +17,6 @@ public class PlayerPanel extends JPanel {
     public Piece getPlayerPiece() {
         return playerPiece;
     }
-
-    List<String> properties;
 
     public PlayerPanel(){
         this.playerPiece = null;

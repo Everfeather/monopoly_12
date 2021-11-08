@@ -21,10 +21,6 @@ public class MonopolyEvent extends EventObject {
         this.type = type;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
     public EventType getEvent(){
         return this.type;
     }

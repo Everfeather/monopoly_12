@@ -13,6 +13,7 @@ public class PropertyPanel extends JPanel {
     public void setPropertyDescription(String propertyDescription) {
         this.propertyDescription = propertyDescription;
     }
+
     public PropertyPanel(Property property) {
         super(new GridBagLayout());
         this.property = property;

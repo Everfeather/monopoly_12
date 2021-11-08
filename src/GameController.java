@@ -3,7 +3,7 @@ import java.awt.event.ActionListener;
 
 public class GameController implements ActionListener {
 
-    GameModel model;
+    private GameModel model;
 
     public GameController(GameModel model){
         this.model = model;

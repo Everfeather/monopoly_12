@@ -13,8 +13,6 @@ public class GameModel {
 
     /** Starting balance of the players */
     private static final int STARTINGBALANCE = 1500;
-    /** Scanner to allow input from terminal */
-    private Scanner in;
     /** Counter to help decide player turn */
     private int counter = 0;
     /** Contains the board of the game */
@@ -37,7 +35,6 @@ public class GameModel {
      */
     public GameModel(){
         dice = new Dice();
-        in = new Scanner(System.in);
         players = new ArrayList<>();
         board = new Board();
         this.views = new ArrayList<>();
@@ -47,7 +44,6 @@ public class GameModel {
     public void initializeGame(){
         System.out.println("initializeGame called");
         dice = new Dice();
-        in = new Scanner(System.in);
         players = new ArrayList<>();
         board = new Board();
         List<Piece> availablePieces = new ArrayList<>();

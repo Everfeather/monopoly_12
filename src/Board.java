@@ -5,8 +5,7 @@ import java.util.List;
  * @author Daniel Wang
  */
 public class Board {
-	/** Maximum number of squares on the board */
-	private static final int BOARDSIZE = 40;
+
 	/** The list of GameBoardSquare objects */
 	private List<GameBoardSquare> board;
 	/**

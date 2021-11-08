@@ -6,16 +6,13 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class BoardPanel extends JPanel  {
-    Board board;
-    Dice dice;
+    private Board board;
+    private Dice dice;
 
-    public ArrayList<JPanel> getSquares() {
-        return squares;
-    }
+    private ArrayList<JPanel> squares;
+    private JTextPane diceRollPane;
 
-    ArrayList<JPanel> squares;
-    JTextPane diceRollPane;
-    public BoardPanel(Board board,Dice dice){
+    public BoardPanel(Board board, Dice dice){
         super(new GridBagLayout());
         this.board = board;
         this.dice = dice;
@@ -255,6 +252,14 @@ public class BoardPanel extends JPanel  {
         this.setSize(600,600);
 
 
+    }
+
+    public JTextPane getDiceRollPane() {
+        return diceRollPane;
+    }
+
+    public ArrayList<JPanel> getSquares() {
+        return squares;
     }
 
     /*

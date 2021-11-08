@@ -8,22 +8,18 @@ import java.util.Map;
 public class GameFrame extends JFrame implements GameView {
 
 
-    private int ROLL = 0;
-    private int NEXT_TURN = 1;
-    private int BUY = 2;
-    private int NEW_GAME = 3;
+    private final int ROLL = 0;
+    private final int NEXT_TURN = 1;
+    private final int BUY = 2;
+    private final int NEW_GAME = 3;
     private BoardPanel board;
     private JPanel contentPane;
-    //private ArrayList<HashMap<String, JLabel>> infoLabels;
-    //private JPanel[] playerPanels;
     private PlayerPanel[] playerPanels;
     private JLabel eventView;
     private int numPlayers;
     private ArrayList<JButton> buttons;
-    GameModel model;
+    private GameModel model;
 
-    /** Font for header */
-    private static final Font HEADERFONT = new Font("Tahoma", Font.BOLD, 22);
     private static final Color bgColour = Color.PINK;
 
 
@@ -133,27 +129,6 @@ public class GameFrame extends JFrame implements GameView {
         this.setVisible(true);
     }
 
-    private void createInfoPanel(JPanel curInfo, int index) {
-        HashMap<String, JLabel> playerInfo = new HashMap<String, JLabel>();
-        //infoLabels.add(playerInfo);
-
-        JLabel pieceLabel = new JLabel("Piece: ");
-        curInfo.add(pieceLabel);
-        playerInfo.put("piece", pieceLabel);
-
-        JLabel moneyLabel = new JLabel("Money: ");
-        curInfo.add(moneyLabel);
-        playerInfo.put("money", moneyLabel);
-
-        JLabel curPosLabel = new JLabel("Current Position: ");
-        curInfo.add(curPosLabel);
-        playerInfo.put("curPos", curPosLabel);
-
-        JLabel propertyLabel = new JLabel("<html>Properties:<br/>");
-        curInfo.add(propertyLabel);
-        playerInfo.put("property", propertyLabel);
-    }
-
     public static void main(String[] args){
         new GameFrame();
     }
@@ -239,7 +214,7 @@ public class GameFrame extends JFrame implements GameView {
                         p.setCurPos(curP.getCurrentPos());
                     }
                 }
-                this.board.diceRollPane.setText(model.getCurrentPlayer().getPlayerPiece().toString() + " Rolled: " + model.getDice().rollValue);
+                this.board.getDiceRollPane().setText(model.getCurrentPlayer().getPlayerPiece().toString() + " Rolled: " + model.getDice().getRollValue());
                 int count = 0;
                 for(GameBoardSquare bs : this.model.getBoard().getBoard()){
                     String s = "";
@@ -261,8 +236,8 @@ public class GameFrame extends JFrame implements GameView {
                     }
                     count++;
                 }
-                if(model.getDice().roll_double){
-                    this.board.diceRollPane.setText(model.getCurrentPlayer().getPlayerPiece().toString() + " Rolled: " + model.getDice().rollValue + ". Nice, doubles!");
+                if(model.getDice().getRollDouble()){
+                    this.board.getDiceRollPane().setText(model.getCurrentPlayer().getPlayerPiece().toString() + " Rolled: " + model.getDice().getRollValue() + ". Nice, doubles!");
                     //System.out.println(model.getDice().getDiceValues()[0] + " " + model.getDice().getDiceValues()[1]);
                 }else{
                     System.out.println("No doubles ):");
