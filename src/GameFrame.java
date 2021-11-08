@@ -201,7 +201,6 @@ public class GameFrame extends JFrame implements GameView {
                 }
             }
             case INIT -> {
-
                 /*
                 int i = 0;
                 for(HashMap p: infoLabels){
@@ -211,12 +210,13 @@ public class GameFrame extends JFrame implements GameView {
                  */
                 int i = 0;
                 //System.out.println("updating view");
+
                 for(PlayerPanel p: playerPanels){
+
                     p.setMoney(model.getSTARTINGBALANCE());
                     p.setPiece(model.getPlayers().get(i).getPlayerPiece().toString());
                     p.setPlayerPiece(model.getPlayers().get(i).getPlayerPiece());
                     p.setCurPos(model.getPlayers().get(i).getCurrentPos());
-
                     i++;
                 }
                 for(JButton b : buttons){
@@ -226,6 +226,7 @@ public class GameFrame extends JFrame implements GameView {
                 buttons.get(NEXT_TURN).setEnabled(false);
                 buttons.get(BUY).setEnabled(false);
                 buttons.get(NEW_GAME).setEnabled(false);
+                System.out.println(6);
             }
 
             case ROLL -> {

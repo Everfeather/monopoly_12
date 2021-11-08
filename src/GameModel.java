@@ -33,7 +33,7 @@ public class GameModel {
     /** List of views*/
     private List<GameView> views;
     /**
-     * Only and default constructor for Gamecontroller
+     * Only and default constructor for GameModel
      */
     public GameModel(){
         dice = new Dice();
