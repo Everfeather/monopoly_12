@@ -55,7 +55,7 @@ public class GameModel {
             Player addedPlayer = new Player(availablePieces.remove(0), STARTINGBALANCE);
             players.add(addedPlayer);
         }
-        curPlayer = players.get(0);
+        //curPlayer = players.get(0);
         if(views.size() > 0){
             System.out.println("views not empty");
         }else{
