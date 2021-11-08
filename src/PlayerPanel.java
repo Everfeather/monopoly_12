@@ -4,14 +4,22 @@ import java.util.List;
 
 public class PlayerPanel extends JPanel {
 
-    JLabel pieceLabel;
-    JLabel moneyLabel;
-    JLabel curPosLabel;
+    private JLabel pieceLabel;
+    private JLabel moneyLabel;
+    private JLabel curPosLabel;
+    private Piece playerPiece;
+    private List<String> properties;
 
+    public void setPlayerPiece(Piece playerPiece) {
+        this.playerPiece = playerPiece;
+    }
 
-    List<String> properties;
+    public Piece getPlayerPiece() {
+        return playerPiece;
+    }
 
     public PlayerPanel(){
+        this.playerPiece = null;
         this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
         //HashMap<String, JLabel> playerInfo = new HashMap<String, JLabel>();
         //infoLabels.add(playerInfo);

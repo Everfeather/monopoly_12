@@ -7,11 +7,18 @@ import java.awt.*;
 public class PropertyPanel extends JPanel {
     private GameBoardSquare property;
     private JButton propertyInfoPopUp;
+    private String propertyDescription;
+
+
+    public void setPropertyDescription(String propertyDescription) {
+        this.propertyDescription = propertyDescription;
+    }
+
     public PropertyPanel(Property property) {
         super(new GridBagLayout());
         this.property = property;
         GridBagConstraints c = new GridBagConstraints();
-
+        propertyDescription = property.toString();
         //name
         JTextPane name = new JTextPane();
         //centering name text
@@ -27,8 +34,8 @@ public class PropertyPanel extends JPanel {
          propertyInfoPopUp = new JButton();
 
         propertyInfoPopUp.addActionListener( e -> {
-            String s = property.toString();
-            JTextArea info = new JTextArea(s);
+
+            JTextArea info = new JTextArea(propertyDescription);
             info.setEditable(false);
             JFrame infoFrame = new JFrame();
             infoFrame.setLocationRelativeTo(null);

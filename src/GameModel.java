@@ -13,8 +13,6 @@ public class GameModel {
 
     /** Starting balance of the players */
     private static final int STARTINGBALANCE = 1500;
-    /** Scanner to allow input from terminal */
-    private Scanner in;
     /** Counter to help decide player turn */
     private int counter = 0;
     /** Contains the board of the game */
@@ -22,30 +20,30 @@ public class GameModel {
     /** Contains the dice to be used */
     private Dice dice;
 
+    private Boolean gameOver;
 
 
     /** List of players */
     private List<Player> players;
+
     /** The current player*/
     private Player curPlayer;
     /** List of views*/
     private List<GameView> views;
-
     /**
-     * Only and default constructor for Gamecontroller
+     * Only and default constructor for GameModel
      */
     public GameModel(){
         dice = new Dice();
-        in = new Scanner(System.in);
         players = new ArrayList<>();
         board = new Board();
         this.views = new ArrayList<>();
+        this.gameOver = false;
     }
 
     public void initializeGame(){
         System.out.println("initializeGame called");
         dice = new Dice();
-        in = new Scanner(System.in);
         players = new ArrayList<>();
         board = new Board();
         List<Piece> availablePieces = new ArrayList<>();
@@ -68,8 +66,12 @@ public class GameModel {
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.INIT));
         }
     }
+
     public Player getCurrentPlayer(){
         return this.curPlayer;
+    }
+    public Boolean getGameOver() {
+        return gameOver;
     }
     /**
      * Sets current player to the next player in order to change the turn
@@ -84,6 +86,10 @@ public class GameModel {
                 canPlay = true;
             }
         }
+        win();
+        for(GameView v: this.views){
+            v.update(new MonopolyEvent(this,MonopolyEvent.EventType.NEXT));
+        }
 
     }
 
@@ -91,7 +97,7 @@ public class GameModel {
      * Checks if a player wins
      * @return True if the current player has won, false otherwise
      */
-    public boolean win(){
+    public void win(){
         int bankruptPLayers = 0;
         for (Player p : players) {
             if (!curPlayer.isBankrupt()  && p.isBankrupt()) {
@@ -100,10 +106,10 @@ public class GameModel {
         }
 
         if (bankruptPLayers == players.size() - 1){
-            return true;
+            gameOver = true;
         }
-        return false;
     }
+
     public Board getBoard(){
         return this.board;
     }
@@ -129,21 +135,53 @@ public class GameModel {
      */
 
 //    /*
+    public void buyProperty( Property prop){
+        int val = prop.getCost();
+        if(prop.getOwner() == null && curPlayer.getBalance() > val){
+            curPlayer.decreaseBalance(val);
+            curPlayer.addProperty(prop);
+            prop.setOwner(curPlayer);
+        }
+
+
+        for(GameView v: this.views){
+            v.update(new MonopolyEvent(this,MonopolyEvent.EventType.BUY));
+        }
+
+    }
 
     public void movePlayer(){
+
         System.out.println(curPlayer.getPlayerPiece() + " is moving");
         System.out.println("board 1: " + this.board);
         board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
 
         int landedSquareIndex = (getDice().getRollValue() + curPlayer.getCurrentPos()) % board.getSize();
+        GameBoardSquare curSquare = board.getBoard().get(landedSquareIndex);
         curPlayer.setCurrentPos(landedSquareIndex);
 
-        board.getBoard().get(landedSquareIndex).addPlayerToSquare(curPlayer);
-        System.out.println("please don't be empty " + board.getBoard().get(landedSquareIndex).getPlayersOnSquare());
+        curSquare.addPlayerToSquare(curPlayer);
+        System.out.println("please don't be empty " + curSquare.getPlayersOnSquare());
         System.out.println("printing player pieces on square:");
-        for(Player p : board.getBoard().get(landedSquareIndex).getPlayersOnSquare()){
+
+        for(Player p : curSquare.getPlayersOnSquare()){
             System.out.println(p.getPlayerPiece());
         }
+
+        if(!(board.getBoard().get(landedSquareIndex) instanceof SpecialSquare)){
+            if(((Property) curSquare).getOwner() != null){
+                if(((Property) curSquare).getOwner().getPlayerPiece() != curPlayer.getPlayerPiece()) {
+                    curPlayer.payRent(((Property) curSquare).getOwner(), (Property) curSquare);
+                    System.out.println("Owner is :" + ((Property) curSquare).getOwner());
+                }
+            }
+        }
+        if(curPlayer.getBalance() <= 0){
+            curPlayer.goneBankrupt();
+            board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
+        }
+
+
         for(GameView v: this.views){
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
         }
@@ -152,21 +190,7 @@ public class GameModel {
     public List<Player> getPlayers() {
         return players;
     }
-    public boolean update(Boolean gameRunning, boolean endTurn){
-        //Checks if current player has gone bankrupt
-        this.curPlayer.goneBankrupt();
 
-        //Check if a player has won
-        gameRunning = !win();
-        //Check which player has won
-
-
-        //Change player turn
-        if(endTurn) {
-            this.nextTurn();
-        }
-        return gameRunning;
-    }
 
 
 

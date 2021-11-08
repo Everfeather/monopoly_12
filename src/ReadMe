@@ -35,6 +35,12 @@ Milestone 1:
 As this is the first milestone we have designed and implemented the entirety of the current code base for this
 milestone. We have written all files and produced a working CLI game.
 
+Milestone 2:
+In this milestone we needed to add a GUI to play the game with. We did this using java swing. On the left we have the
+gameBoard and on the right are the player panels along with the action buttons, roll, buy, init game and next turn. We
+wrote all files in java and have produced a working gui. One known issue is sizing and colouring doesnt function well on
+Mac. This is a known Java Swing issue.
+
 
 
 
