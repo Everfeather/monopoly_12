@@ -1,9 +1,11 @@
+import org.junit.jupiter.api.BeforeAll;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameModelTest {
 
-    @org.junit.Before
-    public void setUp() throws Exception {
+    @BeforeAll
+    public static void setUp() throws Exception {
     }
 
     @org.junit.jupiter.api.Test
@@ -30,5 +32,17 @@ class GameModelTest {
 
     @org.junit.jupiter.api.Test
     void movePlayer() {
+        GameModel model = new GameModel();
+        model.initializeGame();
+
+        model.getDice().rollDice();
+        int moveVal = model.getDice().getRollValue();
+        model.movePlayer();
+        assertEquals(moveVal, model.getCurrentPlayer().getCurrentPos(), "Player not moving correctly");
+
+        model.getDice().setRollValue(40);
+        model.movePlayer();
+        assertEquals(moveVal, model.getCurrentPlayer().getCurrentPos(), "Player not crossing go correctly");
+
     }
 }

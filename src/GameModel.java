@@ -113,6 +113,7 @@ public class GameModel {
             gameOver = true;
         }
     }
+
     public Board getBoard(){
         return this.board;
     }

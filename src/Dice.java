@@ -44,6 +44,10 @@ public class Dice {
         return rollValue;
     }
 
+    public void setRollValue(int rollValue){
+        this.rollValue = rollValue;
+    }
+
     public boolean checkDouble(){
         return roll_double;
     }
