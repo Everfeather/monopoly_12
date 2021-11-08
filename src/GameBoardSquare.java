@@ -2,16 +2,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Represents a square on the monopoly board
- * @author Daniel Wang
+ * @author Team 12
+ * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
  */
 public abstract class GameBoardSquare{
+
+	/** The type of square */
 	private SquareType type;
+	/** The name of the square */
 	private String name;
+	/** The players currently on the square */
 	private List<Player> playersOnSquare;
 
-
 	/**
-	 * Constructor for GameBoardSquare
+	 * Only constructor
+	 * @param type The type of square
+	 * @param name The name of the square
 	 */
 	public GameBoardSquare(SquareType type, String name){
 		this.type = type;
@@ -20,40 +26,38 @@ public abstract class GameBoardSquare{
 	}
 
 	/**
-	 * Add Player p on the Arraylist of playersOnSquare
+	 * Adds a player to the square
+	 * @param p the player to add
 	 */
 	public void addPlayerToSquare(Player p){
 		playersOnSquare.add(p);
 	}
 
 	/**
-	 * Remove Player p on the Arraylist of playersOnSquare
+	 * Removes a player from the square
+	 * @param p the player to remove
 	 */
-
 	public void removePlayerFromSquare(Player p){
 		playersOnSquare.remove(p);
 	}
 
 	/**
-	 * Returns list of Players currently on square
-	 * @return the list of Players
+	 * Getter for Players on square method
+	 * @return The list of players on the square
 	 */
 	public List<Player> getPlayersOnSquare() {
 		return playersOnSquare;
 	}
 
 	/**
-	 * Returns the name of the GameBoardSquare
-	 * @return string name of the GameBoardSquare
+	 * Getter for the name of the square
+	 * @return
 	 */
 	public String getName(){
 		return this.name;
 	}
 
-	/**
-	 * Returns the description of the GameBoardSquare
-	 * @return string description of GameBoardSquare
-	 */
+	@Override
 	public String toString(){
 		return this.name + "\nType: " + this.type;
 

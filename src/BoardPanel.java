@@ -5,15 +5,27 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * The board view
+ * @author Team 12
+ * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
+ */
 public class BoardPanel extends JPanel  {
+
+    /** The board the view represents */
     private Board board;
+    /** The dice of the board */
     private Dice dice;
 
+    /** The squares on the board */
     private ArrayList<JPanel> squares;
+    /** The panel containing the dice roll */
     private JTextPane diceRollPane;
 
     /**
-     * Constructor for Board Panel, setting up 40 squares on the board panel
+     * Only constructor
+     * @param board The board to represent
+     * @param dice The dice to be used by the board/model
      */
     public BoardPanel(Board board, Dice dice){
         super(new GridBagLayout());
@@ -258,16 +270,16 @@ public class BoardPanel extends JPanel  {
     }
 
     /**
-     * Returns the diceRollPanel
-     * @return the diceRollPanel
+     * getter for the dice roll panel
+     * @return The JTextPane containing the dice roll message
      */
     public JTextPane getDiceRollPane() {
         return diceRollPane;
     }
 
     /**
-     * Returns all the squares on the boardPanel
-     * @return Arraylist of JPanel Squares
+     * getter method for the squares on the board
+     * @return The squares on the board
      */
     public ArrayList<JPanel> getSquares() {
         return squares;

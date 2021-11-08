@@ -1,10 +1,20 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The controller of the game
+ * @author Team 12
+ * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
+ */
 public class GameController implements ActionListener {
 
+    /** The model that runs the game */
     private GameModel model;
 
+    /**
+     * Default (and only) constructor
+     * @param model the model that will run the game
+     */
     public GameController(GameModel model){
         this.model = model;
     }

@@ -42,8 +42,7 @@ public class GameModel {
     }
 
     /**
-     * Initializes the game by intializing dice, an arraylist of 4 players, and board.
-     * Sets each player with starting balance of 1500
+     * Initializes the game
      */
     public void initializeGame(){
         System.out.println("initializeGame called");
@@ -59,7 +58,7 @@ public class GameModel {
             Player addedPlayer = new Player(availablePieces.remove(0), STARTINGBALANCE);
             players.add(addedPlayer);
         }
-        //curPlayer = players.get(0);
+        curPlayer = players.get(0);
         if(views.size() > 0){
             System.out.println("views not empty");
         }else{
@@ -71,12 +70,22 @@ public class GameModel {
         }
     }
 
+    /**
+     * Getter method for the current player
+     * @return The current player
+     */
     public Player getCurrentPlayer(){
         return this.curPlayer;
     }
+
+    /**
+     * The getter method for the gameOver field
+     * @return True if the game is over, false otherwise
+     */
     public Boolean getGameOver() {
         return gameOver;
     }
+
     /**
      * Sets current player to the next player in order to change the turn
      */
@@ -115,46 +124,49 @@ public class GameModel {
     }
 
     /**
-     * Returns the board
-     * @return the current Board object
+     * Getter method for the board
+     * @return The board for the game
      */
     public Board getBoard(){
         return this.board;
     }
 
-
     /**
-     * Returns the starting balance
-     * @return the static starting balance shared by all player objects
+     * Getter method for the starting balance
+     * @return The starting balance of the players
      */
     public static int getSTARTINGBALANCE() {
         return STARTINGBALANCE;
     }
 
     /**
-     * Returns the dice
-     * @return the current Dice Object
+     * Getter method for the dice used in the game
+     * @return The dice object for the game
      */
     public Dice getDice(){
         return this.dice;
     }
 
     /**
-     * Addings a new GameView
+     * Adds a game view to the model
+     * @param view The view meant to represent the game
      */
     public void addGameView(GameView view){
         views.add(view);
     }
 
+    /**
+     * Removes a game view from the model
+     * @param view The view to be removed from the game
+     */
     public void removeGameView(GameView view){
         views.remove(view);
     }
 
     /**
-     * Creates players and allows them to choose their own piece
+     * Allows current player to buy a property
+     * @param prop The property the current player will buy
      */
-
-//    /*
     public void buyProperty( Property prop){
         int val = prop.getCost();
         if(prop.getOwner() == null && curPlayer.getBalance() > val){
@@ -171,7 +183,7 @@ public class GameModel {
     }
 
     /**
-     * MovePlayer by the value sum of dice roll and remove player from board if Player balance is 0
+     * Moves the player a certain number of squares
      */
     public void movePlayer(){
 
@@ -212,8 +224,8 @@ public class GameModel {
     }
 
     /**
-     * Returns list of players
-     * @return list of Player Objects
+     * Getter for the list of players
+     * @return The list of players playing the game
      */
     public List<Player> getPlayers() {
         return players;

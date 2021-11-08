@@ -5,35 +5,50 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The view that contains all GUI elements for the Monopoly game
+ * @author Team 12
+ * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
+ */
 public class GameFrame extends JFrame implements GameView {
 
-
+    /** Value for the ROLL button */
     private final int ROLL = 0;
+    /** Value for the NEXT_TURN button */
     private final int NEXT_TURN = 1;
+    /** The value for the BUY button */
     private final int BUY = 2;
+    /** The value for the NEW_GAME button */
     private final int NEW_GAME = 3;
+    /** The board view */
     private BoardPanel board;
+    /** The main content panel of the view */
     private JPanel contentPane;
+    /** The player panels containing player information */
     private PlayerPanel[] playerPanels;
+    /** The label containing messages about the game */
     private JLabel eventView;
+    /** The number of players in the game */
     private int numPlayers;
+    /** The number of buttons in the action panel*/
     private ArrayList<JButton> buttons;
+    /** The model that the view represents */
     private GameModel model;
 
+    /** The background colour of the game */
     private static final Color bgColour = Color.PINK;
 
-
+    /**
+     * The default constructor
+     */
     public GameFrame(){
         super("MONOPOLY GAME TIME");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1080,720);
         this.buttons = new ArrayList<JButton>();
-        //TODO: Create game info
-        //TODO: find number of players:
 
         model = new GameModel();
         model.addGameView(this);
-
 
         GameController gc = new GameController(model);
 
@@ -269,8 +284,13 @@ public class GameFrame extends JFrame implements GameView {
                 }
             }
 
+        }
     }
-}
+
+    /**
+     * getter method for the boardPanel
+     * @return the board that represents the game
+     */
     public BoardPanel getBoardPanel() {
         return board;
     }

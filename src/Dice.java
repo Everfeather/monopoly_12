@@ -1,7 +1,8 @@
 import java.util.Random;
 
 /** Represents a single die
- * @author Giancarlo Salvador
+ * @author Team 12
+ * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
  */
 public class Dice {
 
@@ -26,11 +27,6 @@ public class Dice {
         dice = new int[2];
     }
 
-    /**
-     * Rolls the die
-     * @return The random number between MIN and MAX inclusive
-     */
-
 
     /**
      * Getter for the rollValue field
@@ -40,10 +36,18 @@ public class Dice {
         return rollValue;
     }
 
+    /**
+     * Setter for the rollValue field
+     * @param rollValue the combined value of the 2 dice
+     */
     public void setRollValue(int rollValue){
         this.rollValue = rollValue;
     }
 
+    /**
+     * Getter for the rollDouble field
+     * @return True if both dice equal the same value, false otherwise
+     */
     public boolean getRollDouble(){
         return roll_double;
     }
@@ -67,8 +71,8 @@ public class Dice {
     }
 
     /**
-     * Returns the dice
-     * @return the current Dice Object
+     * Getter for the individual dice fields
+     * @return values of each die
      */
     public int[] getDiceValues() {
         return dice;
