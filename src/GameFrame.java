@@ -133,6 +133,9 @@ public class GameFrame extends JFrame implements GameView {
         new GameFrame();
     }
 
+    /**
+     * Update GameFrame based on event: BUY, NEXT, INIT, ROLL
+     */
     @Override
     public void update(MonopolyEvent event) {
         switch (event.getEvent()){

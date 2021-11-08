@@ -41,6 +41,10 @@ public class GameModel {
         this.gameOver = false;
     }
 
+    /**
+     * Initializes the game by intializing dice, an arraylist of 4 players, and board.
+     * Sets each player with starting balance of 1500
+     */
     public void initializeGame(){
         System.out.println("initializeGame called");
         dice = new Dice();
@@ -110,18 +114,34 @@ public class GameModel {
         }
     }
 
+    /**
+     * Returns the board
+     * @return the current Board object
+     */
     public Board getBoard(){
         return this.board;
     }
 
+
+    /**
+     * Returns the starting balance
+     * @return the static starting balance shared by all player objects
+     */
     public static int getSTARTINGBALANCE() {
         return STARTINGBALANCE;
     }
 
+    /**
+     * Returns the dice
+     * @return the current Dice Object
+     */
     public Dice getDice(){
         return this.dice;
     }
 
+    /**
+     * Addings a new GameView
+     */
     public void addGameView(GameView view){
         views.add(view);
     }
@@ -150,6 +170,9 @@ public class GameModel {
 
     }
 
+    /**
+     * MovePlayer by the value sum of dice roll and remove player from board if Player balance is 0
+     */
     public void movePlayer(){
 
         System.out.println(curPlayer.getPlayerPiece() + " is moving");
@@ -187,6 +210,11 @@ public class GameModel {
         }
 
     }
+
+    /**
+     * Returns list of players
+     * @return list of Player Objects
+     */
     public List<Player> getPlayers() {
         return players;
     }

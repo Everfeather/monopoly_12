@@ -12,6 +12,9 @@ public class BoardPanel extends JPanel  {
     private ArrayList<JPanel> squares;
     private JTextPane diceRollPane;
 
+    /**
+     * Constructor for Board Panel, setting up 40 squares on the board panel
+     */
     public BoardPanel(Board board, Dice dice){
         super(new GridBagLayout());
         this.board = board;
@@ -254,10 +257,18 @@ public class BoardPanel extends JPanel  {
 
     }
 
+    /**
+     * Returns the diceRollPanel
+     * @return the diceRollPanel
+     */
     public JTextPane getDiceRollPane() {
         return diceRollPane;
     }
 
+    /**
+     * Returns all the squares on the boardPanel
+     * @return Arraylist of JPanel Squares
+     */
     public ArrayList<JPanel> getSquares() {
         return squares;
     }

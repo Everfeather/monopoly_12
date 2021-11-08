@@ -66,6 +66,10 @@ public class Dice {
         rollValue = sum;
     }
 
+    /**
+     * Returns the dice
+     * @return the current Dice Object
+     */
     public int[] getDiceValues() {
         return dice;
     }

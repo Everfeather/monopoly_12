@@ -106,7 +106,7 @@ public class Board {
 
 	/**
 	 * Returns the size of the board
-	 * @return
+	 * @return the board size
 	 */
 	public int getSize(){
 		return board.size();
