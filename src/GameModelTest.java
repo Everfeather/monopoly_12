@@ -4,6 +4,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test cases for GameModel functions
+ */
 class GameModelTest {
 
     @BeforeAll
