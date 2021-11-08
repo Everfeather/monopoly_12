@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.BeforeAll;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameModelTest {
@@ -10,6 +12,20 @@ class GameModelTest {
 
     @org.junit.jupiter.api.Test
     void initializeGame() {
+        GameModel model = new GameModel();
+        new GameFrame();
+        model.initializeGame();
+        List<Player> players = model.getPlayers();
+        assertEquals(4, players.size());
+        for(Player p : players){
+            assertEquals(1500, p.getBalance());
+        }
+        Board board = model.getBoard();
+        assertEquals(40, board.getSize());
+        assertEquals(2, model.getDice().getDiceValues().length);
+
+
+
     }
 
     @org.junit.jupiter.api.Test
@@ -31,7 +47,8 @@ class GameModelTest {
         model.getCurrentPlayer().setBankrupt(true);
         model.nextTurn();
         model.getCurrentPlayer().setBankrupt(true);
-        model.nextTurn();model.getCurrentPlayer().setBankrupt(true);
+        model.nextTurn();
+        model.getCurrentPlayer().setBankrupt(true);
         model.nextTurn();
         model.win();
         assertEquals( true, model.getGameOver());
