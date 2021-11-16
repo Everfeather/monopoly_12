@@ -8,7 +8,7 @@ public class SpecialSquarePanel extends JPanel{
 
     GameBoardSquare specialSquare;
 
-    JButton specialSquarePopUp;
+    JButton infoButton;
     public SpecialSquarePanel(SpecialSquare specialSquare){
         super(new GridBagLayout());
         this.specialSquare = specialSquare;
@@ -27,9 +27,9 @@ public class SpecialSquarePanel extends JPanel{
         name.setText(specialSquare.getName());
 
         //information on specialSquare
-        specialSquarePopUp = new JButton();
+        infoButton = new JButton();
 
-        specialSquarePopUp.addActionListener(e -> {
+        infoButton.addActionListener(e -> {
             String s = specialSquare.toString();
             JTextArea info = new JTextArea(s);
             info.setEditable(false);
@@ -41,12 +41,12 @@ public class SpecialSquarePanel extends JPanel{
         });
 
         switch(specialSquare.getName()){
-            case "empty" -> specialSquarePopUp.setBackground(Color.GRAY);
-            case "go" -> specialSquarePopUp.setBackground(Color.pink);
-            case "goToJail" -> specialSquarePopUp.setBackground(Color.CYAN);
-            case "jail" -> specialSquarePopUp.setBackground(new Color(18, 23, 99));
-            case "freeParking" -> specialSquarePopUp.setBackground(new Color(107, 2, 2));
-            case "tax" -> specialSquarePopUp.setBackground(Color.ORANGE);
+            case "empty" -> infoButton.setBackground(Color.GRAY);
+            case "go" -> infoButton.setBackground(Color.pink);
+            case "goToJail" -> infoButton.setBackground(Color.CYAN);
+            case "jail" -> infoButton.setBackground(new Color(18, 23, 99));
+            case "freeParking" -> infoButton.setBackground(new Color(107, 2, 2));
+            case "tax" -> infoButton.setBackground(Color.ORANGE);
         }
 
         c.fill = GridBagConstraints.BOTH;
@@ -60,9 +60,9 @@ public class SpecialSquarePanel extends JPanel{
         c.ipady = 40;
         c.ipadx = 40;
         c.gridheight = 3;
-        this.add(specialSquarePopUp, c);
+        this.add(infoButton, c);
     }
-    public JButton getSpecialSquarePopUp() {
-        return specialSquarePopUp;
+    public JButton getInfoButton() {
+        return infoButton;
     }
 }
