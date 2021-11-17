@@ -306,10 +306,10 @@ public class BoardPanel extends JPanel implements GameView{
                     String s = "";
                     for(Player player : bs.getPlayersOnSquare()){
                         switch (player.getPlayerPiece()) {
-                            case CAR -> s   += "c";
-                            case BOAT -> s  += "b";
-                            case SHOE -> s  += "s";
-                            case HORSE -> s += "h";
+                            case CAR -> player.getPlayerPiece().getName(Piece.CAR);
+                            case BOAT -> player.getPlayerPiece().getName(Piece.BOAT);
+                            case SHOE -> player.getPlayerPiece().getName(Piece.SHOE);
+                            case HORSE ->  player.getPlayerPiece().getName(Piece.HORSE);
                         }
 
                     }

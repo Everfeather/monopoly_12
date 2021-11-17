@@ -7,8 +7,14 @@ import java.awt.*;
 public class SpecialSquarePanel extends JPanel{
 
     GameBoardSquare specialSquare;
-
     JButton infoButton;
+    private static final String EMPTY = "empty";
+    private static final String GO = "go";
+    private static final String GOTOJAIL = "goToJail";
+    private static final String JAIL = "jail";
+    private static final String FREEPARKING = "freeParking";
+    private static final String TAX = "tax";
+
     public SpecialSquarePanel(SpecialSquare specialSquare){
         super(new GridBagLayout());
         this.specialSquare = specialSquare;
@@ -41,12 +47,12 @@ public class SpecialSquarePanel extends JPanel{
         });
 
         switch(specialSquare.getName()){
-            case "empty" -> infoButton.setBackground(Color.GRAY);
-            case "go" -> infoButton.setBackground(Color.pink);
-            case "goToJail" -> infoButton.setBackground(Color.CYAN);
-            case "jail" -> infoButton.setBackground(new Color(18, 23, 99));
-            case "freeParking" -> infoButton.setBackground(new Color(107, 2, 2));
-            case "tax" -> infoButton.setBackground(Color.ORANGE);
+            case EMPTY -> infoButton.setBackground(Color.GRAY);
+            case GO -> infoButton.setBackground(Color.pink);
+            case GOTOJAIL -> infoButton.setBackground(Color.CYAN);
+            case JAIL -> infoButton.setBackground(new Color(18, 23, 99));
+            case FREEPARKING -> infoButton.setBackground(new Color(107, 2, 2));
+            case TAX -> infoButton.setBackground(Color.ORANGE);
         }
 
         c.fill = GridBagConstraints.BOTH;

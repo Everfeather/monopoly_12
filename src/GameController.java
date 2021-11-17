@@ -10,6 +10,10 @@ public class GameController implements ActionListener {
 
     /** The model that runs the game */
     private GameModel model;
+    private static final String ROLL = "roll";
+    private static final String BUY = "buy";
+    private static final String INIT = "init";
+    private static final String NEXT_TURN = "nextTurn";
 
     /**
      * Default (and only) constructor
@@ -25,7 +29,7 @@ public class GameController implements ActionListener {
 
         System.out.println("Button pressed!");
         switch(actionCommand){
-            case "roll" -> {
+            case ROLL -> {
                 System.out.println(model.getCurrentPlayer().getPlayerPiece().toString() + " is Rolling");
 
                 model.getDice().rollDice();
@@ -33,15 +37,15 @@ public class GameController implements ActionListener {
                 //System.out.println("Dice in controller 2: " + model.getDice());
                 System.out.println(model.getCurrentPlayer().getCurrentPos());
             }
-            case "buy" -> {
+            case BUY -> {
                 model.buyProperty((Property) model.getBoard().getSquare(model.getCurrentPlayer().getCurrentPos()));
             }
-            case "init" -> {
+            case INIT -> {
 
                 model.initializeGame();
                 //System.out.println("game initialized");
             }
-            case "nextTurn" ->{
+            case NEXT_TURN ->{
                 model.nextTurn();
             }
         }
