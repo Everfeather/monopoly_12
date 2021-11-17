@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class PropertyPanel extends JPanel {
     private GameBoardSquare property;
-    private JButton propertyInfoPopUp;
+    private JButton infoButton;
     private String propertyDescription;
 
 
@@ -31,9 +31,9 @@ public class PropertyPanel extends JPanel {
         name.setText(property.getName());
 
         //information on property pop up
-         propertyInfoPopUp = new JButton();
+         infoButton = new JButton();
 
-        propertyInfoPopUp.addActionListener( e -> {
+        infoButton.addActionListener( e -> {
 
             JTextArea info = new JTextArea(propertyDescription);
             info.setEditable(false);
@@ -45,15 +45,15 @@ public class PropertyPanel extends JPanel {
         });
 
         switch(property.getPropertyType()){
-            case RED -> propertyInfoPopUp.setBackground(Color.RED);
-            case PINK -> propertyInfoPopUp.setBackground(Color.PINK);
-            case BLUE -> propertyInfoPopUp.setBackground(Color.BLUE);
-            case BROWN -> propertyInfoPopUp.setBackground(new Color(95,42,42));
-            case GREEN -> propertyInfoPopUp.setBackground(Color.GREEN);
-            case ORANGE -> propertyInfoPopUp.setBackground(Color.ORANGE);
-            case YELLOW -> propertyInfoPopUp.setBackground(Color.yellow);
-            case LIGHTBLUE -> propertyInfoPopUp.setBackground(new Color(160,200,250));
-            default -> propertyInfoPopUp.setBackground(Color.white);
+            case RED -> infoButton.setBackground(Color.RED);
+            case PINK -> infoButton.setBackground(Color.PINK);
+            case BLUE -> infoButton.setBackground(Color.BLUE);
+            case BROWN -> infoButton.setBackground(new Color(95,42,42));
+            case GREEN -> infoButton.setBackground(Color.GREEN);
+            case ORANGE -> infoButton.setBackground(Color.ORANGE);
+            case YELLOW -> infoButton.setBackground(Color.yellow);
+            case LIGHTBLUE -> infoButton.setBackground(new Color(160,200,250));
+            default -> infoButton.setBackground(Color.white);
         }
 
         //c.fill = GridBagConstraints.HORIZONTAL;
@@ -69,11 +69,11 @@ public class PropertyPanel extends JPanel {
         c.ipady = 40;
         c.ipadx = 40;
         c.gridheight = 3;
-        this.add(propertyInfoPopUp, c);
+        this.add(infoButton, c);
 
     }
-    public JButton getPropertyInfoPopUp(){
-        return this.propertyInfoPopUp;
+    public JButton getInfoButton(){
+        return this.infoButton;
     }
     public GameBoardSquare getProperty() {
         return property;

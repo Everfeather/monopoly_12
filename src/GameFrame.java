@@ -49,6 +49,9 @@ public class GameFrame extends JFrame implements GameView {
 
         model = new GameModel();
         model.addGameView(this);
+        //Adding the board
+        board = new BoardPanel(model.getBoard(), model.getDice());
+        model.addGameView(board);
 
         GameController gc = new GameController(model);
 
@@ -67,8 +70,7 @@ public class GameFrame extends JFrame implements GameView {
         //c.ipadx = 80;
         c.ipady = 50;
 
-        //Adding the board
-        board = new BoardPanel(model.getBoard(), model.getDice());
+
 
         c.gridx = 0;
         c.gridy = 0;
@@ -99,8 +101,6 @@ public class GameFrame extends JFrame implements GameView {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(bgColour);
 
-
-
         //Buttons
         JButton rollButton = new JButton("Roll!");
         rollButton.setActionCommand("roll");
@@ -126,8 +126,6 @@ public class GameFrame extends JFrame implements GameView {
         initButton.addActionListener(gc);
         buttonPanel.add(initButton);
         buttons.add(initButton);
-
-
 
         botPanel.add(buttonPanel);
 
@@ -161,14 +159,7 @@ public class GameFrame extends JFrame implements GameView {
                         p.setMoney(curP.getBalance());
                     }
                 }
-                //find panel player is on
-                //get the propertyPopUpText
                 //edit it so the player owner is updated
-
-                JPanel panel = this.getBoardPanel().getSquares().get(curP.getCurrentPos());
-                if (panel instanceof PropertyPanel) {
-                    ((PropertyPanel) panel).setPropertyDescription(model.getBoard().getBoard().get(curP.getCurrentPos()).toString());
-                }
                 buttons.get(BUY).setEnabled(false);
                 eventView.setText(curP.getPlayerPiece() + " bought " + model.getBoard().getBoard().get(curP.getCurrentPos()).getName());
             }
@@ -232,32 +223,8 @@ public class GameFrame extends JFrame implements GameView {
                         p.setCurPos(curP.getCurrentPos());
                     }
                 }
-                this.board.getDiceRollPane().setText(model.getCurrentPlayer().getPlayerPiece().toString() + " Rolled: " + model.getDice().getRollValue());
-                int count = 0;
-                for(GameBoardSquare bs : this.model.getBoard().getBoard()){
-                    String s = "";
-                    for(Player p : bs.getPlayersOnSquare()){
-                        switch (p.getPlayerPiece()) {
-                            case CAR -> s   += "c";
-                            case BOAT -> s  += "b";
-                            case SHOE -> s  += "s";
-                            case HORSE -> s += "h";
-                        }
 
-                    }
-                    if(this.getBoardPanel().getSquares().get(count) instanceof PropertyPanel){
-                        PropertyPanel square = (PropertyPanel) this.getBoardPanel().getSquares().get(count);
-                        square.getPropertyInfoPopUp().setText(s);
-                    }else{
-                        SpecialSquarePanel square = (SpecialSquarePanel) this.getBoardPanel().getSquares().get(count);
-                        square.getSpecialSquarePopUp().setText(s);
-                    }
-                    count++;
-                }
-                if(model.getDice().getRollDouble()){
-                    this.board.getDiceRollPane().setText(model.getCurrentPlayer().getPlayerPiece().toString() + " Rolled: " + model.getDice().getRollValue() + ". Nice, doubles!");
-                    //System.out.println(model.getDice().getDiceValues()[0] + " " + model.getDice().getDiceValues()[1]);
-                }else{
+                if(!model.getDice().getRollDouble()){
                     System.out.println("No doubles ):");
                     buttons.get(ROLL).setEnabled(false);
                     buttons.get(NEXT_TURN).setEnabled(true);
@@ -282,6 +249,7 @@ public class GameFrame extends JFrame implements GameView {
                 }else{
                     buttons.get(BUY).setEnabled(false);
                 }
+
             }
 
         }

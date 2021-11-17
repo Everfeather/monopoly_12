@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @author Team 12
  * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
  */
-public class BoardPanel extends JPanel  {
+public class BoardPanel extends JPanel implements GameView{
 
     /** The board the view represents */
     private Board board;
@@ -283,6 +283,54 @@ public class BoardPanel extends JPanel  {
      */
     public ArrayList<JPanel> getSquares() {
         return squares;
+    }
+
+    public void update(MonopolyEvent event){
+        MonopolyEvent.EventType type = event.getEvent();
+        GameModel model = (GameModel)event.getSource();
+        Player p = model.getCurrentPlayer();
+
+        switch(type){
+            case BUY:
+                JPanel panel = this.getSquares().get(p.getCurrentPos());
+                if (panel instanceof PropertyPanel) {
+                    ((PropertyPanel) panel).setPropertyDescription(model.getBoard().getBoard().get(p.getCurrentPos()).toString());
+                }
+                break;
+            case NEXT:
+                break;
+            case ROLL:
+                diceRollPane.setText(p.getPlayerPiece() + " rolled a " + model.getDice().getRollValue());
+                int count = 0;
+                for(GameBoardSquare bs : model.getBoard().getBoard()){
+                    String s = "";
+                    for(Player player : bs.getPlayersOnSquare()){
+                        switch (player.getPlayerPiece()) {
+                            case CAR -> player.getPlayerPiece().getName(Piece.CAR);
+                            case BOAT -> player.getPlayerPiece().getName(Piece.BOAT);
+                            case SHOE -> player.getPlayerPiece().getName(Piece.SHOE);
+                            case HORSE ->  player.getPlayerPiece().getName(Piece.HORSE);
+                        }
+
+                    }
+                    if(this.getSquares().get(count) instanceof PropertyPanel){
+                       // PropertyPanel square = (PropertyPanel) this.squares.get(count);
+                        //square.getPropertyInfoPopUp().setText(s);
+                        ((PropertyPanel) this.squares.get(count)).getInfoButton().setText(s);
+                    }else{
+                        ((SpecialSquarePanel) this.squares.get(count)).getInfoButton().setText(s);
+
+                    }
+                    revalidate();
+                    count++;
+                }
+                if(model.getDice().getRollDouble()){
+                    diceRollPane.setText(model.getCurrentPlayer().getPlayerPiece() + " Rolled: " + model.getDice().getRollValue() + ". Nice, doubles!");
+                    //System.out.println(model.getDice().getDiceValues()[0] + " " + model.getDice().getDiceValues()[1]);
+                }
+                break;
+        }
+
     }
 
     /*
