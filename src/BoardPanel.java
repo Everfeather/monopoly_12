@@ -306,14 +306,15 @@ public class BoardPanel extends JPanel implements GameView{
                     String s = "";
                     for(Player player : bs.getPlayersOnSquare()){
                         switch (player.getPlayerPiece()) {
-                            case CAR -> player.getPlayerPiece().getName(Piece.CAR);
-                            case BOAT -> player.getPlayerPiece().getName(Piece.BOAT);
-                            case SHOE -> player.getPlayerPiece().getName(Piece.SHOE);
-                            case HORSE ->  player.getPlayerPiece().getName(Piece.HORSE);
+                            case CAR -> s += player.getPlayerPiece().getName(Piece.CAR);
+                            case BOAT -> s += player.getPlayerPiece().getName(Piece.BOAT);
+                            case SHOE -> s += player.getPlayerPiece().getName(Piece.SHOE);
+                            case HORSE ->  s += player.getPlayerPiece().getName(Piece.HORSE);
                         }
 
                     }
                     if(this.getSquares().get(count) instanceof PropertyPanel){
+                        System.out.println("Setting text to " + s);
                        // PropertyPanel square = (PropertyPanel) this.squares.get(count);
                         //square.getPropertyInfoPopUp().setText(s);
                         ((PropertyPanel) this.squares.get(count)).getInfoButton().setText(s);
