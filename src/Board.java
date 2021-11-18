@@ -14,24 +14,24 @@ public class Board {
 	public Board(){
 		this.board = new ArrayList<>();
 
-		SpecialSquare Go = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare Go = new SpecialSquare("Go",SquareType.GO);
 		SpecialSquare comChest2 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare inTax4 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare RR5 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare inTax4 = new SpecialSquare("Income Tax",SquareType.TAX);
+		Property RR5 = new Property("Reading Railroad", 200, 4, PropertyType.RAILROAD);
 		SpecialSquare chance7 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare jail = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare elecComp12 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare PR15 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare jail = new SpecialSquare("Jail",SquareType.JAIL);
+		Property elecComp12 = new Property("Electrical Company", 150, 2, PropertyType.UTILITY);
+		Property PR15 = new Property("Pennsylvania Railroad", 200, 4, PropertyType.RAILROAD);
 		SpecialSquare comChest17 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare freeParking = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare freeParking = new SpecialSquare("Free Parking",SquareType.FREEPARKING);
 		SpecialSquare chance22 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare BOR25 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare WW28 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare goToJail = new SpecialSquare("empty",SquareType.EMPTY);
+		Property BOR25 = new Property("B&O Railroad", 150, 2, PropertyType.RAILROAD);
+		Property WW28 = new Property("Water Works", 150, 2, PropertyType.UTILITY);
+		SpecialSquare goToJail = new SpecialSquare("Go To Jail",SquareType.GOTOJAIL);
 		SpecialSquare comChest33 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare SLR35 = new SpecialSquare("empty",SquareType.EMPTY);
+		Property SLR35 = new Property("empty", 200, 4, PropertyType.RAILROAD);
 		SpecialSquare chance36 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare luxTax38 = new SpecialSquare("empty",SquareType.EMPTY);
+		SpecialSquare luxTax38 = new SpecialSquare("empty",SquareType.TAX);
 		Property Mediterranean_Avenue = new Property("Mediterranean Avenue",60,2,PropertyType.BROWN);
 		Property Baltic_Avenue = new Property("Baltic Avenue",60,2,PropertyType.BROWN);
 		Property Oriental_Avenue = new Property("Oriental Avenue", 100, 3,PropertyType.LIGHTBLUE);

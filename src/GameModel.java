@@ -189,6 +189,7 @@ public class GameModel {
 
         System.out.println(curPlayer.getPlayerPiece() + " is moving");
         System.out.println("board 1: " + this.board);
+        int oldPos = curPlayer.getCurrentPos();
         board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
 
         int landedSquareIndex = (getDice().getRollValue() + curPlayer.getCurrentPos()) % board.getSize();
@@ -214,6 +215,10 @@ public class GameModel {
         if(curPlayer.getBalance() <= 0){
             curPlayer.goneBankrupt();
             board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
+        }
+
+        if(oldPos > curPlayer.getCurrentPos()){
+            curPlayer.increaseBalance(200);
         }
 
 
