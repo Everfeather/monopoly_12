@@ -29,7 +29,7 @@ public class Board {
 		Property WW28 = new Property("Water Works", 150, 2, PropertyType.UTILITY);
 		SpecialSquare goToJail = new SpecialSquare("Go To Jail",SquareType.GOTOJAIL);
 		SpecialSquare comChest33 = new SpecialSquare("empty",SquareType.EMPTY);
-		Property SLR35 = new Property("empty", 200, 4, PropertyType.RAILROAD);
+		Property SLR35 = new Property("Short Line", 200, 4, PropertyType.RAILROAD);
 		SpecialSquare chance36 = new SpecialSquare("empty",SquareType.EMPTY);
 		SpecialSquare luxTax38 = new SpecialSquare("empty",SquareType.TAX);
 		Property Mediterranean_Avenue = new Property("Mediterranean Avenue",60,2,PropertyType.BROWN);
