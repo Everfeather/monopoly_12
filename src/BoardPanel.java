@@ -33,9 +33,9 @@ public class BoardPanel extends JPanel implements GameView{
         this.dice = dice;
         this.squares = new ArrayList<JPanel>();
         for(int i = 0; i < board.getSize(); i++){
-            if(i % 5 == 0 || (i % 10 == 2 && i < 30) || (i % 10 == 7 && i < 20) || i == 4
-                    || i == 7 || i == 17 || i == 28 || i == 33 || i == 36 || i == 38){
-                squares.add(new SpecialSquarePanel((SpecialSquare) board.getBoard().get(5)));
+            if(i % 10 == 0 || (i % 10 == 2 && i < 30 && i != 12) || (i % 10 == 7 && i < 20) || i == 4
+                    || i == 7 || i == 17 || i == 33 || i == 36 || i == 38){
+                squares.add(new SpecialSquarePanel((SpecialSquare) board.getBoard().get(i)));
 
             }else{
                 squares.add(new PropertyPanel((Property) board.getBoard().get(i)));
