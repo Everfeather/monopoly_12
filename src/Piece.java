@@ -11,10 +11,18 @@ public enum Piece {
 
     public String getName(Piece piece){
         switch(piece){
-            case CAR -> s   += "c";
-            case BOAT -> s  += "b";
-            case SHOE -> s  += "s";
-            case HORSE -> s += "h";
+            case CAR -> {
+                return "c";
+            }
+            case BOAT -> {
+                return "b";
+            }
+            case SHOE -> {
+                return "s";
+            }
+            case HORSE -> {
+                return "h";
+            }
         }
         return s;
 
