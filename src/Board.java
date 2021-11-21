@@ -31,7 +31,7 @@ public class Board {
 		SpecialSquare comChest33 = new SpecialSquare("empty",SquareType.EMPTY);
 		Property SLR35 = new Property("Short Line", 200, 4, PropertyType.RAILROAD);
 		SpecialSquare chance36 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare luxTax38 = new SpecialSquare("empty",SquareType.TAX);
+		SpecialSquare luxTax38 = new SpecialSquare("Luxury Tax",SquareType.TAX);
 		Property Mediterranean_Avenue = new Property("Mediterranean Avenue",60,2,PropertyType.BROWN);
 		Property Baltic_Avenue = new Property("Baltic Avenue",60,2,PropertyType.BROWN);
 		Property Oriental_Avenue = new Property("Oriental Avenue", 100, 3,PropertyType.LIGHTBLUE);

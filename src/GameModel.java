@@ -68,11 +68,12 @@ public class GameModel {
             System.out.println("views empty????");
         }
         curPlayer = players.get(0);
-        if(curPlayer.isBot()){
-            botTurn();
-        }
+
         for(GameView v: this.views){
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.INIT));
+        }
+        if(curPlayer.isBot()){
+            botTurn();
         }
     }
 
@@ -124,13 +125,14 @@ public class GameModel {
             }
         }
         win();
-        if(curPlayer.isBot()){
-            botTurn();
-        }
+
         for(GameView v: this.views){
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.NEXT));
         }
 
+        if(curPlayer.isBot()){
+            botTurn();
+        }
     }
     public  void botTurn(){
         boolean doubles = true;
@@ -141,8 +143,9 @@ public class GameModel {
             curSquare = this.getBoard().getSquare(this.getCurrentPlayer().getCurrentPos());
 
             if( curSquare instanceof Property){
-                System.out.println("BOT BUYING PROPERTY");
+                System.out.println(curPlayer.getPlayerPiece() + "_BOT IS BUYING PROPERTY");
                 this.buyProperty((Property) curSquare);
+                System.out.println(curPlayer.getBalance());
             }
 
             doubles = this.dice.getRollDouble();
@@ -275,7 +278,7 @@ public class GameModel {
 
         for(GameView v: this.views){
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
-            v.update(new MonopolyEvent(this,MonopolyEvent.EventType.BUY));
+            //v.update(new MonopolyEvent(this,MonopolyEvent.EventType.BUY));
         }
 
     }

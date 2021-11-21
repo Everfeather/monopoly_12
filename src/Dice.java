@@ -64,7 +64,7 @@ public class Dice {
             dice[i] = rand.nextInt((MAX - MIN) + 1) + MIN;
             sum += dice[i];
         }
-        System.out.println("dice[0] " + dice[0] + "dice[1]" + dice[1]);
+        //System.out.println("dice[0] " + dice[0] + "dice[1]" + dice[1]);
         roll_double = dice[0] == dice[1];
 
         rollValue = sum;

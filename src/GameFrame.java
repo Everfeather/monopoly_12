@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -105,42 +106,17 @@ public class GameFrame extends JFrame implements GameView {
         buttonPanel.setBackground(bgColour);
 
         //Buttons
-        JButton rollButton = new JButton("Roll!");
-        rollButton.setActionCommand("roll");
-        rollButton.addActionListener(gc);
-        buttonPanel.add(rollButton);
-        buttons.add(rollButton);
+        addButton("Roll!","roll",buttonPanel,gc,botPanel);
 
-        JButton nextTurnButton = new JButton("next turn");
-        nextTurnButton.setActionCommand("nextTurn");
-        nextTurnButton.addActionListener(gc);
-        buttonPanel.add(nextTurnButton);
-        buttons.add(nextTurnButton);
+        addButton("Next Turn","nextTurn",buttonPanel,gc,botPanel);
 
-        JButton buyButton = new JButton("Buy");
-        buyButton.setEnabled(false);
-        buyButton.setActionCommand("buy");
-        buyButton.addActionListener(gc);
-        buttonPanel.add(buyButton);
-        buttons.add(buyButton);
+        addButton("Buy","buy",buttonPanel,gc,botPanel);
 
-        JButton initButton = new JButton("Start Game");
-        initButton.setActionCommand("init");
-        initButton.addActionListener(gc);
-        buttonPanel.add(initButton);
-        buttons.add(initButton);
+        addButton("Start Game","init",buttonPanel,gc,botPanel);
 
-        JButton addBotButton = new JButton("Add Bot");
-        addBotButton.setActionCommand("add_bot");
-        addBotButton.addActionListener(gc);
-        buttonPanel.add(addBotButton);
-        buttons.add(addBotButton);
+        addButton("Add Bot","add_bot",buttonPanel,gc,botPanel);
 
-        JButton removeBotButton = new JButton("Remove Bot");
-        removeBotButton.setActionCommand("remove_bot");
-        removeBotButton.addActionListener(gc);
-        buttonPanel.add(removeBotButton);
-        buttons.add(removeBotButton);
+        addButton("Remove Bot","remove_bot",buttonPanel,gc,botPanel);
 
         botPanel.add(buttonPanel);
 
@@ -156,7 +132,15 @@ public class GameFrame extends JFrame implements GameView {
 
         this.setVisible(true);
     }
+    public void addButton(String buttonName, String buttonCommand, JPanel buttonPanel, ActionListener gc, JPanel botPanel){
+        JButton newButton = new JButton(buttonName);
+        newButton.setActionCommand(buttonCommand);
+        newButton.addActionListener(gc);
+        buttonPanel.add(newButton);
+        this.buttons.add(newButton);
 
+        botPanel.add(buttonPanel);
+    }
     public static void main(String[] args){
         new GameFrame();
     }
@@ -168,9 +152,15 @@ public class GameFrame extends JFrame implements GameView {
     public void update(MonopolyEvent event) {
         switch (event.getEvent()){
             case BUY -> {
+                System.out.println("UPDATING VIEWS FOR BUY");
                 Player curP = model.getCurrentPlayer();
                 for(PlayerPanel p : playerPanels){
+                    System.out.println(p.getPlayerPiece());
                     if(p.getPlayerPiece() == model.getCurrentPlayer().getPlayerPiece()){
+                        System.out.println("UPDATING BALANCE");
+                        if(curP.isBot()){
+                            System.out.println("CHANGING BOT BALANCE");
+                        }
                         p.setMoney(curP.getBalance());
                     }
                 }
@@ -231,7 +221,7 @@ public class GameFrame extends JFrame implements GameView {
                 }
 
                 if(!model.getDice().getRollDouble()){
-                    System.out.println("No doubles ):");
+                    //System.out.println("No doubles ):");
                     buttons.get(ROLL).setEnabled(false);
                     buttons.get(NEXT_TURN).setEnabled(true);
                 }
