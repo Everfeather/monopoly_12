@@ -22,12 +22,13 @@ public class GameModel {
 
     private Boolean gameOver;
 
+    private int numBots;
 
     /** List of players */
     private List<Player> players;
-
     /** The current player*/
     private Player curPlayer;
+
     /** List of views*/
     private List<GameView> views;
     /**
@@ -40,7 +41,6 @@ public class GameModel {
         this.views = new ArrayList<>();
         this.gameOver = false;
     }
-
     /**
      * Initializes the game
      */
@@ -56,6 +56,9 @@ public class GameModel {
         availablePieces.add(Piece.BOAT);
         for( int i = 0; i < MAXNUMPLAYERS; i++){
             Player addedPlayer = new Player(availablePieces.remove(0), STARTINGBALANCE);
+            if (i < numBots){
+                addedPlayer.setBot(true);
+            }
             players.add(addedPlayer);
         }
         curPlayer = players.get(0);
@@ -65,6 +68,9 @@ public class GameModel {
             System.out.println("views empty????");
         }
         curPlayer = players.get(0);
+        if(curPlayer.isBot()){
+            botTurn();
+        }
         for(GameView v: this.views){
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.INIT));
         }
@@ -76,6 +82,24 @@ public class GameModel {
      */
     public Player getCurrentPlayer(){
         return this.curPlayer;
+    }
+
+    public int getNumBots() {
+        return numBots;
+    }
+    public void addBot(){
+        //if all the player are bots the gui updates too fast and a stackoverflowerror occures
+        if(numBots < MAXNUMPLAYERS - 1){
+            numBots++;
+        }
+    }
+    public void removeBot(){
+        if(numBots > 0){
+            numBots--;
+        }
+    }
+    public void setNumBots(int numBots) {
+        this.numBots = numBots;
     }
 
     /**
@@ -100,12 +124,31 @@ public class GameModel {
             }
         }
         win();
+        if(curPlayer.isBot()){
+            botTurn();
+        }
         for(GameView v: this.views){
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.NEXT));
         }
 
     }
+    public  void botTurn(){
+        boolean doubles = true;
+        GameBoardSquare curSquare;
+        while(doubles){
+            this.dice.rollDice();
+            this.movePlayer();
+            curSquare = this.getBoard().getSquare(this.getCurrentPlayer().getCurrentPos());
 
+            if( curSquare instanceof Property){
+                System.out.println("BOT BUYING PROPERTY");
+                this.buyProperty((Property) curSquare);
+            }
+
+            doubles = this.dice.getRollDouble();
+        }
+        this.nextTurn();
+    }
     /**
      * Checks if a player wins
      * @return True if the current player has won, false otherwise
@@ -187,8 +230,8 @@ public class GameModel {
      */
     public void movePlayer(){
 
-        System.out.println(curPlayer.getPlayerPiece() + " is moving");
-        System.out.println("board 1: " + this.board);
+        //System.out.println(curPlayer.getPlayerPiece() + " is moving");
+        //System.out.println("board 1: " + this.board);
         int oldPos = curPlayer.getCurrentPos();
         board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
 
@@ -197,33 +240,42 @@ public class GameModel {
         curPlayer.setCurrentPos(landedSquareIndex);
 
         curSquare.addPlayerToSquare(curPlayer);
-        System.out.println("please don't be empty " + curSquare.getPlayersOnSquare());
-        System.out.println("printing player pieces on square:");
+        //System.out.println("please don't be empty " + curSquare.getPlayersOnSquare());
+        //System.out.println("printing player pieces on square:");
 
-        for(Player p : curSquare.getPlayersOnSquare()){
-            System.out.println(p.getPlayerPiece());
+        if(oldPos > landedSquareIndex){
+            //player passed go
+            System.out.println("Player passed go");
+            curPlayer.increaseBalance(200);
         }
 
-        if(!(board.getBoard().get(landedSquareIndex) instanceof SpecialSquare)){
+        if(!(curSquare instanceof SpecialSquare)){
             if(((Property) curSquare).getOwner() != null){
                 if(((Property) curSquare).getOwner().getPlayerPiece() != curPlayer.getPlayerPiece()) {
                     curPlayer.payRent(((Property) curSquare).getOwner(), (Property) curSquare);
-                    System.out.println("Owner is :" + ((Property) curSquare).getOwner());
+                    //System.out.println("Owner is :" + ((Property) curSquare).getOwner());
                 }
             }
+        }else{
+            if(curSquare.getType() == SquareType.TAX){
+                if(landedSquareIndex == 4){
+                    curPlayer.decreaseBalance(200);
+                }else{
+                    curPlayer.decreaseBalance(75);
+                }
+            }
+
+            //special square
+
         }
         if(curPlayer.getBalance() <= 0){
             curPlayer.goneBankrupt();
             board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
         }
 
-        if(oldPos > curPlayer.getCurrentPos()){
-            curPlayer.increaseBalance(200);
-        }
-
-
         for(GameView v: this.views){
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
+            v.update(new MonopolyEvent(this,MonopolyEvent.EventType.BUY));
         }
 
     }

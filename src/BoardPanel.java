@@ -314,7 +314,7 @@ public class BoardPanel extends JPanel implements GameView{
 
                     }
                     if(this.getSquares().get(count) instanceof PropertyPanel){
-                        System.out.println("Setting text to " + s);
+                        //System.out.println("Setting text to " + s);
                        // PropertyPanel square = (PropertyPanel) this.squares.get(count);
                         //square.getPropertyInfoPopUp().setText(s);
                         ((PropertyPanel) this.squares.get(count)).getInfoButton().setText(s);

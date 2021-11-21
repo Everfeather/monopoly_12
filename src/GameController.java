@@ -14,6 +14,8 @@ public class GameController implements ActionListener {
     private static final String BUY = "buy";
     private static final String INIT = "init";
     private static final String NEXT_TURN = "nextTurn";
+    private static final String ADD_BOT = "add_bot";
+    private static final String REMOVE_BOT = "remove_bot";
 
     /**
      * Default (and only) constructor
@@ -35,7 +37,7 @@ public class GameController implements ActionListener {
                 model.getDice().rollDice();
                 model.movePlayer();
                 //System.out.println("Dice in controller 2: " + model.getDice());
-                System.out.println(model.getCurrentPlayer().getCurrentPos());
+                //System.out.println(model.getCurrentPlayer().getCurrentPos());
             }
             case BUY -> {
                 model.buyProperty((Property) model.getBoard().getSquare(model.getCurrentPlayer().getCurrentPos()));
@@ -47,6 +49,12 @@ public class GameController implements ActionListener {
             }
             case NEXT_TURN ->{
                 model.nextTurn();
+            }
+            case ADD_BOT -> {
+                model.addBot();
+            }
+            case REMOVE_BOT -> {
+                model.removeBot();
             }
         }
     }

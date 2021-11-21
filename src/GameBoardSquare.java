@@ -14,6 +14,10 @@ public abstract class GameBoardSquare{
 	/** The players currently on the square */
 	private List<Player> playersOnSquare;
 
+	public SquareType getType() {
+		return type;
+	}
+
 	/**
 	 * Only constructor
 	 * @param type The type of square

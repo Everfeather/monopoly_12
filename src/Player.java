@@ -26,6 +26,11 @@ public class Player {
     /** Flag for if the player is bankrupt or not (true if bankrupt) */
     private boolean bankrupt;
 
+
+    private boolean isBot;
+
+
+
     /**
      * Only constructor for the player object
      * @param p Piece, The unique piece that represents the player
@@ -39,6 +44,7 @@ public class Player {
         this.currentPos = 0;
         this.inJail = false;
         this.turnsInJail = 0;
+        this.isBot = false;
     }
 
     /**
@@ -71,6 +77,14 @@ public class Player {
      */
     public void increaseBalance(int amount){
         this.balance += amount;
+    }
+
+    public boolean isBot() {
+        return isBot;
+    }
+
+    public void setBot(boolean bot) {
+        isBot = bot;
     }
 
     /**
@@ -180,9 +194,12 @@ public class Player {
 
     @Override
     public String toString(){
-        String s = String.format("\nPlayer: %s\nBalance: %d\nProperties:\n",this.getPlayerPiece(),this.getBalance());
-        for(Property p: this.properties.keySet()){
-            s += p;
+        String s;
+        if(this.isBot){
+            s = String.format("\nBot: %s\nBalance: %d\nProperties:\n",this.getPlayerPiece(),this.getBalance());
+
+        }else{
+            s = String.format("\nPlayer: %s\nBalance: %d\nProperties:\n",this.getPlayerPiece(),this.getBalance());
         }
         return s;
     }

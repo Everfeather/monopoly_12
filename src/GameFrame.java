@@ -20,6 +20,8 @@ public class GameFrame extends JFrame implements GameView {
     private final int BUY = 2;
     /** The value for the NEW_GAME button */
     private final int NEW_GAME = 3;
+    private final int ADD_BOT = 4;
+    private final int REMOVE_BOT = 5;
     /** The board view */
     private BoardPanel board;
     /** The main content panel of the view */
@@ -99,6 +101,7 @@ public class GameFrame extends JFrame implements GameView {
         botPanel.setLayout(new GridLayout(2,1));
 
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(3,2));
         buttonPanel.setBackground(bgColour);
 
         //Buttons
@@ -126,6 +129,18 @@ public class GameFrame extends JFrame implements GameView {
         initButton.addActionListener(gc);
         buttonPanel.add(initButton);
         buttons.add(initButton);
+
+        JButton addBotButton = new JButton("Add Bot");
+        addBotButton.setActionCommand("add_bot");
+        addBotButton.addActionListener(gc);
+        buttonPanel.add(addBotButton);
+        buttons.add(addBotButton);
+
+        JButton removeBotButton = new JButton("Remove Bot");
+        removeBotButton.setActionCommand("remove_bot");
+        removeBotButton.addActionListener(gc);
+        buttonPanel.add(removeBotButton);
+        buttons.add(removeBotButton);
 
         botPanel.add(buttonPanel);
 
@@ -165,16 +180,9 @@ public class GameFrame extends JFrame implements GameView {
             }
 
             case NEXT ->{
-                for(JButton b : buttons){
-                    b.setEnabled(true);
-                }
-                buttons.get(NEW_GAME).setEnabled(false);
-                buttons.get(BUY).setEnabled(false);
-
                 eventView.setText(model.getCurrentPlayer().getPlayerPiece() + "'s turn");
-
-
                 buttons.get(NEXT_TURN).setEnabled(false);
+                buttons.get(ROLL).setEnabled(true);
                 if(model.getGameOver()){
                     eventView.setText(model.getCurrentPlayer().getPlayerPiece() + " has Won!");
                     for(JButton b: buttons){
@@ -185,31 +193,29 @@ public class GameFrame extends JFrame implements GameView {
                 }
             }
             case INIT -> {
-                /*
-                int i = 0;
-                for(HashMap p: infoLabels){
-                    p.put("piece", new JLabel(String.format()))
-                }
 
-                 */
                 int i = 0;
                 //System.out.println("updating view");
 
                 for(PlayerPanel p: playerPanels){
-
-                    p.setMoney(model.getSTARTINGBALANCE());
-                    p.setPiece(model.getPlayers().get(i).getPlayerPiece().toString());
-                    p.setPlayerPiece(model.getPlayers().get(i).getPlayerPiece());
-                    p.setCurPos(model.getPlayers().get(i).getCurrentPos());
+                    if(model.getPlayers().get(i).isBot()){
+                        p.setMoney(model.getSTARTINGBALANCE());
+                        p.setPiece(model.getPlayers().get(i).getPlayerPiece().toString() + "_bot");
+                        p.setPlayerPiece(model.getPlayers().get(i).getPlayerPiece());
+                        p.setCurPos(model.getPlayers().get(i).getCurrentPos());
+                    }else{
+                        p.setMoney(model.getSTARTINGBALANCE());
+                        p.setPiece(model.getPlayers().get(i).getPlayerPiece().toString());
+                        p.setPlayerPiece(model.getPlayers().get(i).getPlayerPiece());
+                        p.setCurPos(model.getPlayers().get(i).getCurrentPos());
+                    }
                     i++;
                 }
                 for(JButton b : buttons){
-                    b.setEnabled(true);
+                    b.setEnabled(false);
                 }
                 eventView.setText(model.getCurrentPlayer().getPlayerPiece() + "'s turn");
-                buttons.get(NEXT_TURN).setEnabled(false);
-                buttons.get(BUY).setEnabled(false);
-                buttons.get(NEW_GAME).setEnabled(false);
+                buttons.get(ROLL).setEnabled(true);
                 System.out.println(6);
             }
 
