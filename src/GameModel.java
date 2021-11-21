@@ -236,6 +236,17 @@ public class GameModel {
         //System.out.println(curPlayer.getPlayerPiece() + " is moving");
         //System.out.println("board 1: " + this.board);
         int oldPos = curPlayer.getCurrentPos();
+        if(board.getBoard().get(oldPos).getType() == SquareType.JAIL  && curPlayer.getInJail()){
+            if (curPlayer.getTurnsInJail() == 3){
+                curPlayer.decreaseBalance(50);
+                curPlayer.setInJail(false);
+                return;
+            }
+            int previous_Turn_Injail = curPlayer.getTurnsInJail();
+            curPlayer.setTurnsInJail(previous_Turn_Injail +1);
+
+
+        }
         board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
 
         int landedSquareIndex = (getDice().getRollValue() + curPlayer.getCurrentPos()) % board.getSize();
@@ -259,7 +270,13 @@ public class GameModel {
                     //System.out.println("Owner is :" + ((Property) curSquare).getOwner());
                 }
             }
-        }else{
+        }else if (curSquare.getType() == SquareType.JAIL){
+            System.out.println("Player landed in Jail");
+            curPlayer.setInJail(true);
+            curPlayer.setTurnsInJail(1);
+
+        }
+        else{
             if(curSquare.getType() == SquareType.TAX){
                 if(landedSquareIndex == 4){
                     curPlayer.decreaseBalance(200);
@@ -267,9 +284,6 @@ public class GameModel {
                     curPlayer.decreaseBalance(75);
                 }
             }
-
-            //special square
-
         }
         if(curPlayer.getBalance() <= 0){
             curPlayer.goneBankrupt();
