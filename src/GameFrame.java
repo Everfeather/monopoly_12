@@ -132,7 +132,7 @@ public class GameFrame extends JFrame implements GameView {
 
             DefaultListModel propertyListModel = new DefaultListModel();
             for(Property p : model.getCurrentPlayer().getProperties().keySet()){
-                if(model.getCurrentPlayer().hasPropertySet(p)){
+                if(model.getCurrentPlayer().hasPropertySet(p) && p.getNumBuildings() < 4){
                     propertyListModel.addElement(p);
 
                 }
@@ -208,10 +208,14 @@ public class GameFrame extends JFrame implements GameView {
                         p.setMoney(curP.getBalance());
                     }
                 }
-
-                if(curSquare instanceof Property){
-                    buttons.get(BUY_BUILDING).setEnabled(((Property) curSquare).getNumBuildings() >= 4);
+                buttons.get(BUY_BUILDING).setEnabled(false);
+                for(Map.Entry<Property,PropertyType> entry : curP.getProperties().entrySet()){
+                    if(entry.getKey().getNumBuildings() < 4){
+                        buttons.get(BUY_BUILDING).setEnabled(true);
+                        break;
+                    }
                 }
+
 
             }
             case BUY -> {
