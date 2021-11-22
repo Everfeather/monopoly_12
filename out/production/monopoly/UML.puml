@@ -1,0 +1,267 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+
+enum Piece{
+    -HORSE,SHOE,CAR,BOAT
+}
+
+enum PropertyType{
+    -BROWN,LIGHTBLUE,PINK,ORANGE,RED,YELLOW,GREEN,BLUE,RAILROAD,UTILITY
+}
+
+enum SquareType{
+    -PROPERTY,GO,FREEPARKING,JAIL,GOTOJAIL,TAX,EMPTY
+}
+
+class Dice {
+    - {static} MAX: int = 6
+    - {static} MIN: int = 1
+    - rollValue: int
+    - rand: Random
+    - roll_double: boolean
+    - dice: int[]
+
+    + Dice():
+    + getDiceValues(): int[]
+    + getRollValue(): int
+    + setRollValue(int):
+    + getRollDouble(): boolean
+    + rollDice():
+}
+
+class GameController {
+    - model: GameModel
+    + GameController():
+    + actionPerformed(ActionEvent):
+}
+
+class PropertyPanel {
+    - property: GameBoardSquare
+    - propertyInfoPopUp: JButton
+    - propertyDescription: String
+    + PropertyPanel(Property):
+    + setPropertyDescription(String): void
+    + getPropertyInfoPopUp(): JButton
+    + getProperty(): GameBoardSquare
+}
+
+class MonopolyEvent {
+    - player: Player
+    - type: EventType
+
+    + MonopolyEvent(GameModel, EventType)
+    + getEvent(): EventType
+}
+
+class SpecialSquare {
+    + SpecialSquare(String, SquareType)
+}
+
+class Player {
+    - playerPiece: Piece
+    - balance: int
+    - properties: HashMap<Property,PropertyType>
+    - currentPos: int
+    - inJail: boolean
+    - turnsInJail: int
+    - bankrupt: boolean
+
+    + Player(Piece, int):
+    + getPlayerPiece(): Piece
+    + setPlayerPiece(Piece): void
+    + getBalance(): int
+    + increaseBalance(int): void
+    + decreaseBalance(int): void
+    + getProperties(): HashMap<Property,PropertyType>
+    + getCurrentPos(): int
+    + setCurrentPos(int): void
+    + getInJail(): boolean
+    + setInJail(boolean): void
+    + getTurnsInJail(): int
+    + setTurnsInJail(int): void
+    + isBankrupt(): boolean
+    + setBankrupt(boolean): void
+    + hasPropertySet(Property): boolean
+    + addProperty(Property): void
+    + toString(): String
+    + goneBankrupt(): void
+    + payRent(Player,Property): void
+}
+
+abstract class GameBoardSquare {
+    - type: SquareType
+    - name: String
+    - playersOnSquare: List<Player>
+
+    + GameBoardSquare(SquareType, String):
+    + addPlayerToSquare(Player): void
+    + removePlayerFromSquare(Player): void
+    + getPlayersOnSquare(): List<Player>
+    + getName(): String
+    + toString(): String
+}
+
+class BoardPanel {
+    - board: Board
+    - dice: Dice
+    - squares: ArrayList<JPanel>
+    - diceRollPane: JTextPane
+
+    + BoardPanel(Board, Dice):
+    + getSquares(): ArrayList<JPanel>
+    + getDicRollPane(): JTextPane
+}
+
+class Board {
+
+    - board: List<GameBoardSquare>
+
+    + Board():
+    + addSquare(GameBoardSquare): void
+    + getSize(): int
+    + getSquare(int): GameBoardSquare
+    + getBoard(): List<GameBoardSquare>
+}
+
+class GameModel {
+    - {static} MAXNUMPLAYERS: int = 4
+    - {static} STARTINGBALANCE: int = 1500
+    - counter: int
+    - board: Board
+    - dice: Dice
+    - gameOver: Boolean
+    - players: List<Player>
+    - curPlayer: Player
+    - views: List<GameView>
+
+    + GameModel():
+    + initializeGame(): void
+    + getCurrentPlayer(): Player
+    + getGameOver(): Boolean
+    + nextTurn(): void
+    + win(): void
+    + getBoard(): Board
+    + {static} getSTARTINGBALANCE(): int
+    + getDice(): Dice
+    + addGameView(GameView): void
+    + removeGameView(GameView): void
+    + buyProperty(Property): void
+    + movePlayer(): void
+    + getPlayers(): List<Player>
+}
+
+class Property {
+    - colourSetSize: int
+    - cost: int
+    - buildingCost: int
+    - rent: int
+    - owner: Player
+    - propertyType: PropertyType
+    - numBuildings: int
+
+    + Property(String, int, int, PropertyType):
+    + buildingPurchased(): void
+    + getColourSetSize(): int
+    + getCost(): int
+    + getBuildingCost(): int
+    + getRent(): int
+    + getOwner(): Player
+    + getPropertyType(): PropertyType
+    + getNumBuildings(): int
+    + removeOwner(): void
+    + setOwner(Player): void
+    + toString(): String
+}
+
+class GameFrame {
+    - ROLL: int = 0
+    - NEXT_TURN: int = 1
+    - BUY: int = 2
+    - NEW_GAME: int = 3
+    - board: BoardPanel
+    - contentPane: JPanel
+    - playerPanels: PlayerPanel[]
+    - eventView: JLabel
+    - numPlayers: int
+    - buttons: ArrayList<JButton>
+    - model: GameModel
+    - {static} bgColour: Color = Color.PINK
+
+    + GameFrame():
+    + {static} main(String[]): void
+    + update(MonopolyEvent): void
+    + getBoardPanel(): BoardPanel
+}
+
+interface GameView {
+    + update(MonopolyEvent): void
+}
+
+class PlayerPanel {
+    - pieceLabel: JLabel
+    - moneyLabel: JLabel
+    - curPosLabel: JLabel
+    - playerPiece: Piece
+    - properties: List<String>
+
+    + PlayerPanel():
+    + setPlayerPiece(Piece): void
+    + getPlayerPiece(): Piece
+    + addProperty(String): void
+    + setPiece(String): void
+    + setMoney(int): void
+    + setCurPos(int): void
+}
+
+class SpecialSquarePanel {
+    ~ GameBoardSquare specialSquare
+    ~ JButton specialSquarePopUp
+    + JButton getSpecialSquarePopUp()
+}
+
+
+java.awt.event.ActionListener <|.. GameController
+JPanel <|-- PropertyPanel
+java.util.EventObject <|-- MonopolyEvent
+JPanel <|-- BoardPanel
+GameBoardSquare <|-- Property
+GameView <|.. GameFrame
+JFrame <|-- GameFrame
+JPanel <|-- PlayerPanel
+JPanel <|-- SpecialSquarePanel
+
+Player "n" --* GameModel
+GameModel o-- GameView
+GameModel o-- "1" Dice
+GameModel *-- "1" Board
+
+Property -|> GameBoardSquare
+Property *-- "1" PropertyType
+Property o-- "1" Player
+
+Player *-- "1" Piece
+Player o-- "n" Property
+
+Board *-- "40" GameBoardSquare
+
+SpecialSquare --up|> GameBoardSquare
+
+PropertyPanel *-- GameBoardSquare
+
+GameBoardSquare *-- SquareType
+
+GameController *-- GameModel
+
+GameModel ..> MonopolyEvent
+
+GameFrame <-- GameView
+GameFrame o-- "n" PlayerPanel
+GameFrame o-- "1" BoardPanel
+GameFrame *-- "1" GameModel
+
+SpecialSquarePanel *-- "1" SpecialSquare
+
+PlayerPanel o-- "1" Piece
+
+@enduml
