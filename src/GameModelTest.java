@@ -111,6 +111,88 @@ class GameModelTest {
         assertEquals(model.getSTARTINGBALANCE() - 48 - 160, model.getCurrentPlayer().getBalance());
     }
 
+    @Test
+    void passGo(){
+        new GameFrame();
+        model.initializeGame();
+
+        int oldPos = 0;
+        int balance = model.getCurrentPlayer().getBalance();
+
+        while(true){
+            model.getDice().rollDice();
+            model.movePlayer();
+
+            if (model.getCurrentPlayer().getPlayerPiece() == Piece.HORSE){
+                if (oldPos > model.getCurrentPlayer().getCurrentPos() && !model.getCurrentPlayer().getInJail()){
+                    break;
+                }
+                oldPos = model.getCurrentPlayer().getCurrentPos();
+            }
+            model.nextTurn();
+            balance = model.getCurrentPlayer().getBalance();
+        }
+
+        assertEquals(balance + 200, model.getCurrentPlayer().getBalance());
+    }
+
+    @Test
+    void goToJailTripleDoubles(){
+        new GameFrame();
+        model.initializeGame();
+
+        while(true) {
+            model.getDice().rollDice();
+
+            if (model.getDice().triple_Roll()){
+                System.out.println(model.getDice().triple_Roll());
+                break;
+            }
+            model.movePlayer();
+            model.nextTurn();
+        }
+
+        assertEquals(true, model.getCurrentPlayer().getInJail());
+    }
+
+    @Test
+    void goToJail(){
+        new GameFrame();
+        model.initializeGame();
+        model.getDice().setRollValue(30);
+        model.movePlayer();
+
+        assertEquals(true, model.getCurrentPlayer().getInJail());
+    }
+
+
+    @Test
+    void goToJailFor3Turns(){
+        new GameFrame();
+        model.initializeGame();
+        model.getDice().setRollValue(30);
+        model.movePlayer();
+        System.out.println(model.getCurrentPlayer().getPlayerPiece());
+        assertEquals(true, model.getCurrentPlayer().getInJail());
+
+        model.nextTurn();
+
+        int i = 0;
+        while(i < 11){
+            model.getDice().rollDice();
+            System.out.println(model.getDice().getRollValue());
+            model.movePlayer();
+            model.nextTurn();
+            i++;
+        }
+
+        System.out.println(model.getCurrentPlayer().getPlayerPiece());
+
+        assertEquals(false, model.getCurrentPlayer().getInJail());
+    }
+
+
+
 //    @Test
 //    void testRailroad(){
 //        model.initializeGame();
