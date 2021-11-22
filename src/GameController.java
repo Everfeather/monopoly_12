@@ -20,7 +20,9 @@ public class GameController implements ActionListener, ListSelectionListener {
     private static final String NEXT_TURN = "nextTurn";
     private static final String ADD_BOT = "add_bot";
     private static final String REMOVE_BOT = "remove_bot";
-    private static final String BUY_BUILDING = "buyBuilding";
+
+    private static final String BAILOUT = "bail_out";
+    private static final String ROLL_DOUBLE = "roll_double";
 
     /**
      * Default (and only) constructor
@@ -64,6 +66,12 @@ public class GameController implements ActionListener, ListSelectionListener {
             }
             case REMOVE_BOT -> {
                 model.removeBot();
+            }
+            case BAILOUT -> {
+
+            }
+            case ROLL_DOUBLE -> {
+
             }
         }
     }

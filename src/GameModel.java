@@ -245,11 +245,21 @@ public class GameModel {
         //System.out.println(curPlayer.getPlayerPiece() + " is moving");
         //System.out.println("board 1: " + this.board);
         int oldPos = curPlayer.getCurrentPos();
+
+        if(curPlayer.getInJail() || dice.triple_Roll()){
+            for(GameView v: this.views){
+                v.update(new MonopolyEvent(this,MonopolyEvent.EventType.JAIL));
+                v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
+            }
+            return;
+        }
+
         board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
 
         int landedSquareIndex = (getDice().getRollValue() + curPlayer.getCurrentPos()) % board.getSize();
         GameBoardSquare curSquare = board.getBoard().get(landedSquareIndex);
         curPlayer.setCurrentPos(landedSquareIndex);
+
 
         curSquare.addPlayerToSquare(curPlayer);
         //System.out.println("please don't be empty " + curSquare.getPlayersOnSquare());
@@ -259,6 +269,7 @@ public class GameModel {
             //player passed go
             System.out.println("Player passed go");
             curPlayer.increaseBalance(200);
+            System.out.println(curPlayer.getBalance());
         }
 
         if(!(curSquare instanceof SpecialSquare)){
@@ -271,7 +282,17 @@ public class GameModel {
                     }
                 }
             }
-        }else{
+        }else if (curSquare.getType() == SquareType.GOTOJAIL){
+            System.out.println("Player landed in Jail");
+            curPlayer.setInJail(true);
+            curPlayer.setCurrentPos(10);
+            for(GameView v: this.views){
+                v.update(new MonopolyEvent(this,MonopolyEvent.EventType.JAIL));
+            }
+
+
+        }
+        else{
             if(curSquare.getType() == SquareType.TAX){
                 if(landedSquareIndex == 4){
                     curPlayer.decreaseBalance(200);
@@ -279,10 +300,8 @@ public class GameModel {
                     curPlayer.decreaseBalance(75);
                 }
             }
-
-            //special square
-
         }
+
         if(curPlayer.getBalance() <= 0){
             curPlayer.goneBankrupt();
             board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
