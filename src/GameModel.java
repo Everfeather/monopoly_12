@@ -220,6 +220,19 @@ public class GameModel {
             curPlayer.decreaseBalance(cost);
             curPlayer.addProperty(prop);
             prop.setOwner(curPlayer);
+            if(prop.getPropertyType() == PropertyType.RAILROAD){
+                int numOwnedRailRoads = 0;
+                for(Map.Entry<Property, PropertyType> entry : curPlayer.getProperties().entrySet() ){
+                    if( entry.getValue() == PropertyType.RAILROAD){
+                        numOwnedRailRoads++;
+                    }
+                }
+                for(Map.Entry<Property, PropertyType> entry : curPlayer.getProperties().entrySet() ){
+                    if( entry.getValue() == PropertyType.RAILROAD){
+                        entry.getKey().setRent(numOwnedRailRoads * 15);
+                    }
+                }
+            }
         }
 
 
@@ -233,6 +246,7 @@ public class GameModel {
             curPlayer.decreaseBalance((property.getBuildingCost()));
             property.buildingPurchased();
         }
+
         for(GameView v: this.views){
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.BUY_BUILDING, property));
         }

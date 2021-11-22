@@ -85,7 +85,9 @@ public class Property extends GameBoardSquare {
     public int getRent() {
         return rent;
     }
-
+    public void setRent(int amount){
+        rent = amount;
+    }
     /**
      * Getter for the owner field
      * @return The Player that owns this property
