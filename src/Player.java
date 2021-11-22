@@ -220,11 +220,6 @@ public class Player {
         }
     }
 
-    /**
-     * Buys a property
-     * @param prop The property to be bought
-     */
-
 
     /**
      * Pays rent

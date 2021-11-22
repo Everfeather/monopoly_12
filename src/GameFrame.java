@@ -1,10 +1,12 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * The view that contains all GUI elements for the Monopoly game
@@ -19,10 +21,12 @@ public class GameFrame extends JFrame implements GameView {
     private final int NEXT_TURN = 1;
     /** The value for the BUY button */
     private final int BUY = 2;
+
+    private final int BUY_BUILDING = 3;
     /** The value for the NEW_GAME button */
-    private final int NEW_GAME = 3;
-    private final int ADD_BOT = 4;
-    private final int REMOVE_BOT = 5;
+    private final int NEW_GAME = 4;
+    private final int ADD_BOT = 5;
+    private final int REMOVE_BOT = 6;
     /** The board view */
     private BoardPanel board;
     /** The main content panel of the view */
@@ -102,8 +106,12 @@ public class GameFrame extends JFrame implements GameView {
         botPanel.setLayout(new GridLayout(2,1));
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(3,2));
+        buttonPanel.setLayout(new GridLayout(4,2));
         buttonPanel.setBackground(bgColour);
+
+
+
+
 
         //Buttons
         addButton("Roll!","roll",buttonPanel,gc,botPanel);
@@ -111,6 +119,44 @@ public class GameFrame extends JFrame implements GameView {
         addButton("Next Turn","nextTurn",buttonPanel,gc,botPanel);
 
         addButton("Buy","buy",buttonPanel,gc,botPanel);
+
+        //addButton("Buy building","buyBuilding",buttonPanel,gc,botPanel);
+        JButton newButton = new JButton("Buy building");
+        newButton.setActionCommand("buyBuilding");
+
+        newButton.addActionListener(e -> {
+            //purchasing building
+            JFrame propertyListFrame = new JFrame();
+            JPanel propertyListPanel = new JPanel();
+
+            DefaultListModel propertyListModel = new DefaultListModel();
+            for(Property p : model.getCurrentPlayer().getProperties().keySet()){
+                if(model.getCurrentPlayer().hasPropertySet(p)){
+                    propertyListModel.addElement(p);
+
+                }
+            }
+
+            JList propertyList = new JList<Property>(propertyListModel);
+            propertyList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            propertyList.addListSelectionListener(f -> {
+                //this.model.setPropertyGettingBuilding((Property) propertyList.getSelectedValue());
+                model.buyBuilding((Property) propertyList.getSelectedValue());
+                propertyListFrame.setVisible(false);
+                propertyListFrame.dispose();
+            });
+
+
+
+            propertyListPanel.add(propertyList);
+            propertyListFrame.add(propertyListPanel);
+            propertyListFrame.pack();
+            propertyListFrame.setVisible(true);
+        });
+        buttonPanel.add(newButton);
+        this.buttons.add(newButton);
+
+        botPanel.add(buttonPanel);
 
         addButton("Start Game","init",buttonPanel,gc,botPanel);
 
@@ -151,33 +197,47 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void update(MonopolyEvent event) {
         switch (event.getEvent()){
+            case BUY_BUILDING -> {
+                Player curP = model.getCurrentPlayer();
+                GameBoardSquare curSquare = model.getBoard().getBoard().get(curP.getCurrentPos());
+
+                for(PlayerPanel p : playerPanels){
+                    if(p.getPlayerPiece() == curP.getPlayerPiece()){
+                        p.setMoney(curP.getBalance());
+                    }
+                }
+
+                if(curSquare instanceof Property){
+                    buttons.get(BUY_BUILDING).setEnabled(((Property) curSquare).getNumBuildings() >= 4);
+                }
+
+            }
             case BUY -> {
                 System.out.println("UPDATING VIEWS FOR BUY");
                 Player curP = model.getCurrentPlayer();
+                GameBoardSquare curSquare = model.getBoard().getBoard().get(curP.getCurrentPos());
                 for(PlayerPanel p : playerPanels){
-                    System.out.println(p.getPlayerPiece());
-                    if(p.getPlayerPiece() == model.getCurrentPlayer().getPlayerPiece()){
-                        System.out.println("UPDATING BALANCE");
-                        if(curP.isBot()){
-                            System.out.println("CHANGING BOT BALANCE");
-                        }
+                    if(p.getPlayerPiece() == curP.getPlayerPiece()){
                         p.setMoney(curP.getBalance());
                     }
                 }
                 //edit it so the player owner is updated
                 buttons.get(BUY).setEnabled(false);
-                eventView.setText(curP.getPlayerPiece() + " bought " + model.getBoard().getBoard().get(curP.getCurrentPos()).getName());
+                buttons.get(BUY_BUILDING).setEnabled(curP.hasPropertySet((Property) curSquare));
+                eventView.setText(curP.getPlayerPiece() + " bought " + curSquare.getName());
             }
 
             case NEXT ->{
+                Player curP = model.getCurrentPlayer();
+                GameBoardSquare curSquare = model.getBoard().getBoard().get(curP.getCurrentPos());
                 eventView.setText(model.getCurrentPlayer().getPlayerPiece() + "'s turn");
                 buttons.get(NEXT_TURN).setEnabled(false);
+                if(curSquare instanceof Property){
+                    buttons.get(BUY_BUILDING).setEnabled(curP.hasPropertySet((Property) curSquare));
+                }
                 buttons.get(ROLL).setEnabled(true);
                 if(model.getGameOver()){
                     eventView.setText(model.getCurrentPlayer().getPlayerPiece() + " has Won!");
-                    for(JButton b: buttons){
-                        b.setEnabled(false);
-                    }
                     JOptionPane.showMessageDialog(null, model.getCurrentPlayer().getPlayerPiece() + " has Won!");
                     this.dispose();
                 }
@@ -210,10 +270,9 @@ public class GameFrame extends JFrame implements GameView {
             }
 
             case ROLL -> {
-                //disables next turn button
                 buttons.get(BUY).setEnabled(true);
-                //System.out.println("dice 1: " + this.model.getDice());
                 Player curP = model.getCurrentPlayer();
+                GameBoardSquare curSquare = model.getBoard().getBoard().get(curP.getCurrentPos());
                 for(PlayerPanel p : playerPanels){
                     if(p.getPlayerPiece() == model.getCurrentPlayer().getPlayerPiece()){
                         p.setCurPos(curP.getCurrentPos());
@@ -225,28 +284,25 @@ public class GameFrame extends JFrame implements GameView {
                     buttons.get(ROLL).setEnabled(false);
                     buttons.get(NEXT_TURN).setEnabled(true);
                 }
-                eventView.setText(curP.getPlayerPiece() + " landed on " + model.getBoard().getBoard().get(curP.getCurrentPos()).getName());
+                eventView.setText(curP.getPlayerPiece() + " landed on " + curSquare.getName());
                 if(!(model.getBoard().getBoard().get(curP.getCurrentPos()) instanceof SpecialSquare)){
-                    if(((Property)model.getBoard().getBoard().get(curP.getCurrentPos())).getOwner() != null){
+                    if(((Property) curSquare).getOwner() != null){
                         buttons.get(BUY).setEnabled(false);
                         for(PlayerPanel p : playerPanels){
                             if(p.getPlayerPiece() == model.getCurrentPlayer().getPlayerPiece()){
                                 p.setMoney(curP.getBalance());
                             }
-                            if(p.getPlayerPiece() == ((Property)model.getBoard().getBoard().get(curP.getCurrentPos())).getOwner().getPlayerPiece()){
-                                p.setMoney(((Property)model.getBoard().getBoard().get(curP.getCurrentPos())).getOwner().getBalance());
+                            if(p.getPlayerPiece() == ((Property)curSquare).getOwner().getPlayerPiece()){
+                                p.setMoney(((Property)curSquare).getOwner().getBalance());
                             }
                         }
                     }else{
-                        if(curP.getBalance() < ((Property)model.getBoard().getBoard().get(curP.getCurrentPos())).getCost()){
-                            buttons.get(BUY).setEnabled(false);
-                        }
+                        buttons.get(BUY).setEnabled(curP.getBalance() > ((Property)curSquare).getCost());
                     }
-                }else{
-                    buttons.get(BUY).setEnabled(false);
                 }
 
             }
+
 
         }
     }

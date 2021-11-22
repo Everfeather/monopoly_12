@@ -45,9 +45,10 @@ public class Property extends GameBoardSquare {
      * increases the rent.
      */
     public void buildingPurchased(){
-        if (this.propertyType != PropertyType.RAILROAD || this.propertyType != PropertyType.UTILITY){
+        if (this.propertyType != PropertyType.RAILROAD || this.propertyType != PropertyType.UTILITY && this.numBuildings < 4) {
             this.numBuildings ++;
             this.rent += (int) (this.numBuildings * this.cost * 0.4);
+            System.out.println(this.toString());
         }
     }
 

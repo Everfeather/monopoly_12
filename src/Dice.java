@@ -67,7 +67,8 @@ public class Dice {
         //System.out.println("dice[0] " + dice[0] + "dice[1]" + dice[1]);
         roll_double = dice[0] == dice[1];
 
-        rollValue = sum;
+        //rollValue = sum;
+        rollValue = 1;
     }
 
     /**

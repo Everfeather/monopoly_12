@@ -44,6 +44,7 @@ public class GameModel {
     /**
      * Initializes the game
      */
+
     public void initializeGame(){
         System.out.println("initializeGame called");
         dice = new Dice();
@@ -214,9 +215,9 @@ public class GameModel {
      * @param prop The property the current player will buy
      */
     public void buyProperty( Property prop){
-        int val = prop.getCost();
-        if(prop.getOwner() == null && curPlayer.getBalance() > val){
-            curPlayer.decreaseBalance(val);
+        int cost = prop.getCost();
+        if(prop.getOwner() == null && curPlayer.getBalance() > cost){
+            curPlayer.decreaseBalance(cost);
             curPlayer.addProperty(prop);
             prop.setOwner(curPlayer);
         }
@@ -227,7 +228,15 @@ public class GameModel {
         }
 
     }
-
+    public void buyBuilding(Property property){
+        if(curPlayer.hasPropertySet(property) && curPlayer.getBalance() > property.getCost()){
+            curPlayer.decreaseBalance((property.getBuildingCost()));
+            property.buildingPurchased();
+        }
+        for(GameView v: this.views){
+            v.update(new MonopolyEvent(this,MonopolyEvent.EventType.BUY_BUILDING));
+        }
+    }
     /**
      * Moves the player a certain number of squares
      */
@@ -256,7 +265,7 @@ public class GameModel {
             if(((Property) curSquare).getOwner() != null){
                 if(((Property) curSquare).getOwner().getPlayerPiece() != curPlayer.getPlayerPiece()) {
                     curPlayer.payRent(((Property) curSquare).getOwner(), (Property) curSquare);
-                    //System.out.println("Owner is :" + ((Property) curSquare).getOwner());
+
                 }
             }
         }else{
