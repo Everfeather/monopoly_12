@@ -199,6 +199,10 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void update(MonopolyEvent event) {
         switch (event.getEvent()){
+            case JAIL -> {
+                Player curP = model.getCurrentPlayer();
+
+            }
             case BUY_BUILDING -> {
                 Player curP = model.getCurrentPlayer();
                 GameBoardSquare curSquare = model.getBoard().getBoard().get(curP.getCurrentPos());

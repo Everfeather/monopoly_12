@@ -21,7 +21,7 @@ public class BoardPanel extends JPanel implements GameView{
     private ArrayList<JPanel> squares;
     /** The panel containing the dice roll */
     private JTextPane diceRollPane;
-
+    private static int JAIL = 10;
     /**
      * Only constructor
      * @param board The board to represent
@@ -306,6 +306,22 @@ public class BoardPanel extends JPanel implements GameView{
         Player p = model.getCurrentPlayer();
 
         switch(type){
+            case JAIL:
+
+                GameBoardSquare jail = model.getBoard().getSquare(JAIL);
+                System.out.println(jail.getName());
+                String prisoners = "";
+                for(Player player : jail.getPlayersOnSquare()){
+                    switch(player.getPlayerPiece()){
+                        case CAR -> prisoners += player.getPlayerPiece().getName(Piece.CAR);
+                        case BOAT -> prisoners += player.getPlayerPiece().getName(Piece.BOAT);
+                        case SHOE -> prisoners += player.getPlayerPiece().getName(Piece.SHOE);
+                        case HORSE ->  prisoners += player.getPlayerPiece().getName(Piece.HORSE);
+                    }
+                }
+                System.out.println("Prisoners: "+prisoners);
+                ((SpecialSquarePanel) this.getSquares().get(JAIL)).getInfoButton().setText(prisoners);
+                break;
             case BUY_BUILDING:
                 PropertyPanel target = findPropertyPanel(event.getProperty());
                 target.setPropertyDescription(event.getProperty().toString());
