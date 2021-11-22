@@ -77,8 +77,8 @@ public class Dice {
             triple_Roll_Double_counter +=1;
         }
 
-        //rollValue = sum;
-        rollValue = 1;
+        rollValue = sum;
+        //rollValue = 30;
     }
 
     /**

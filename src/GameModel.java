@@ -246,12 +246,16 @@ public class GameModel {
         //System.out.println("board 1: " + this.board);
         int oldPos = curPlayer.getCurrentPos();
 
-        if(curPlayer.getInJail() || dice.triple_Roll()){
-            for(GameView v: this.views){
-                v.update(new MonopolyEvent(this,MonopolyEvent.EventType.JAIL));
-                v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
+        if(curPlayer.getInJail()){
+            if(dice.getRollDouble()){
+                board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
+            }else{
+                for(GameView v: this.views){
+                    v.update(new MonopolyEvent(this,MonopolyEvent.EventType.JAIL));
+                    v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
+                }
+                return;
             }
-            return;
         }
 
         board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
@@ -283,10 +287,12 @@ public class GameModel {
                     }
                 }
             }
-        }else if (curSquare.getType() == SquareType.GOTOJAIL){
+        }else if (curSquare.getType() == SquareType.GOTOJAIL || dice.triple_Roll()){
+            board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
             System.out.println("Player landed in Jail");
             curPlayer.setInJail(true);
             curPlayer.setCurrentPos(10);
+            board.getBoard().get(10).addPlayerToSquare(curPlayer);
             for(GameView v: this.views){
                 v.update(new MonopolyEvent(this,MonopolyEvent.EventType.JAIL));
             }
@@ -310,7 +316,6 @@ public class GameModel {
 
         for(GameView v: this.views){
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
-            //v.update(new MonopolyEvent(this,MonopolyEvent.EventType.BUY));
         }
 
     }
