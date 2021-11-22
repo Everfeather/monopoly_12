@@ -120,6 +120,7 @@ public class GameFrame extends JFrame implements GameView {
 
         addButton("Buy","buy",buttonPanel,gc,botPanel);
 
+        /** SOMETHING IS WRONG HERE */
         //addButton("Buy building","buyBuilding",buttonPanel,gc,botPanel);
         JButton newButton = new JButton("Buy building");
         newButton.setActionCommand("buyBuilding");
@@ -146,8 +147,6 @@ public class GameFrame extends JFrame implements GameView {
                 propertyListFrame.dispose();
             });
 
-
-
             propertyListPanel.add(propertyList);
             propertyListFrame.add(propertyListPanel);
             propertyListFrame.pack();
@@ -155,6 +154,8 @@ public class GameFrame extends JFrame implements GameView {
         });
         buttonPanel.add(newButton);
         this.buttons.add(newButton);
+
+        /** SOMETHING IS WRONG HERE END*/
 
         botPanel.add(buttonPanel);
 
@@ -178,6 +179,7 @@ public class GameFrame extends JFrame implements GameView {
 
         this.setVisible(true);
     }
+
     public void addButton(String buttonName, String buttonCommand, JPanel buttonPanel, ActionListener gc, JPanel botPanel){
         JButton newButton = new JButton(buttonName);
         newButton.setActionCommand(buttonCommand);

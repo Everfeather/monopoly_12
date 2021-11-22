@@ -234,7 +234,7 @@ public class GameModel {
             property.buildingPurchased();
         }
         for(GameView v: this.views){
-            v.update(new MonopolyEvent(this,MonopolyEvent.EventType.BUY_BUILDING));
+            v.update(new MonopolyEvent(this,MonopolyEvent.EventType.BUY_BUILDING, property));
         }
     }
     /**
@@ -264,8 +264,8 @@ public class GameModel {
         if(!(curSquare instanceof SpecialSquare)){
             if(((Property) curSquare).getOwner() != null){
                 if(((Property) curSquare).getOwner().getPlayerPiece() != curPlayer.getPlayerPiece()) {
-                    curPlayer.payRent(((Property) curSquare).getOwner(), (Property) curSquare);
 
+                    curPlayer.payRent(((Property) curSquare).getOwner(), (Property) curSquare);
                 }
             }
         }else{

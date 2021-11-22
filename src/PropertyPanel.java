@@ -5,20 +5,17 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 
 public class PropertyPanel extends JPanel {
-    private GameBoardSquare property;
+    private Property property;
     private JButton infoButton;
     private String propertyDescription;
     private JTextArea propertyInfo;
-
-
-    public void setPropertyDescription(String propertyDescription) {
-        this.propertyDescription = propertyDescription;
-    }
 
     public PropertyPanel(Property property) {
         super(new GridBagLayout());
         this.property = property;
         GridBagConstraints c = new GridBagConstraints();
+
+
         propertyDescription = property.toString();
         //name
         JTextPane name = new JTextPane();
@@ -35,6 +32,11 @@ public class PropertyPanel extends JPanel {
          infoButton = new JButton();
 
         infoButton.addActionListener( e -> {
+            System.out.println("\n------------");
+            System.out.println(property);
+            System.out.println("-------------");
+            System.out.println(propertyDescription);
+            System.out.println("-----------------\n");
 
             propertyInfo = new JTextArea(propertyDescription);
             propertyInfo.setEditable(false);
@@ -74,13 +76,20 @@ public class PropertyPanel extends JPanel {
 
     }
 
+    public void setProperty(Property property){
+        this.property = property;
+    }
+
+    public void setPropertyDescription(String propertyDescription) {
+        this.propertyDescription = propertyDescription;
+    }
     public JTextArea getInfoArea(){
         return propertyInfo;
     }
     public JButton getInfoButton(){
         return this.infoButton;
     }
-    public GameBoardSquare getProperty() {
+    public Property getProperty() {
         return property;
     }
     //testing stuff
