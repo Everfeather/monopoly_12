@@ -23,6 +23,7 @@ public class GameFrame extends JFrame implements GameView {
     private final int NEW_GAME = 3;
     private final int ADD_BOT = 4;
     private final int REMOVE_BOT = 5;
+    private final int PAY = 6;
     /** The board view */
     private BoardPanel board;
     /** The main content panel of the view */
@@ -214,9 +215,11 @@ public class GameFrame extends JFrame implements GameView {
                 buttons.get(BUY).setEnabled(true);
                 //System.out.println("dice 1: " + this.model.getDice());
                 Player curP = model.getCurrentPlayer();
+
                 for(PlayerPanel p : playerPanels){
                     if(p.getPlayerPiece() == model.getCurrentPlayer().getPlayerPiece()){
                         p.setCurPos(curP.getCurrentPos());
+                        p.setMoney(curP.getBalance());
                     }
                 }
 
@@ -226,6 +229,7 @@ public class GameFrame extends JFrame implements GameView {
                     buttons.get(NEXT_TURN).setEnabled(true);
                 }
                 eventView.setText(curP.getPlayerPiece() + " landed on " + model.getBoard().getBoard().get(curP.getCurrentPos()).getName());
+
                 if(!(model.getBoard().getBoard().get(curP.getCurrentPos()) instanceof SpecialSquare)){
                     if(((Property)model.getBoard().getBoard().get(curP.getCurrentPos())).getOwner() != null){
                         buttons.get(BUY).setEnabled(false);
@@ -245,6 +249,59 @@ public class GameFrame extends JFrame implements GameView {
                 }else{
                     buttons.get(BUY).setEnabled(false);
                 }
+
+            }
+            case JAIL -> {
+
+                System.out.println("got into jail");
+                Player curP = model.getCurrentPlayer();
+                for(PlayerPanel p : playerPanels){
+                    if(p.getPlayerPiece() == model.getCurrentPlayer().getPlayerPiece()){
+                        p.setCurPos(curP.getCurrentPos());
+                    }
+                }
+
+
+                if(model.getBoard().getBoard().get(curP.getCurrentPos()).getType() == SquareType.JAIL  && curP.getInJail()){
+                    if (curP.getTurnsInJail() == 3){
+                        curP.decreaseBalance(50);
+                        curP.setInJail(false);
+                        return;
+                    }else{
+                        int result = JOptionPane.showConfirmDialog(null, "Do you want to BailOut? If not then Roll Doubles");
+                        switch (result) {
+                            case JOptionPane.YES_OPTION:
+                                System.out.println("Bail");
+                                break;
+                            case JOptionPane.NO_OPTION:
+                                System.out.println("Roll");
+                                break;
+
+                        }
+                        if (result ==0){ //bail
+                            curP.decreaseBalance(50);
+                            curP.setInJail(false);
+                            System.out.println(curP.getInJail());
+                            return;
+                        }else if (result ==1){ //rolldoubles
+                            model.getDice().rollDice();
+                            if(model.getDice().getRollDouble()){
+                                curP.setInJail(false);
+                                System.out.println("they rolled doubles");
+                                System.out.println(curP.getInJail());
+                                return;
+                            }
+                            System.out.println(curP.getInJail());
+                            curP.setTurnsInJail(curP.getTurnsInJail() +1);
+                            System.out.println(curP.getTurnsInJail());
+                        }
+
+
+                    }
+
+
+                }
+                System.out.println("got into jail");
 
             }
 

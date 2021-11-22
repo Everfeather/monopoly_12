@@ -236,22 +236,20 @@ public class GameModel {
         //System.out.println(curPlayer.getPlayerPiece() + " is moving");
         //System.out.println("board 1: " + this.board);
         int oldPos = curPlayer.getCurrentPos();
-        if(board.getBoard().get(oldPos).getType() == SquareType.JAIL  && curPlayer.getInJail()){
-            if (curPlayer.getTurnsInJail() == 3){
-                curPlayer.decreaseBalance(50);
-                curPlayer.setInJail(false);
-                return;
+        if(curPlayer.getInJail()){
+            for(GameView v: this.views){
+                v.update(new MonopolyEvent(this,MonopolyEvent.EventType.JAIL));
+                v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
             }
-            int previous_Turn_Injail = curPlayer.getTurnsInJail();
-            curPlayer.setTurnsInJail(previous_Turn_Injail +1);
-
-
+            return;
         }
+
         board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
 
         int landedSquareIndex = (getDice().getRollValue() + curPlayer.getCurrentPos()) % board.getSize();
         GameBoardSquare curSquare = board.getBoard().get(landedSquareIndex);
         curPlayer.setCurrentPos(landedSquareIndex);
+
 
         curSquare.addPlayerToSquare(curPlayer);
         //System.out.println("please don't be empty " + curSquare.getPlayersOnSquare());
@@ -261,6 +259,7 @@ public class GameModel {
             //player passed go
             System.out.println("Player passed go");
             curPlayer.increaseBalance(200);
+            System.out.println(curPlayer.getBalance());
         }
 
         if(!(curSquare instanceof SpecialSquare)){
@@ -270,10 +269,14 @@ public class GameModel {
                     //System.out.println("Owner is :" + ((Property) curSquare).getOwner());
                 }
             }
-        }else if (curSquare.getType() == SquareType.JAIL){
+        }else if (curSquare.getType() == SquareType.GOTOJAIL){
             System.out.println("Player landed in Jail");
             curPlayer.setInJail(true);
-            curPlayer.setTurnsInJail(1);
+            curPlayer.setCurrentPos(10);
+            for(GameView v: this.views){
+                v.update(new MonopolyEvent(this,MonopolyEvent.EventType.JAIL));
+            }
+
 
         }
         else{
@@ -285,6 +288,7 @@ public class GameModel {
                 }
             }
         }
+
         if(curPlayer.getBalance() <= 0){
             curPlayer.goneBankrupt();
             board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
