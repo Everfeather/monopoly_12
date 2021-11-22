@@ -1,4 +1,6 @@
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -9,13 +11,20 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class GameModelTest {
 
+    static GameModel model;
+
     @BeforeAll
-    public static void setUp() throws Exception {
+    public static void setUp() {
+        model = new GameModel();
+    }
+
+    @BeforeEach
+    public void reset(){
+        model = new GameModel();
     }
 
     @org.junit.jupiter.api.Test
     void initializeGame() {
-        GameModel model = new GameModel();
         new GameFrame();
         model.initializeGame();
         List<Player> players = model.getPlayers();
@@ -33,7 +42,6 @@ class GameModelTest {
 
     @org.junit.jupiter.api.Test
     void nextTurn() {
-        GameModel model = new GameModel();
         new GameFrame();
         model.initializeGame();
         Player curP = model.getCurrentPlayer();
@@ -44,7 +52,6 @@ class GameModelTest {
 
     @org.junit.jupiter.api.Test
     void win() {
-        GameModel model = new GameModel();
         new GameFrame();
         model.initializeGame();
         model.getCurrentPlayer().setBankrupt(true);
@@ -59,7 +66,6 @@ class GameModelTest {
 
     @org.junit.jupiter.api.Test
     void buyProperty() {
-        GameModel model = new GameModel();
         new GameFrame();
         model.initializeGame();
         Property prop = new Property("test", 500, 2, PropertyType.PINK);
@@ -70,7 +76,6 @@ class GameModelTest {
 
     @org.junit.jupiter.api.Test
     void movePlayer() {
-        GameModel model = new GameModel();
         model.initializeGame();
 
         model.getDice().rollDice();
@@ -83,4 +88,48 @@ class GameModelTest {
         assertEquals(moveVal, model.getCurrentPlayer().getCurrentPos(), "Player not crossing go correctly");
 
     }
+
+    @Test
+    void testUtility(){
+        model.initializeGame();
+        model.getDice().setRollValue(12);
+        model.movePlayer();
+        model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
+        model.nextTurn();
+        model.movePlayer();
+        assertEquals(model.getSTARTINGBALANCE() - 48, model.getCurrentPlayer().getBalance());
+        //Goes back to player 1
+        while(model.getCurrentPlayer().getPlayerPiece() != Piece.HORSE){
+            model.nextTurn();
+        }
+        //First player again
+        model.getDice().setRollValue(16);
+        model.movePlayer();
+        model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
+        model.nextTurn();
+        model.movePlayer();
+        assertEquals(model.getSTARTINGBALANCE() - 48 - 160, model.getCurrentPlayer().getBalance());
+    }
+
+//    @Test
+//    void testRailroad(){
+//        model.initializeGame();
+//        model.getDice().setRollValue(5);
+//        model.movePlayer();
+//        model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
+//        model.nextTurn();
+//        model.movePlayer();
+//        assertEquals(model.getSTARTINGBALANCE() - 48, model.getCurrentPlayer().getBalance());
+//        //Goes back to player 1
+//        while(model.getCurrentPlayer().getPlayerPiece() != Piece.HORSE){
+//            model.nextTurn();
+//        }
+//        //First player again
+//        model.getDice().setRollValue(16);
+//        model.movePlayer();
+//        model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
+//        model.nextTurn();
+//        model.movePlayer();
+//        assertEquals(model.getSTARTINGBALANCE() - 48 - 160, model.getCurrentPlayer().getBalance());
+//    }
 }

@@ -175,8 +175,8 @@ public class Player {
     public boolean hasPropertySet(Property property){
        int num = 0;
        int setSize = property.getColourSetSize();
-        for (PropertyType i:
-             this.properties.values()) {
+        for (PropertyType i: this.properties.values()) {
+
             if (i == property.getPropertyType()){
                 num++;
             }
@@ -247,7 +247,8 @@ public class Player {
      * @param property The property whose rent will be paid
      */
     public void payRent(Player payee,Property property, int diceVal){
-        int rent = hasPropertySet(property)? diceVal * 10 : diceVal * 4;
+        System.out.println("Paying rent for utility");
+        int rent = payee.hasPropertySet(property)? diceVal * 10 : diceVal * 4;
 
         if(this.getBalance() >= rent){
             this.decreaseBalance(rent);

@@ -274,11 +274,12 @@ public class GameModel {
 
         if(!(curSquare instanceof SpecialSquare)){
             if(((Property) curSquare).getOwner() != null){
-                if(((Property) curSquare).getOwner().getPlayerPiece() != curPlayer.getPlayerPiece()) {
+                Player owner = ((Property) curSquare).getOwner();
+                if(owner.getPlayerPiece() != curPlayer.getPlayerPiece()) {
                     if(((Property) curSquare).getPropertyType() == PropertyType.UTILITY){
-                        curPlayer.payRent(((Property) curSquare).getOwner(), (Property) curSquare, dice.getRollValue());
+                        curPlayer.payRent(owner, (Property) curSquare, dice.getRollValue());
                     } else {
-                        curPlayer.payRent(((Property) curSquare).getOwner(), (Property) curSquare);
+                        curPlayer.payRent(owner, (Property) curSquare);
                     }
                 }
             }
