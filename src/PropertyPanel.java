@@ -5,19 +5,17 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 
 public class PropertyPanel extends JPanel {
-    private GameBoardSquare property;
+    private Property property;
     private JButton infoButton;
     private String propertyDescription;
-
-
-    public void setPropertyDescription(String propertyDescription) {
-        this.propertyDescription = propertyDescription;
-    }
+    private JTextArea propertyInfo;
 
     public PropertyPanel(Property property) {
         super(new GridBagLayout());
         this.property = property;
         GridBagConstraints c = new GridBagConstraints();
+
+
         propertyDescription = property.toString();
         //name
         JTextPane name = new JTextPane();
@@ -34,12 +32,17 @@ public class PropertyPanel extends JPanel {
          infoButton = new JButton();
 
         infoButton.addActionListener( e -> {
+            System.out.println("\n------------");
+            System.out.println(property);
+            System.out.println("-------------");
+            System.out.println(propertyDescription);
+            System.out.println("-----------------\n");
 
-            JTextArea info = new JTextArea(propertyDescription);
-            info.setEditable(false);
+            propertyInfo = new JTextArea(propertyDescription);
+            propertyInfo.setEditable(false);
             JFrame infoFrame = new JFrame();
             infoFrame.setLocationRelativeTo(null);
-            infoFrame.add(info);
+            infoFrame.add(propertyInfo);
             infoFrame.setSize(200,200);
             infoFrame.setVisible(true);
         });
@@ -72,10 +75,21 @@ public class PropertyPanel extends JPanel {
         this.add(infoButton, c);
 
     }
+
+    public void setProperty(Property property){
+        this.property = property;
+    }
+
+    public void setPropertyDescription(String propertyDescription) {
+        this.propertyDescription = propertyDescription;
+    }
+    public JTextArea getInfoArea(){
+        return propertyInfo;
+    }
     public JButton getInfoButton(){
         return this.infoButton;
     }
-    public GameBoardSquare getProperty() {
+    public Property getProperty() {
         return property;
     }
     //testing stuff

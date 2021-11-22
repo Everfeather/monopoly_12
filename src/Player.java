@@ -220,11 +220,6 @@ public class Player {
         }
     }
 
-    /**
-     * Buys a property
-     * @param prop The property to be bought
-     */
-
 
     /**
      * Pays rent
@@ -235,6 +230,25 @@ public class Player {
         //testing val
 //        int rent = property.getBuildingCost();
         int rent = property.getRent();
+        if(this.getBalance() >= rent){
+            this.decreaseBalance(rent);
+            payee.increaseBalance(rent);
+        }else{
+            payee.increaseBalance(this.getBalance());
+            this.decreaseBalance(this.getBalance());
+            System.out.println(String.format("%s cannot afford rent, %s has gone bankrupt!",this.getPlayerPiece(),this.getPlayerPiece()));
+            this.setBankrupt(true);
+        }
+    }
+
+    /**
+     * Pays rent
+     * @param payee The player to be paid
+     * @param property The property whose rent will be paid
+     */
+    public void payRent(Player payee,Property property, int diceVal){
+        int rent = hasPropertySet(property)? diceVal * 10 : diceVal * 4;
+
         if(this.getBalance() >= rent){
             this.decreaseBalance(rent);
             payee.increaseBalance(rent);

@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /** Represents a property square in monopoly
  * @author Spencer Antliff
  */
@@ -45,9 +47,10 @@ public class Property extends GameBoardSquare {
      * increases the rent.
      */
     public void buildingPurchased(){
-        if (this.propertyType != PropertyType.RAILROAD || this.propertyType != PropertyType.UTILITY){
+        if (this.propertyType != PropertyType.RAILROAD || this.propertyType != PropertyType.UTILITY && this.numBuildings < 4) {
             this.numBuildings ++;
             this.rent += (int) (this.numBuildings * this.cost * 0.4);
+            System.out.println(this.toString());
         }
     }
 
@@ -131,5 +134,17 @@ public class Property extends GameBoardSquare {
             return String.format("%s \nCost: %d \nNumber of Buildings: %d \nRent: %d \nOwner: %s",
                     this.getName(), this.getCost(), this.getNumBuildings(), this.getRent(), this.getOwner().getPlayerPiece().toString());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        Property property = (Property) o;
+        return super.getName() == property.getName();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), colourSetSize, cost, propertyType);
     }
 }

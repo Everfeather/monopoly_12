@@ -285,12 +285,31 @@ public class BoardPanel extends JPanel implements GameView{
         return squares;
     }
 
+    private PropertyPanel findPropertyPanel(Property target){
+        for(JPanel panel: squares){
+            if(panel instanceof PropertyPanel){
+
+                if(((PropertyPanel)panel).getProperty().equals(target)){
+
+                    return (PropertyPanel)panel;
+                }
+            }
+        }
+        return null;
+    }
+
+
+
     public void update(MonopolyEvent event){
         MonopolyEvent.EventType type = event.getEvent();
         GameModel model = (GameModel)event.getSource();
         Player p = model.getCurrentPlayer();
 
         switch(type){
+            case BUY_BUILDING:
+                PropertyPanel target = findPropertyPanel(event.getProperty());
+                target.setPropertyDescription(event.getProperty().toString());
+                break;
             case BUY:
                 JPanel panel = this.getSquares().get(p.getCurrentPos());
                 if (panel instanceof PropertyPanel) {
