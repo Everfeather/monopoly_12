@@ -13,7 +13,7 @@ public class MonopolyEvent extends EventObject {
      * enum for the different types of monopoly events
      */
     public enum EventType {
-        INIT, NEXT, BUY, ROLL, BUY_BUILDING
+        INIT, NEXT, BUY, ROLL, BOT, JAIL
     };
 
     /**

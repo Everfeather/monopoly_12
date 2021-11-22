@@ -1,16 +1,12 @@
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.EventListener;
 
 /**
  * The controller of the game
  * @author Team 12
  * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
  */
-public class GameController implements ActionListener, ListSelectionListener {
+public class GameController implements ActionListener {
 
     /** The model that runs the game */
     private GameModel model;
@@ -20,7 +16,8 @@ public class GameController implements ActionListener, ListSelectionListener {
     private static final String NEXT_TURN = "nextTurn";
     private static final String ADD_BOT = "add_bot";
     private static final String REMOVE_BOT = "remove_bot";
-    private static final String BUY_BUILDING = "buyBuilding";
+    private static final String BAILOUT = "bail_out";
+    private static final String ROLL_DOUBLE = "roll_double";
 
     /**
      * Default (and only) constructor
@@ -36,10 +33,6 @@ public class GameController implements ActionListener, ListSelectionListener {
 
         System.out.println("Button pressed!");
         switch(actionCommand){
-            case BUY_BUILDING ->{
-
-                //iterate through properties to find property being purchased
-            }
             case ROLL -> {
                 System.out.println(model.getCurrentPlayer().getPlayerPiece().toString() + " is Rolling");
 
@@ -65,12 +58,12 @@ public class GameController implements ActionListener, ListSelectionListener {
             case REMOVE_BOT -> {
                 model.removeBot();
             }
+            case BAILOUT -> {
+
+            }
+            case ROLL_DOUBLE -> {
+
+            }
         }
-    }
-
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-
-
     }
 }

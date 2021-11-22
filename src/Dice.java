@@ -15,7 +15,7 @@ public class Dice {
     /** Random number generator */
     private Random rand;
     private boolean roll_double = false;
-
+    private int triple_Roll_Double_counter =0;
     /** Contains the dice to be used */
     private int[] dice;
 
@@ -52,6 +52,13 @@ public class Dice {
         return roll_double;
     }
 
+    public boolean triple_Roll(){
+        if (triple_Roll_Double_counter ==3){
+            triple_Roll_Double_counter =0;
+            return true;
+        }
+        return false;
+    }
     /**
      * Rolls all the dice
      * @return The sum of all dice rolls
@@ -66,6 +73,9 @@ public class Dice {
         }
         //System.out.println("dice[0] " + dice[0] + "dice[1]" + dice[1]);
         roll_double = dice[0] == dice[1];
+        if(roll_double){
+            triple_Roll_Double_counter +=1;
+        }
 
         //rollValue = sum;
         rollValue = 1;
