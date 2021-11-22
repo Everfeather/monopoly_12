@@ -236,7 +236,8 @@ public class GameModel {
         //System.out.println(curPlayer.getPlayerPiece() + " is moving");
         //System.out.println("board 1: " + this.board);
         int oldPos = curPlayer.getCurrentPos();
-        if(curPlayer.getInJail()){
+
+        if(curPlayer.getInJail() || dice.triple_Roll()){
             for(GameView v: this.views){
                 v.update(new MonopolyEvent(this,MonopolyEvent.EventType.JAIL));
                 v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));

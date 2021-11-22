@@ -39,6 +39,7 @@ public class GameFrame extends JFrame implements GameView {
     /** The model that the view represents */
     private GameModel model;
 
+
     /** The background colour of the game */
     private static final Color bgColour = Color.PINK;
 
