@@ -78,7 +78,7 @@ public class Dice {
         }
 
         //rollValue = sum;
-        rollValue = 1;
+        rollValue = 12;
     }
 
     /**

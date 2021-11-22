@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /** Represents a square on the monopoly board
  * @author Team 12
@@ -64,6 +65,17 @@ public abstract class GameBoardSquare{
 	@Override
 	public String toString(){
 		return this.name + "\nType: " + this.type;
+	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		GameBoardSquare that = (GameBoardSquare) o;
+		return type == that.type && Objects.equals(name, that.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(type, name);
 	}
 }
