@@ -68,7 +68,7 @@ public class Dice {
         roll_double = dice[0] == dice[1];
 
         //rollValue = sum;
-        rollValue = 1;
+        rollValue = 12;
     }
 
     /**

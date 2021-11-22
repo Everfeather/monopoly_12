@@ -264,8 +264,11 @@ public class GameModel {
         if(!(curSquare instanceof SpecialSquare)){
             if(((Property) curSquare).getOwner() != null){
                 if(((Property) curSquare).getOwner().getPlayerPiece() != curPlayer.getPlayerPiece()) {
-
-                    curPlayer.payRent(((Property) curSquare).getOwner(), (Property) curSquare);
+                    if(((Property) curSquare).getPropertyType() == PropertyType.UTILITY){
+                        curPlayer.payRent(((Property) curSquare).getOwner(), (Property) curSquare, dice.getRollValue());
+                    } else {
+                        curPlayer.payRent(((Property) curSquare).getOwner(), (Property) curSquare);
+                    }
                 }
             }
         }else{
