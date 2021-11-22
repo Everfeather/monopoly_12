@@ -8,6 +8,7 @@ public class PropertyPanel extends JPanel {
     private GameBoardSquare property;
     private JButton infoButton;
     private String propertyDescription;
+    private JTextArea propertyInfo;
 
 
     public void setPropertyDescription(String propertyDescription) {
@@ -35,11 +36,11 @@ public class PropertyPanel extends JPanel {
 
         infoButton.addActionListener( e -> {
 
-            JTextArea info = new JTextArea(propertyDescription);
-            info.setEditable(false);
+            propertyInfo = new JTextArea(propertyDescription);
+            propertyInfo.setEditable(false);
             JFrame infoFrame = new JFrame();
             infoFrame.setLocationRelativeTo(null);
-            infoFrame.add(info);
+            infoFrame.add(propertyInfo);
             infoFrame.setSize(200,200);
             infoFrame.setVisible(true);
         });
@@ -71,6 +72,10 @@ public class PropertyPanel extends JPanel {
         c.gridheight = 3;
         this.add(infoButton, c);
 
+    }
+
+    public JTextArea getInfoArea(){
+        return propertyInfo;
     }
     public JButton getInfoButton(){
         return this.infoButton;

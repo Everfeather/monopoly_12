@@ -291,6 +291,13 @@ public class BoardPanel extends JPanel implements GameView{
         Player p = model.getCurrentPlayer();
 
         switch(type){
+            case BUY_BUILDING:
+                GameBoardSquare curSquare = model.getBoard().getBoard().get(p.getCurrentPos());
+                if(curSquare instanceof Property){
+                    PropertyPanel houseTarget = (PropertyPanel)squares.get(p.getCurrentPos());
+                    houseTarget.getInfoArea().setText(curSquare.toString());
+                }
+                break;
             case BUY:
                 JPanel panel = this.getSquares().get(p.getCurrentPos());
                 if (panel instanceof PropertyPanel) {
