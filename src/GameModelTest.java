@@ -191,7 +191,7 @@ class GameModelTest {
         model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
         model.nextTurn();
         model.movePlayer();
-        assertEquals(model.getSTARTINGBALANCE() - 48, model.getCurrentPlayer().getBalance());
+        assertEquals(model.getSTARTINGBALANCE() - 15, model.getCurrentPlayer().getBalance());
         //Goes back to player 1
         while(model.getCurrentPlayer().getPlayerPiece() != Piece.HORSE){
             model.nextTurn();
@@ -202,6 +202,6 @@ class GameModelTest {
         model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
         model.nextTurn();
         model.movePlayer();
-        assertEquals(model.getSTARTINGBALANCE() - 48 - 160, model.getCurrentPlayer().getBalance());
+        assertEquals(model.getSTARTINGBALANCE() - 15 - 22, model.getCurrentPlayer().getBalance());
     }
 }
