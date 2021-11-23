@@ -247,7 +247,6 @@ public class Player {
      * @param property The property whose rent will be paid
      */
     public void payRent(Player payee,Property property, int diceVal){
-        System.out.println("Paying rent for utility");
         int rent = payee.hasPropertySet(property)? diceVal * 10 : diceVal * 4;
 
         if(this.getBalance() >= rent){

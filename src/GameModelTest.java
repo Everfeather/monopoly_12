@@ -124,6 +124,7 @@ class GameModelTest {
             model.movePlayer();
 
             if (model.getCurrentPlayer().getPlayerPiece() == Piece.HORSE){
+                System.out.println(model.getCurrentPlayer().getCurrentPos());
                 if (oldPos > model.getCurrentPlayer().getCurrentPos() && !model.getCurrentPlayer().getInJail()){
                     break;
                 }
@@ -193,25 +194,25 @@ class GameModelTest {
 
 
 
-//    @Test
-//    void testRailroad(){
-//        model.initializeGame();
-//        model.getDice().setRollValue(5);
-//        model.movePlayer();
-//        model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
-//        model.nextTurn();
-//        model.movePlayer();
-//        assertEquals(model.getSTARTINGBALANCE() - 48, model.getCurrentPlayer().getBalance());
-//        //Goes back to player 1
-//        while(model.getCurrentPlayer().getPlayerPiece() != Piece.HORSE){
-//            model.nextTurn();
-//        }
-//        //First player again
-//        model.getDice().setRollValue(16);
-//        model.movePlayer();
-//        model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
-//        model.nextTurn();
-//        model.movePlayer();
-//        assertEquals(model.getSTARTINGBALANCE() - 48 - 160, model.getCurrentPlayer().getBalance());
-//    }
+    @Test
+    void testRailroad(){
+        model.initializeGame();
+        model.getDice().setRollValue(5);
+        model.movePlayer();
+        model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
+        model.nextTurn();
+        model.movePlayer();
+        assertEquals(model.getSTARTINGBALANCE() - 15, model.getCurrentPlayer().getBalance());
+        //Goes back to player 1
+        while(model.getCurrentPlayer().getPlayerPiece() != Piece.HORSE){
+            model.nextTurn();
+        }
+        //First player again
+        model.getDice().setRollValue(10);
+        model.movePlayer();
+        model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
+        model.nextTurn();
+        model.movePlayer();
+        assertEquals(model.getSTARTINGBALANCE() - 15 - 30, model.getCurrentPlayer().getBalance());
+    }
 }
