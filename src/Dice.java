@@ -14,17 +14,20 @@ public class Dice {
     private int rollValue;
     /** Random number generator */
     private Random rand;
-    private boolean roll_double = false;
-    private int triple_Roll_Double_counter =0;
+    private boolean roll_double;
+
+    private int numDoublesRolled;
+
     /** Contains the dice to be used */
     private int[] dice;
-
     /**
      * Default, only constructor
      */
     public Dice(){
         this.rand = new Random();
         dice = new int[2];
+        roll_double = false;
+        numDoublesRolled = 0;
     }
 
 
@@ -53,12 +56,13 @@ public class Dice {
     }
 
     public boolean triple_Roll(){
-        if (triple_Roll_Double_counter ==3){
-            triple_Roll_Double_counter =0;
+        if (numDoublesRolled == 3){
+            numDoublesRolled = 0;
             return true;
         }
         return false;
     }
+
     /**
      * Rolls all the dice
      * @return The sum of all dice rolls
@@ -72,21 +76,23 @@ public class Dice {
             sum += dice[i];
         }
         //System.out.println("dice[0] " + dice[0] + "dice[1]" + dice[1]);
-        roll_double = dice[0] == dice[1];
-        if(roll_double){
-            triple_Roll_Double_counter +=1;
-        }
+        //roll_double = dice[0] == dice[1];
+        roll_double = true;
+        numDoublesRolled = roll_double ? numDoublesRolled + 1 : 0;
 
-        rollValue = sum;
-        //rollValue = 30;
+        //rollValue = sum;
+        rollValue = 1;
     }
-
     /**
      * Getter for the individual dice fields
      * @return values of each die
      */
     public int[] getDiceValues() {
         return dice;
+    }
+
+    public int getNumDoublesRolled() {
+        return numDoublesRolled;
     }
 
 

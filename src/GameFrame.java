@@ -201,7 +201,10 @@ public class GameFrame extends JFrame implements GameView {
         switch (event.getEvent()){
             case JAIL -> {
                 Player curP = model.getCurrentPlayer();
-
+                if(!curP.getInJail()){
+                    buttons.get(ROLL).setEnabled(false);
+                    buttons.get(NEXT_TURN).setEnabled(true);
+                }
             }
             case BUY_BUILDING -> {
                 Player curP = model.getCurrentPlayer();
