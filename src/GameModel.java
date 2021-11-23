@@ -262,10 +262,11 @@ public class GameModel {
 
         if(curPlayer.getInJail()){
             System.out.println("Turns in jail: " + curPlayer.getTurnsInJail());
-            if(!dice.getRollDouble()){
+            if(!dice.getRollDouble() && curPlayer.getTurnsInJail() < 3){
                 curPlayer.increaseTurnsInJail();
+
             }else{
-                if(curPlayer.getTurnsInJail() >= 3){
+                if(curPlayer.getTurnsInJail() == 3){
                     curPlayer.decreaseBalance(50); //criminally owned
                 }
                 curPlayer.setInJail(false);
