@@ -261,15 +261,27 @@ public class GameModel {
         int oldPos = curPlayer.getCurrentPos();
 
         if(curPlayer.getInJail()){
-            if(dice.getRollDouble()){
-                board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
+            System.out.println("Turns in jail: " + curPlayer.getTurnsInJail());
+            if(!dice.getRollDouble() && curPlayer.getTurnsInJail() < 3){
+                curPlayer.increaseTurnsInJail();
+
             }else{
-                for(GameView v: this.views){
-                    v.update(new MonopolyEvent(this,MonopolyEvent.EventType.JAIL));
-                    v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
+                if(curPlayer.getTurnsInJail() == 3){
+                    curPlayer.decreaseBalance(50); //criminally owned
                 }
-                return;
+                curPlayer.setInJail(false);
+                board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
+                int landedSquareIndex = (getDice().getRollValue() + curPlayer.getCurrentPos()) % board.getSize();
+                GameBoardSquare curSquare = board.getBoard().get(landedSquareIndex);
+                curPlayer.setCurrentPos(landedSquareIndex);
+                curPlayer.setTurnsInJail(0);
+                curSquare.addPlayerToSquare(curPlayer);
             }
+            for(GameView v: this.views) {
+                v.update(new MonopolyEvent(this, MonopolyEvent.EventType.JAIL));
+                v.update(new MonopolyEvent(this, MonopolyEvent.EventType.ROLL));
+            }
+            return;
         }
 
         board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
@@ -277,6 +289,7 @@ public class GameModel {
         int landedSquareIndex = (getDice().getRollValue() + curPlayer.getCurrentPos()) % board.getSize();
         GameBoardSquare curSquare = board.getBoard().get(landedSquareIndex);
         curPlayer.setCurrentPos(landedSquareIndex);
+
 
 
         curSquare.addPlayerToSquare(curPlayer);
@@ -289,7 +302,7 @@ public class GameModel {
             curPlayer.increaseBalance(200);
             System.out.println(curPlayer.getBalance());
         }
-
+        System.out.println("Dice num doubles: " + dice.getNumDoublesRolled());
         if(!(curSquare instanceof SpecialSquare)){
             if(((Property) curSquare).getOwner() != null){
                 Player owner = ((Property) curSquare).getOwner();
@@ -301,7 +314,9 @@ public class GameModel {
                     }
                 }
             }
-        }else if (curSquare.getType() == SquareType.GOTOJAIL || dice.triple_Roll()){
+
+        }
+        if (curSquare.getType() == SquareType.GOTOJAIL || dice.triple_Roll()){
             board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
             System.out.println("Player landed in Jail");
             curPlayer.setInJail(true);
