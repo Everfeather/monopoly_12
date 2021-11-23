@@ -165,19 +165,20 @@ class GameModelTest {
         assertEquals(true, model.getCurrentPlayer().getInJail());
 
         model.nextTurn();
-
+        System.out.println(model.getCurrentPlayer().getBalance());
         int i = 0;
-        while(i < 15){
+        while(i < 19){
             model.getDice().rollDice();
-            System.out.println(model.getDice().getRollValue());
+            model.getDice().setRollDouble(false);
             model.movePlayer();
             model.nextTurn();
             i++;
         }
 
-        System.out.println(model.getCurrentPlayer().getPlayerPiece());
 
-        assertEquals(false, model.getCurrentPlayer().getInJail());
+
+        assertFalse(model.getCurrentPlayer().getInJail(), "player still in jail");
+        assertEquals(1450, model.getCurrentPlayer().getBalance(), "balance not equal");
     }
 
 

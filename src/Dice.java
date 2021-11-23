@@ -55,6 +55,13 @@ public class Dice {
         return roll_double;
     }
 
+    /**
+     * setter for the rollDouble field
+     */
+    public void setRollDouble(boolean rollDouble){
+        this.roll_double = rollDouble;
+    }
+
 
     /**
      * setter for rollDouble field
@@ -85,8 +92,8 @@ public class Dice {
             sum += dice[i];
         }
         //System.out.println("dice[0] " + dice[0] + "dice[1]" + dice[1]);
-        //roll_double = dice[0] == dice[1];
-        roll_double = true;
+        roll_double = dice[0] == dice[1];
+        //roll_double = true;
         numDoublesRolled = roll_double ? numDoublesRolled + 1 : 0;
 
         //rollValue = sum;
