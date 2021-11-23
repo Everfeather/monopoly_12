@@ -183,25 +183,25 @@ class GameModelTest {
 
 
 
-//    @Test
-//    void testRailroad(){
-//        model.initializeGame();
-//        model.getDice().setRollValue(5);
-//        model.movePlayer();
-//        model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
-//        model.nextTurn();
-//        model.movePlayer();
-//        assertEquals(model.getSTARTINGBALANCE() - 48, model.getCurrentPlayer().getBalance());
-//        //Goes back to player 1
-//        while(model.getCurrentPlayer().getPlayerPiece() != Piece.HORSE){
-//            model.nextTurn();
-//        }
-//        //First player again
-//        model.getDice().setRollValue(16);
-//        model.movePlayer();
-//        model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
-//        model.nextTurn();
-//        model.movePlayer();
-//        assertEquals(model.getSTARTINGBALANCE() - 48 - 160, model.getCurrentPlayer().getBalance());
-//    }
+    @org.junit.jupiter.api.Test
+    void testRailroad(){
+        model.initializeGame();
+        model.getDice().setRollValue(5);
+        model.movePlayer();
+        model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
+        model.nextTurn();
+        model.movePlayer();
+        assertEquals(model.getSTARTINGBALANCE() - 48, model.getCurrentPlayer().getBalance());
+        //Goes back to player 1
+        while(model.getCurrentPlayer().getPlayerPiece() != Piece.HORSE){
+            model.nextTurn();
+        }
+        //First player again
+        model.getDice().setRollValue(16);
+        model.movePlayer();
+        model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
+        model.nextTurn();
+        model.movePlayer();
+        assertEquals(model.getSTARTINGBALANCE() - 48 - 160, model.getCurrentPlayer().getBalance());
+    }
 }
