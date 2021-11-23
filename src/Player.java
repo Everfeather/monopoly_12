@@ -151,6 +151,9 @@ public class Player {
         this.turnsInJail = turnsInJail;
     }
 
+    public void increaseTurnsInJail(){
+        turnsInJail++;
+    }
     /**
      * Getter for the bankrupt flag
      * @return True if the player is bankrupt, false otherwise
