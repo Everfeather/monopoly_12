@@ -96,8 +96,8 @@ public class Dice {
         //roll_double = true;
         numDoublesRolled = roll_double ? numDoublesRolled + 1 : 0;
 
-        //rollValue = sum;
-        rollValue = 1;
+        rollValue = sum;
+        //rollValue = 1;
     }
     /**
      * Getter for the individual dice fields
