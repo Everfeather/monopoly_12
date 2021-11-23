@@ -41,6 +41,12 @@ gameBoard and on the right are the player panels along with the action buttons, 
 wrote all files in java and have produced a working gui. One known issue is sizing and colouring doesnt function well on
 Mac. This is a known Java Swing issue.
 
+Milestone 3:
+In this milestone we needed to add special properties such as railroads, utilities, tax, go and jail. We did this with
+java swing as well as java backend coding. railroads and utilities are now purchasable properties, landing on tax forces
+you to pay taxes and going to jail and bing in jail are both functioning events now. We also had to add bots to the game
+so that people can play by themselves and against the bots if they dont have other humans to play with.
+
 
 
 
