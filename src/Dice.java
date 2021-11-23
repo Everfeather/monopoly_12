@@ -55,6 +55,15 @@ public class Dice {
         return roll_double;
     }
 
+
+    /**
+     * setter for rollDouble field
+     * @param roll_double
+     */
+    public void setRoll_double(boolean roll_double) {
+        this.roll_double = roll_double;
+    }
+
     public boolean triple_Roll(){
         if (numDoublesRolled == 3){
             numDoublesRolled = 0;

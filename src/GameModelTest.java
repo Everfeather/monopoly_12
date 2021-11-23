@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -89,7 +88,7 @@ class GameModelTest {
 
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     void testUtility(){
         model.initializeGame();
         model.getDice().setRollValue(12);
@@ -111,51 +110,41 @@ class GameModelTest {
         assertEquals(model.getSTARTINGBALANCE() - 48 - 160, model.getCurrentPlayer().getBalance());
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     void passGo(){
-        new GameFrame();
         model.initializeGame();
-
-        int oldPos = 0;
         int balance = model.getCurrentPlayer().getBalance();
 
-        while(true){
-            model.getDice().rollDice();
-            model.movePlayer();
-
-            if (model.getCurrentPlayer().getPlayerPiece() == Piece.HORSE){
-                if (oldPos > model.getCurrentPlayer().getCurrentPos() && !model.getCurrentPlayer().getInJail()){
-                    break;
-                }
-                oldPos = model.getCurrentPlayer().getCurrentPos();
-            }
-            model.nextTurn();
-            balance = model.getCurrentPlayer().getBalance();
-        }
+        model.getDice().setRollValue(35);
+        model.movePlayer();
+        model.nextTurn();
+        model.nextTurn();
+        model.nextTurn();
+        model.nextTurn();
+        model.getDice().setRollValue(10);
+        model.movePlayer();
 
         assertEquals(balance + 200, model.getCurrentPlayer().getBalance());
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     void goToJailTripleDoubles(){
-        new GameFrame();
         model.initializeGame();
 
-        while(true) {
-            model.getDice().rollDice();
-
-            if (model.getDice().triple_Roll()){
-                System.out.println(model.getDice().triple_Roll());
-                break;
-            }
-            model.movePlayer();
-            model.nextTurn();
-        }
+        model.getDice().setRollValue(10);
+        model.getDice().setRoll_double(true);
+        model.movePlayer();
+        model.getDice().setRollValue(10);
+        model.getDice().setRoll_double(true);
+        model.movePlayer();
+        model.getDice().setRollValue(10);
+        model.getDice().setRoll_double(true);
+        model.movePlayer();
 
         assertEquals(true, model.getCurrentPlayer().getInJail());
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     void goToJail(){
         new GameFrame();
         model.initializeGame();
@@ -166,7 +155,7 @@ class GameModelTest {
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     void goToJailFor3Turns(){
         new GameFrame();
         model.initializeGame();
@@ -178,7 +167,7 @@ class GameModelTest {
         model.nextTurn();
 
         int i = 0;
-        while(i < 11){
+        while(i < 15){
             model.getDice().rollDice();
             System.out.println(model.getDice().getRollValue());
             model.movePlayer();
