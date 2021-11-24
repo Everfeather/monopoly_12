@@ -31,7 +31,7 @@ public class BoardPanel extends JPanel implements GameView{
         super(new GridBagLayout());
         this.board = board;
         this.dice = dice;
-        this.squares = new ArrayList<JPanel>();
+        this.squares = new ArrayList<>();
         for(int i = 0; i < board.getSize(); i++){
             if(i % 10 == 0 || (i % 10 == 2 && i < 30 && i != 12) || (i % 10 == 7 && i < 20) || i == 4
                     || i == 7 || i == 17 || i == 33 || i == 36 || i == 38){
@@ -47,8 +47,6 @@ public class BoardPanel extends JPanel implements GameView{
         c.fill = GridBagConstraints.BOTH;
         int x = 0;
         int y = 0;
-
-
 
         //free parking 20
         c.gridx = 0;
@@ -298,7 +296,31 @@ public class BoardPanel extends JPanel implements GameView{
         return null;
     }
 
+    private String playersOnSquare(GameBoardSquare square){
+        String s = "";
+        for(Player player : square.getPlayersOnSquare()){
+            switch(player.getPlayerPiece()){
+                case CAR -> s += player.getPlayerPiece().getName(Piece.CAR);
+                case BOAT -> s += player.getPlayerPiece().getName(Piece.BOAT);
+                case SHOE -> s += player.getPlayerPiece().getName(Piece.SHOE);
+                case HORSE ->  s += player.getPlayerPiece().getName(Piece.HORSE);
+            }
+        }
+        return s;
+    }
 
+    private void updatePlayerPositionSquare(GameModel model){
+        int count = 0;
+        for(GameBoardSquare bs : model.getBoard().getBoard()){
+            String s = playersOnSquare(bs);
+            if(this.getSquares().get(count) instanceof PropertyPanel){
+                ((PropertyPanel) this.squares.get(count)).getInfoButton().setText(s);
+            }else{
+                ((SpecialSquarePanel) this.squares.get(count)).getInfoButton().setText(s);
+            }
+            count++;
+        }
+    }
 
     public void update(MonopolyEvent event){
         MonopolyEvent.EventType type = event.getEvent();
@@ -307,18 +329,9 @@ public class BoardPanel extends JPanel implements GameView{
 
         switch(type){
             case JAIL:
-
                 GameBoardSquare jail = model.getBoard().getSquare(JAIL);
                 System.out.println(jail.getName());
-                String prisoners = "";
-                for(Player player : jail.getPlayersOnSquare()){
-                    switch(player.getPlayerPiece()){
-                        case CAR -> prisoners += player.getPlayerPiece().getName(Piece.CAR);
-                        case BOAT -> prisoners += player.getPlayerPiece().getName(Piece.BOAT);
-                        case SHOE -> prisoners += player.getPlayerPiece().getName(Piece.SHOE);
-                        case HORSE ->  prisoners += player.getPlayerPiece().getName(Piece.HORSE);
-                    }
-                }
+                String prisoners = playersOnSquare(jail);
                 System.out.println("Prisoners: "+prisoners);
                 ((SpecialSquarePanel) this.getSquares().get(JAIL)).getInfoButton().setText(prisoners);
                 break;
@@ -332,37 +345,11 @@ public class BoardPanel extends JPanel implements GameView{
                     ((PropertyPanel) panel).setPropertyDescription(model.getBoard().getBoard().get(p.getCurrentPos()).toString());
                 }
                 break;
-            case NEXT:
-                break;
             case ROLL:
                 diceRollPane.setText(p.getPlayerPiece() + " rolled a " + model.getDice().getRollValue());
-                int count = 0;
-                for(GameBoardSquare bs : model.getBoard().getBoard()){
-                    String s = "";
-                    for(Player player : bs.getPlayersOnSquare()){
-                        switch (player.getPlayerPiece()) {
-                            case CAR -> s += player.getPlayerPiece().getName(Piece.CAR);
-                            case BOAT -> s += player.getPlayerPiece().getName(Piece.BOAT);
-                            case SHOE -> s += player.getPlayerPiece().getName(Piece.SHOE);
-                            case HORSE ->  s += player.getPlayerPiece().getName(Piece.HORSE);
-                        }
-
-                    }
-                    if(this.getSquares().get(count) instanceof PropertyPanel){
-                        //System.out.println("Setting text to " + s);
-                       // PropertyPanel square = (PropertyPanel) this.squares.get(count);
-                        //square.getPropertyInfoPopUp().setText(s);
-                        ((PropertyPanel) this.squares.get(count)).getInfoButton().setText(s);
-                    }else{
-                        ((SpecialSquarePanel) this.squares.get(count)).getInfoButton().setText(s);
-
-                    }
-                    revalidate();
-                    count++;
-                }
+                updatePlayerPositionSquare(model);
                 if(model.getDice().getRollDouble()){
                     diceRollPane.setText(model.getCurrentPlayer().getPlayerPiece() + " Rolled: " + model.getDice().getRollValue() + ". Nice, doubles!");
-                    //System.out.println(model.getDice().getDiceValues()[0] + " " + model.getDice().getDiceValues()[1]);
                 }
                 break;
         }
@@ -384,7 +371,5 @@ public class BoardPanel extends JPanel implements GameView{
         frame.setVisible(true);
 
     }
-
-
-     */
+    */
 }

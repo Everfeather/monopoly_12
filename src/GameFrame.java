@@ -172,7 +172,7 @@ public class GameFrame extends JFrame implements GameView {
     }
 
 
-    private void handleJail(MonopolyEvent event){
+    private void handleJail(){
         Player curP = model.getCurrentPlayer();
         if(!curP.getInJail()){
             buttons.get(ROLL).setEnabled(false);
@@ -257,7 +257,7 @@ public class GameFrame extends JFrame implements GameView {
     public void update(MonopolyEvent event) {
         switch (event.getEvent()){
             case JAIL -> {
-                handleJail(event);
+                handleJail();
             }
             case BUY_BUILDING -> {
                 Player curP = model.getCurrentPlayer();
