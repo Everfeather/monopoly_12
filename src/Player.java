@@ -1,4 +1,6 @@
 import java.util.HashMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /** Represents a player in monopoly
  * @author Robbie Kuhn
@@ -185,6 +187,27 @@ public class Player {
             }
         }
         return num == setSize;
+    }
+
+    public boolean containsAPropertySet(){
+        HashMap<PropertyType, Integer> valueMap = new HashMap<>();
+        HashMap<PropertyType, Integer> sizeMap = new HashMap<>();
+        for(Property p: properties.keySet()){
+            if(valueMap.containsKey(p.getPropertyType())){
+                valueMap.put(p.getPropertyType(), valueMap.get(p.getPropertyType()) + 1);
+            } else {
+                valueMap.put(p.getPropertyType(), 1);
+                sizeMap.put(p.getPropertyType(), p.getColourSetSize());
+            }
+        }
+
+        for(PropertyType type: valueMap.keySet()){
+            if(sizeMap.get(type) == valueMap.get(type)){
+                return true;
+            }
+        }
+        return false;
+
     }
 
     /**
