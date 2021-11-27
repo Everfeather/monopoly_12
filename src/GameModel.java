@@ -19,18 +19,27 @@ public class GameModel {
     private Board board;
     /** Contains the dice to be used */
     private Dice dice;
-
+    /** boolean for if the game is over or not */
     private Boolean gameOver;
-
+    /** number of bots in the game */
     private int numBots;
-
+    /** constant for how many turns in jail */
+    final int jailTurns = 3;
+    /** amount to bail out of jail */
+    final int jailBailAmount = 50;
+    /** amount gained when passing go or when landing on $200 tax*/
+    final int passGoAmount = 200;
+    /** amount to pay when landing on $75 tax */
+    final int tax = 75;
+    /** in jail square number*/
+    final int inJail = 10;
     /** List of players */
     private List<Player> players;
     /** The current player*/
     private Player curPlayer;
-
     /** List of views*/
     private List<GameView> views;
+
     /**
      * Only and default constructor for GameModel
      */
@@ -41,10 +50,10 @@ public class GameModel {
         this.views = new ArrayList<>();
         this.gameOver = false;
     }
+
     /**
      * Initializes the game
      */
-
     public void initializeGame(){
         System.out.println("initializeGame called");
         dice = new Dice();
@@ -89,17 +98,20 @@ public class GameModel {
     public int getNumBots() {
         return numBots;
     }
+
     public void addBot(){
         //if all the player are bots the gui updates too fast and a stackoverflowerror occures
         if(numBots < MAXNUMPLAYERS - 1){
             numBots++;
         }
     }
+
     public void removeBot(){
         if(numBots > 0){
             numBots--;
         }
     }
+
     public void setNumBots(int numBots) {
         this.numBots = numBots;
     }
@@ -135,6 +147,7 @@ public class GameModel {
             botTurn();
         }
     }
+
     public  void botTurn(){
         boolean doubles = true;
         GameBoardSquare curSquare;
@@ -153,6 +166,7 @@ public class GameModel {
         }
         this.nextTurn();
     }
+
     /**
      * Checks if a player wins
      * @return True if the current player has won, false otherwise
@@ -241,6 +255,7 @@ public class GameModel {
         }
 
     }
+
     public void buyBuilding(Property property){
         if(curPlayer.hasPropertySet(property) && curPlayer.getBalance() > property.getCost()){
             curPlayer.decreaseBalance((property.getBuildingCost()));
@@ -251,6 +266,7 @@ public class GameModel {
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.BUY_BUILDING, property));
         }
     }
+
     /**
      * Moves the player a certain number of squares
      */
@@ -308,8 +324,8 @@ public class GameModel {
             board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
             System.out.println("Player landed in Jail");
             curPlayer.setInJail(true);
-            curPlayer.setCurrentPos(10);
-            board.getBoard().get(10).addPlayerToSquare(curPlayer);
+            curPlayer.setCurrentPos(inJail);
+            board.getBoard().get(inJail).addPlayerToSquare(curPlayer);
             for(GameView v: this.views){
                 v.update(new MonopolyEvent(this,MonopolyEvent.EventType.JAIL));
             }
@@ -319,9 +335,9 @@ public class GameModel {
         else{
             if(curSquare.getType() == SquareType.TAX){
                 if(landedSquareIndex == 4){
-                    curPlayer.decreaseBalance(200);
+                    curPlayer.decreaseBalance(passGoAmount);
                 }else{
-                    curPlayer.decreaseBalance(75);
+                    curPlayer.decreaseBalance(tax);
                 }
             }
         }
@@ -330,18 +346,18 @@ public class GameModel {
     private void handlePassGo() {
         //player passed go
         System.out.println("Player passed go");
-        curPlayer.increaseBalance(200);
+        curPlayer.increaseBalance(passGoAmount);
         System.out.println(curPlayer.getBalance());
     }
 
     private void handleInJail() {
         System.out.println("Turns in jail: " + curPlayer.getTurnsInJail());
-        if(!dice.getRollDouble() && curPlayer.getTurnsInJail() < 3){
+        if(!dice.getRollDouble() && curPlayer.getTurnsInJail() < jailTurns){
             curPlayer.increaseTurnsInJail();
 
         }else{
-            if(curPlayer.getTurnsInJail() == 3){
-                curPlayer.decreaseBalance(50); //criminally owned
+            if(curPlayer.getTurnsInJail() == jailTurns){
+                curPlayer.decreaseBalance(jailBailAmount); //criminally owned
             }
             curPlayer.setInJail(false);
             board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
@@ -364,9 +380,6 @@ public class GameModel {
     public List<Player> getPlayers() {
         return players;
     }
-
-
-
 
     /*
 
