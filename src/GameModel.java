@@ -261,26 +261,7 @@ public class GameModel {
         int oldPos = curPlayer.getCurrentPos();
 
         if(curPlayer.getInJail()){
-            System.out.println("Turns in jail: " + curPlayer.getTurnsInJail());
-            if(!dice.getRollDouble() && curPlayer.getTurnsInJail() < 3){
-                curPlayer.increaseTurnsInJail();
-
-            }else{
-                if(curPlayer.getTurnsInJail() == 3){
-                    curPlayer.decreaseBalance(50); //criminally owned
-                }
-                curPlayer.setInJail(false);
-                board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
-                int landedSquareIndex = (getDice().getRollValue() + curPlayer.getCurrentPos()) % board.getSize();
-                GameBoardSquare curSquare = board.getBoard().get(landedSquareIndex);
-                curPlayer.setCurrentPos(landedSquareIndex);
-                curPlayer.setTurnsInJail(0);
-                curSquare.addPlayerToSquare(curPlayer);
-            }
-            for(GameView v: this.views) {
-                v.update(new MonopolyEvent(this, MonopolyEvent.EventType.JAIL));
-                v.update(new MonopolyEvent(this, MonopolyEvent.EventType.ROLL));
-            }
+            handleInJail();
             return;
         }
 
@@ -290,19 +271,26 @@ public class GameModel {
         GameBoardSquare curSquare = board.getBoard().get(landedSquareIndex);
         curPlayer.setCurrentPos(landedSquareIndex);
 
-
-
         curSquare.addPlayerToSquare(curPlayer);
-        //System.out.println("please don't be empty " + curSquare.getPlayersOnSquare());
-        //System.out.println("printing player pieces on square:");
 
         if(oldPos > landedSquareIndex){
-            //player passed go
-            System.out.println("Player passed go");
-            curPlayer.increaseBalance(200);
-            System.out.println(curPlayer.getBalance());
+            handlePassGo();
         }
         System.out.println("Dice num doubles: " + dice.getNumDoublesRolled());
+        handleLandedSquare(landedSquareIndex, curSquare);
+
+        if(curPlayer.getBalance() <= 0){
+            curPlayer.goneBankrupt();
+            board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
+        }
+
+        for(GameView v: this.views){
+            v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
+        }
+
+    }
+
+    private void handleLandedSquare(int landedSquareIndex, GameBoardSquare curSquare) {
         if(!(curSquare instanceof SpecialSquare)){
             if(((Property) curSquare).getOwner() != null){
                 Player owner = ((Property) curSquare).getOwner();
@@ -337,16 +325,36 @@ public class GameModel {
                 }
             }
         }
+    }
 
-        if(curPlayer.getBalance() <= 0){
-            curPlayer.goneBankrupt();
+    private void handlePassGo() {
+        //player passed go
+        System.out.println("Player passed go");
+        curPlayer.increaseBalance(200);
+        System.out.println(curPlayer.getBalance());
+    }
+
+    private void handleInJail() {
+        System.out.println("Turns in jail: " + curPlayer.getTurnsInJail());
+        if(!dice.getRollDouble() && curPlayer.getTurnsInJail() < 3){
+            curPlayer.increaseTurnsInJail();
+
+        }else{
+            if(curPlayer.getTurnsInJail() == 3){
+                curPlayer.decreaseBalance(50); //criminally owned
+            }
+            curPlayer.setInJail(false);
             board.getBoard().get(curPlayer.getCurrentPos()).removePlayerFromSquare(curPlayer);
+            int landedSquareIndex = (getDice().getRollValue() + curPlayer.getCurrentPos()) % board.getSize();
+            GameBoardSquare curSquare = board.getBoard().get(landedSquareIndex);
+            curPlayer.setCurrentPos(landedSquareIndex);
+            curPlayer.setTurnsInJail(0);
+            curSquare.addPlayerToSquare(curPlayer);
         }
-
-        for(GameView v: this.views){
-            v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
+        for(GameView v: this.views) {
+            v.update(new MonopolyEvent(this, MonopolyEvent.EventType.JAIL));
+            v.update(new MonopolyEvent(this, MonopolyEvent.EventType.ROLL));
         }
-
     }
 
     /**
