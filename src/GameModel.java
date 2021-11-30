@@ -1,12 +1,13 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.util.*;
 
 /** Controls the Monopoly game
  * @author Team 12
  * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
  */
-public class GameModel {
+public class GameModel implements Serializable {
     /** The maximum number of players allowed */
     private static final int MAXNUMPLAYERS = 4;
 
@@ -301,6 +302,7 @@ public class GameModel {
         }
 
         for(GameView v: this.views){
+            this.save();
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
         }
 
@@ -379,6 +381,34 @@ public class GameModel {
      */
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public void save() {
+        FileOutputStream fileOutputStream
+                = null;
+        try {
+            String fileName = "gameModel.txt";
+            fileOutputStream = new FileOutputStream(fileName);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+            objectOutputStream.writeObject(counter);
+            objectOutputStream.writeObject(board);
+            objectOutputStream.writeObject(dice);
+            objectOutputStream.writeObject(numBots);
+            objectOutputStream.writeObject(curPlayer);
+
+            objectOutputStream.writeObject(players);
+            objectOutputStream.writeObject(views);
+
+
+            objectOutputStream.flush();
+            objectOutputStream.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+        System.out.println("** Data Written to the file successfully **");
     }
 
     /*

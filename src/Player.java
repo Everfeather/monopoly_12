@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -5,7 +6,7 @@ import java.util.stream.Collectors;
 /** Represents a player in monopoly
  * @author Robbie Kuhn
  */
-public class Player {
+public class Player implements Serializable {
 
     /** Represents the unique player piece */
     private Piece playerPiece;

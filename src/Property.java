@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.Objects;
 
 /** Represents a property square in monopoly
  * @author Spencer Antliff
  */
-public class Property extends GameBoardSquare {
+public class Property extends GameBoardSquare implements Serializable {
 
     /** The size of the property set */
     private int colourSetSize;

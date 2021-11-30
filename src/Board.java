@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /** Represents the Board
  * @author Daniel Wang
  */
-public class Board {
+public class Board implements Serializable {
 
 	/** The list of GameBoardSquare objects */
 	private List<GameBoardSquare> board;

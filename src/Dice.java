@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.util.Random;
 
 /** Represents a single die
  * @author Team 12
  * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
  */
-public class Dice {
+public class Dice implements Serializable {
 
     /** The maximum value a die can roll */
     private static final int MAX = 6;
