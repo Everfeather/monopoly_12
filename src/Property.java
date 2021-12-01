@@ -42,6 +42,10 @@ public class Property extends GameBoardSquare implements Serializable {
 
     }
 
+    public Property(){
+        super();
+    }
+
     /**
      * This methode changes the relevant attributes of the property accordingly when a building is purchased.
      * increases the number of buildings by 1.
@@ -55,12 +59,20 @@ public class Property extends GameBoardSquare implements Serializable {
         }
     }
 
+    public void setColourSetSize(int colourSetSize) {
+        this.colourSetSize = colourSetSize;
+    }
+
     /**
      * Getter for the colourSetSize field
      * @return Number of total matching properties
      */
     public int getColourSetSize() {
         return colourSetSize;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     /**
@@ -103,6 +115,10 @@ public class Property extends GameBoardSquare implements Serializable {
      */
     public PropertyType getPropertyType() {
         return propertyType;
+    }
+
+    public void setPropertyType(PropertyType propertyType) {
+        this.propertyType = propertyType;
     }
 
     /**

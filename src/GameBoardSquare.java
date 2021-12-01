@@ -15,10 +15,6 @@ public abstract class GameBoardSquare{
 	/** The players currently on the square */
 	private List<Player> playersOnSquare;
 
-	public SquareType getType() {
-		return type;
-	}
-
 	/**
 	 * Only constructor
 	 * @param type The type of square
@@ -28,6 +24,18 @@ public abstract class GameBoardSquare{
 		this.type = type;
 		this.name = name;
 		this.playersOnSquare = new ArrayList<>();
+	}
+
+	public GameBoardSquare(){
+
+	}
+
+	public void setType(SquareType type) {
+		this.type = type;
+	}
+
+	public SquareType getType() {
+		return type;
 	}
 
 	/**
@@ -52,6 +60,10 @@ public abstract class GameBoardSquare{
 	 */
 	public List<Player> getPlayersOnSquare() {
 		return playersOnSquare;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**

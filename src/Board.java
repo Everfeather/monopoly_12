@@ -1,3 +1,9 @@
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -5,96 +11,26 @@ import java.util.List;
 /** Represents the Board
  * @author Daniel Wang
  */
-public class Board implements Serializable {
+public class Board extends DefaultHandler implements Serializable {
 
 	/** The list of GameBoardSquare objects */
 	private List<GameBoardSquare> board;
+	private GameBoardSquare tempSquare;
+	private StringBuffer tagContent;
+
 	/**
 	 * Default, only constructor. Defines board
 	 */
-	public Board(){
+	public Board(String filename){
 		this.board = new ArrayList<>();
 
-		SpecialSquare Go = new SpecialSquare("Go",SquareType.GO);
-		SpecialSquare comChest2 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare inTax4 = new SpecialSquare("Income Tax",SquareType.TAX);
-		Property RR5 = new Property("Reading Railroad", 200, 4, PropertyType.RAILROAD);
-		SpecialSquare chance7 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare jail = new SpecialSquare("Jail",SquareType.JAIL);
-		Property elecComp12 = new Property("Electrical Company", 150, 2, PropertyType.UTILITY);
-		Property PR15 = new Property("Pennsylvania Railroad", 200, 4, PropertyType.RAILROAD);
-		SpecialSquare comChest17 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare freeParking = new SpecialSquare("Free Parking",SquareType.FREEPARKING);
-		SpecialSquare chance22 = new SpecialSquare("empty",SquareType.EMPTY);
-		Property BOR25 = new Property("B&O Railroad", 150, 2, PropertyType.RAILROAD);
-		Property WW28 = new Property("Water Works", 150, 2, PropertyType.UTILITY);
-		SpecialSquare goToJail = new SpecialSquare("Go To Jail",SquareType.GOTOJAIL);
-		SpecialSquare comChest33 = new SpecialSquare("empty",SquareType.EMPTY);
-		Property SLR35 = new Property("Short Line", 200, 4, PropertyType.RAILROAD);
-		SpecialSquare chance36 = new SpecialSquare("empty",SquareType.EMPTY);
-		SpecialSquare luxTax38 = new SpecialSquare("Luxury Tax",SquareType.TAX);
-		Property Mediterranean_Avenue = new Property("Mediterranean Avenue",60,2,PropertyType.BROWN);
-		Property Baltic_Avenue = new Property("Baltic Avenue",60,2,PropertyType.BROWN);
-		Property Oriental_Avenue = new Property("Oriental Avenue", 100, 3,PropertyType.LIGHTBLUE);
-		Property Vermont_Avenue = new Property("Vermont Avenue", 100, 3,PropertyType.LIGHTBLUE);
-		Property Connecticut_Avenue = new Property("Connecticut Avenue", 120, 3,PropertyType.LIGHTBLUE);
-		Property St_Charles_Place = new Property("St Charles Place", 140, 3,PropertyType.PINK);
-		Property States_Avenue = new Property("States Avenue", 140, 3,PropertyType.PINK);
-		Property Virginia_Avenue = new Property("Virginia Avenue", 160, 3,PropertyType.PINK);
-		Property St_James_Place = new Property("St James Place", 180, 3,PropertyType.ORANGE);
-		Property Tennessee_Avenue = new Property("Tennessee Avenue", 180, 3,PropertyType.ORANGE);
-		Property New_York_Avenue = new Property("New York Avenue", 200, 3,PropertyType.ORANGE);
-		Property Kentucky_Avenue = new Property("Kentucky Avenue", 220, 3,PropertyType.RED);
-		Property Indiana_Avenue = new Property("Indiana Avenue", 220, 3,PropertyType.RED);
-		Property Illinois_Avenue = new Property("Illinois Avenue", 240, 3,PropertyType.RED);
-		Property Atlantic_Avenue = new Property("Atlantic Avenue", 260, 3,PropertyType.YELLOW);
-		Property Ventnor_Avenue = new Property("Ventnor Avenue", 260, 3,PropertyType.YELLOW);
-		Property Marvin_Gardens = new Property("Marvin Gardens", 280, 3,PropertyType.YELLOW);
-		Property Pacific_Avenue = new Property("Pacific Avenue", 300, 3,PropertyType.GREEN);
-		Property North_Carolina_Avenue = new Property("North Carolina Avenue", 300, 3,PropertyType.GREEN);
-		Property Pennsylvania_Avenue = new Property("Pennsylvania Avenue", 320, 3,PropertyType.GREEN);
-		Property Park_Place = new Property("Park Place", 350, 2,PropertyType.BLUE);
-		Property Boardwalk = new Property("Boardwalk", 400, 2,PropertyType.BLUE);
-		addSquare(Go); //GO 0
-		addSquare(Mediterranean_Avenue); // 1
-		addSquare(comChest2); //community chest 2
-		addSquare(Baltic_Avenue); // 3
-		addSquare(inTax4); //income tax 4
-		addSquare(RR5); //reading railroad 5
-		addSquare(Oriental_Avenue); // 6
-		addSquare(chance7); //chance 7
-		addSquare(Vermont_Avenue); // 8
-		addSquare(Connecticut_Avenue); // 9
-		addSquare(jail); //jail 10
-		addSquare(St_Charles_Place); //11
-		addSquare(elecComp12); //Electric Company 12
-		addSquare(States_Avenue); // 13
-		addSquare(Virginia_Avenue); // 14
-		addSquare(PR15); // Pennsylvania Railroad 15
-		addSquare(St_James_Place); // 16
-		addSquare(comChest17); // Community Chest 17
-		addSquare(Tennessee_Avenue); //18
-		addSquare(New_York_Avenue); //19
-		addSquare(freeParking); //Free Parking 20
-		addSquare(Kentucky_Avenue); //21
-		addSquare(chance22); //chance 22
-		addSquare(Indiana_Avenue); //23
-		addSquare(Illinois_Avenue); //24
-		addSquare(BOR25); //B. & O. Railroad 25
-		addSquare(Atlantic_Avenue); // 26
-		addSquare(Ventnor_Avenue); //27
-		addSquare(WW28); //Water Works 28
-		addSquare(Marvin_Gardens); //29
-		addSquare(goToJail); //goToJail 30
-		addSquare(Pacific_Avenue); //31
-		addSquare(North_Carolina_Avenue); //32
-		addSquare(comChest33); //Community Chest 33
-		addSquare(Pennsylvania_Avenue); //34
-		addSquare(SLR35); //Short Line (railroad) 35
-		addSquare(chance36); //chance 36
-		addSquare(Park_Place); //37
-		addSquare(luxTax38); //LuxuryTax 38
-		addSquare(Boardwalk); //39
+		try {
+			SAXParserFactory fact = SAXParserFactory.newInstance();
+			SAXParser saxParser = fact.newSAXParser();
+			saxParser.parse(filename, this);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -129,4 +65,85 @@ public class Board implements Serializable {
 	public List<GameBoardSquare> getBoard() {
 		return board;
 	}
+
+	private PropertyType getPropertyTypeFromString(String type){
+		for(PropertyType possible: PropertyType.values()){
+			if(possible.toString().equals(type)){
+				return possible;
+			}
+		}
+		return null;
+	}
+
+	private SquareType getSquareTypeFromString(String type){
+		for(SquareType possible: SquareType.values()){
+			if(possible.toString().equals(type)){
+				return possible;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void startDocument(){
+		System.out.println("Reading board xml");
+	}
+
+	@Override
+	public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
+		switch(qName){
+			case "SpecialSquare":
+				tempSquare = new SpecialSquare();
+				break;
+			case "Property":
+				tempSquare = new Property();
+				break;
+			default:
+				tagContent = new StringBuffer();
+				break;
+		}
+	}
+
+	@Override
+	public void endElement(String url, String localName, String qName){
+		switch(qName){
+			case "name":
+				tempSquare.setName(tagContent.toString());
+				break;
+			case "type":
+				tempSquare.setType(getSquareTypeFromString(tagContent.toString()));
+				break;
+			case "cost":
+				((Property)tempSquare).setCost(Integer.parseInt(tagContent.toString()));
+				break;
+			case "propertyType":
+				((Property)tempSquare).setPropertyType(getPropertyTypeFromString(tagContent.toString()));
+				break;
+			case "colourSetSize":
+				((Property)tempSquare).setColourSetSize(Integer.parseInt(tagContent.toString()));
+				break;
+			case "SpecialSquare":
+			case "Property":
+				addSquare(tempSquare);
+				break;
+		}
+	}
+
+	@Override
+	public void characters(char[] ch, int start, int length){
+		String info = new String(ch, start, length);
+		if(!info.equals("\n")) {
+			tagContent.append(info);
+		}
+	}
+
+	@Override
+	public void endDocument() throws SAXException {
+		System.out.println("Done reading board xml");
+	}
+
+	public static void main (String[] args){
+		new Board("monopolyXML.xml");
+	}
+
 }

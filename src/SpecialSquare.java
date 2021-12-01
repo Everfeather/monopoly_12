@@ -8,4 +8,7 @@ public class SpecialSquare extends GameBoardSquare implements Serializable {
     public SpecialSquare(String name,SquareType type ){
         super(type,name);
     }
+    public SpecialSquare(){
+        super();
+    };
 }

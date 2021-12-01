@@ -47,7 +47,7 @@ public class GameModel implements Serializable {
     public GameModel(){
         dice = new Dice();
         players = new ArrayList<>();
-        board = new Board();
+        board = new Board("monopolyXML.xml");
         this.views = new ArrayList<>();
         this.gameOver = false;
     }
@@ -59,7 +59,7 @@ public class GameModel implements Serializable {
         System.out.println("initializeGame called");
         dice = new Dice();
         players = new ArrayList<>();
-        board = new Board();
+        board = new Board("monopolyXML.xml");
         List<Piece> availablePieces = new ArrayList<>();
         availablePieces.add(Piece.HORSE);
         availablePieces.add(Piece.SHOE);
