@@ -332,7 +332,6 @@ public class GameModel implements Serializable {
         }
 
         for(GameView v: this.views){
-            this.save();
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.ROLL));
         }
 

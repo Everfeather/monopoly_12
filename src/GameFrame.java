@@ -146,6 +146,8 @@ public class GameFrame extends JFrame implements GameView {
 
         addButton("Remove Bot","remove_bot",buttonPanel,gc,botPanel);
 
+        addButton("Save Game", "save", buttonPanel, gc, botPanel);
+
         botPanel.add(buttonPanel);
 
 
@@ -263,6 +265,7 @@ public class GameFrame extends JFrame implements GameView {
      */
     @Override
     public void update(MonopolyEvent event) {
+        buttons.get(7).setEnabled(true);
         switch (event.getEvent()){
             case JAIL -> {
                 handleJail();
