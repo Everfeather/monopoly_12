@@ -212,7 +212,7 @@ public class GameFrame extends JFrame implements GameView {
         JFrame jFrame = new JFrame();
         //Custom button text
         Object[] options = {"Canada Version",
-                "Other Version",
+                "Original Version",
                 "Cancel"};
         int n = JOptionPane.showOptionDialog(jFrame,"Choose your Monopoly Version", "Choose Version", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
         //n will be 0,1,2, based on user selection of versions
