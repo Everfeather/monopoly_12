@@ -51,6 +51,12 @@ public class GameModel implements Serializable {
         this.views = new ArrayList<>();
         this.gameOver = false;
     }
+    /**
+     * Imports a game file
+     */
+    public void importFile(String fileName){
+
+    }
 
     /**
      * Initializes the game
