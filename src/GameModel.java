@@ -6,6 +6,7 @@ import javax.xml.parsers.SAXParserFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.*;
 import javax.xml.parsers.*;
 
@@ -43,12 +44,16 @@ public class GameModel implements Serializable {
     final int tax = 75;
     /** in jail square number*/
     final int inJail = 10;
+    /** save file name */
+    final String fileName = "gameModel.txt";
     /** List of players */
     private List<Player> players;
     /** The current player*/
     private Player curPlayer;
     /** List of views*/
     private List<GameView> views;
+    /** boolean for if a game is saved*/
+    private boolean gameSaved;
 
     /**
      * Only and default constructor for GameModel
@@ -59,6 +64,13 @@ public class GameModel implements Serializable {
         board = new Board();
         this.views = new ArrayList<>();
         this.gameOver = false;
+
+        File f = new File(fileName);
+        if(f.exists() && !f.isDirectory()) {
+           this.setGameSaved(true);
+        }else {
+            this.setGameSaved(false);
+        }
     }
     /**
      * Imports a game file
@@ -416,7 +428,6 @@ public class GameModel implements Serializable {
         FileOutputStream fileOutputStream
                 = null;
         try {
-            String fileName = "gameModel.txt";
             fileOutputStream = new FileOutputStream(fileName);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
@@ -438,6 +449,51 @@ public class GameModel implements Serializable {
             ioException.printStackTrace();
         }
         System.out.println("** Data Written to the file successfully **");
+
+        this.setGameSaved(true);
+    }
+
+    public void loadGame(){
+        try {
+            FileInputStream fileInputStream
+                    = new FileInputStream(fileName);
+            ObjectInputStream objectInputStream
+                    = new ObjectInputStream(fileInputStream);
+                try {
+                    this.counter = (Integer) objectInputStream.readObject();
+//                    for (int i = 0; i <= 40; i++){
+//                        if (i % 10 == 0 || (i % 10 == 2 && i < 30 && i != 12) || (i % 10 == 7 && i < 20) || i == 4
+//                                || i == 7 || i == 17 || i == 33 || i == 36 || i == 38){
+//                            SpecialSquare ss = (SpecialSquare) objectInputStream.readObject();
+//                            this.board.addSquare(new SpecialSquare(ss.getName(), ss.getType()));
+//                        }else{
+//                            Property p = (Property) objectInputStream.readObject();
+//                            this.board.addSquare(new Property(p.getName(), p.getCost(), p.getColourSetSize(), p.getPropertyType()));
+//                        }
+//                    }
+                    this.board = (Board) objectInputStream.readObject();
+                    this.dice = (Dice) objectInputStream.readObject();
+                    this. numBots = (Integer) objectInputStream.readObject();
+                    this. curPlayer = (Player) objectInputStream.readObject();
+
+                    this.players = (List<Player>) objectInputStream.readObject();
+                    this.views = (List<GameView>) objectInputStream.readObject();
+                }catch(IOException | ClassNotFoundException objectNotFoundException) {
+                    objectNotFoundException.printStackTrace();
+                }
+            objectInputStream.close();
+        } catch (IOException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        }
+        System.out.println("*** Game loded ***");
+    }
+
+    public boolean isGameSaved() {
+        return gameSaved;
+    }
+
+    public void setGameSaved(boolean gameSaved) {
+        this.gameSaved = gameSaved;
     }
 
     /*

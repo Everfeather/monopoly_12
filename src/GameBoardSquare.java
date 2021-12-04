@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -6,7 +7,7 @@ import java.util.Objects;
  * @author Team 12
  * @author Giancarlo Salvador, Spencer Antliff, Robbie Kuhn, Daniel Wang
  */
-public abstract class GameBoardSquare{
+public abstract class GameBoardSquare implements Serializable {
 
 	/** The type of square */
 	private SquareType type;

@@ -148,6 +148,8 @@ public class GameFrame extends JFrame implements GameView {
 
         addButton("Save Game", "save", buttonPanel, gc, botPanel);
 
+        addButton("Load Game", "load", buttonPanel, gc, botPanel);
+
         botPanel.add(buttonPanel);
 
 
@@ -266,6 +268,9 @@ public class GameFrame extends JFrame implements GameView {
     @Override
     public void update(MonopolyEvent event) {
         buttons.get(7).setEnabled(true);
+        if (model.isGameSaved()){
+            buttons.get(8).setEnabled(true);
+        }
         switch (event.getEvent()){
             case JAIL -> {
                 handleJail();

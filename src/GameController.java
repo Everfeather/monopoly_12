@@ -19,6 +19,7 @@ public class GameController implements ActionListener {
     private static final String BAILOUT = "bail_out";
     private static final String ROLL_DOUBLE = "roll_double";
     private static final String SAVE = "save";
+    private static final String LOAD = "load";
 
     /**
      * Default (and only) constructor
@@ -67,6 +68,9 @@ public class GameController implements ActionListener {
             }
             case SAVE -> {
                 model.save();
+            }
+            case LOAD -> {
+                model.loadGame();
             }
         }
     }
