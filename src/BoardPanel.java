@@ -38,7 +38,7 @@ public class BoardPanel extends JPanel implements GameView{
         this.dice = dice;
         this.squares = new ArrayList<>();
         for(int i = 0; i < board.getSize(); i++){
-            if(i % 10 == 0 || (i % 10 == 2 && i < 30 && i != 12) || (i % 10 == 7 && i < 20) || i == 4
+            if(i % 10 == 0 || (i % 10 == 2 && i < 30 && i != 12) || i == 4
                     || i == 7 || i == 17 || i == 33 || i == 36 || i == 38){
                 squares.add(new SpecialSquarePanel((SpecialSquare) board.getBoard().get(i)));
 
@@ -341,6 +341,7 @@ public class BoardPanel extends JPanel implements GameView{
                 break;
             case BUY_BUILDING:
                 PropertyPanel target = findPropertyPanel(event.getProperty());
+                assert target != null;
                 target.setPropertyDescription(event.getProperty().toString());
                 break;
             case BUY:
@@ -357,6 +358,7 @@ public class BoardPanel extends JPanel implements GameView{
                 }
                 break;
             case LOAD:
+                System.out.println("Updating board LOAD");
                 updatePlayerPositionSquare(model);
                 break;
         }

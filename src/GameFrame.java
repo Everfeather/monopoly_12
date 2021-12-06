@@ -12,14 +12,18 @@ import java.util.Map;
  */
 public class GameFrame extends JFrame implements GameView {
 
-    /** Value for the ROLL button */
+    /** Button Values */
     private final int ROLL = 0;
-    /** Value for the NEXT_TURN button */
     private final int NEXT_TURN = 1;
-    /** The value for the BUY button */
     private final int BUY = 2;
-
     private final int BUY_BUILDING = 3;
+    private final int START_GAME = 4;
+    private final int ADD_BOT = 5;
+    private final int REMOVE_BOT = 6;
+    private final int SAVE_GAME = 7;
+    private final int LOAD_GAME = 8;
+    /** End of Button Values/
+
     /** The board view */
     private BoardPanel board;
     /** The main content panel of the view */
@@ -47,7 +51,7 @@ public class GameFrame extends JFrame implements GameView {
         super("MONOPOLY GAME TIME");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1080,720);
-        this.buttons = new ArrayList<JButton>();
+        this.buttons = new ArrayList<>();
 
         model = new GameModel();
         model.addGameView(this);
@@ -105,10 +109,10 @@ public class GameFrame extends JFrame implements GameView {
         addButton("Buy","buy",buttonPanel,gc,botPanel);
 
         //addButton("Buy building","buyBuilding",buttonPanel,gc,botPanel);
-        JButton newButton = new JButton("Buy building");
-        newButton.setActionCommand("buyBuilding");
+        JButton buyBuildingButton = new JButton("Buy building");
+        buyBuildingButton.setActionCommand("buyBuilding");
 
-        newButton.addActionListener(e -> {
+        buyBuildingButton.addActionListener(e -> {
             //purchasing building
             JFrame propertyListFrame = new JFrame();
             JPanel propertyListPanel = new JPanel();
@@ -135,10 +139,9 @@ public class GameFrame extends JFrame implements GameView {
             propertyListFrame.pack();
             propertyListFrame.setVisible(true);
         });
-        buttonPanel.add(newButton);
-        this.buttons.add(newButton);
+        buttonPanel.add(buyBuildingButton);
 
-        botPanel.add(buttonPanel);
+        this.buttons.add(buyBuildingButton);
 
         addButton("Start Game","init",buttonPanel,gc,botPanel);
 
@@ -152,6 +155,10 @@ public class GameFrame extends JFrame implements GameView {
 
         botPanel.add(buttonPanel);
 
+        this.buttons.get(ROLL).setEnabled(false);
+        this.buttons.get(NEXT_TURN).setEnabled(false);
+        this.buttons.get(BUY).setEnabled(false);
+        this.buttons.get(BUY_BUILDING).setEnabled(false);
 
         eventView = new JLabel("Welcome to monopoly.", SwingConstants.CENTER);
         botPanel.add(eventView);
@@ -232,7 +239,6 @@ public class GameFrame extends JFrame implements GameView {
         }
         eventView.setText(model.getCurrentPlayer().getPlayerPiece() + "'s turn");
         buttons.get(ROLL).setEnabled(true);
-        System.out.println(6);
     }
 
     private void handleRentOccurrance(Player curP, GameBoardSquare curSquare){
@@ -260,14 +266,15 @@ public class GameFrame extends JFrame implements GameView {
      */
     @Override
     public void update(MonopolyEvent event) {
-        buttons.get(7).setEnabled(true);
+        buttons.get(SAVE_GAME).setEnabled(true);
         if (model.isGameSaved()){
-            buttons.get(8).setEnabled(true);
+            buttons.get(LOAD_GAME).setEnabled(true);
         }
         switch (event.getEvent()){
             case JAIL -> {
                 handleJail();
             }
+
             case BUY_BUILDING -> {
                 Player curP = model.getCurrentPlayer();
                 updatePlayerMoney(curP);
@@ -309,6 +316,11 @@ public class GameFrame extends JFrame implements GameView {
                 handleRentOccurrance(curP, curSquare);
             }
             case LOAD -> {
+
+                for(JButton b : buttons){
+                    b.setEnabled(true);
+                }
+                System.out.println("LOAD BRUH");
                 gameLoad();
             }
         }
@@ -320,7 +332,6 @@ public class GameFrame extends JFrame implements GameView {
 
         //Adding board
         board.createBoardPanel(model.getBoard(), model.getDice());
-        revalidate();
 
         for(PlayerPanel p: playerPanels){
             if(model.getPlayers().get(i).isBot()){
@@ -340,6 +351,7 @@ public class GameFrame extends JFrame implements GameView {
         }
         eventView.setText(model.getCurrentPlayer().getPlayerPiece() + "'s turn");
         buttons.get(ROLL).setEnabled(true);
+        System.out.println("ROLL SET TO TRUE");
     }
 
     public static void main(String[] args){
