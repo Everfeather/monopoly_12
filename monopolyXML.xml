@@ -1,0 +1,218 @@
+<board>
+	<SpecialSquare>
+		<name>Go</name>
+		<type>GO</type>
+	</SpecialSquare>
+	<Property>
+		<name>Mediterranean Avenue</name>
+		<colourSetSize>2</colourSetSize>
+		<cost>60</cost>
+		<propertyType>BROWN</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>empty</name>
+		<type>EMPTY</type>
+	</SpecialSquare>
+	<Property>
+		<name>Baltic Avenue</name>
+		<colourSetSize>2</colourSetSize>
+		<cost>60</cost>
+		<propertyType>BROWN</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>Income Tax</name>
+		<type>TAX</type>
+	</SpecialSquare>
+	<Property>
+		<name>Reading Railroad</name>
+		<colourSetSize>4</colourSetSize>
+		<cost>200</cost>
+		<propertyType>RAILROAD</propertyType>
+	</Property>
+	<Property>
+		<name>Oriental Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>100</cost>
+		<propertyType>LIGHTBLUE</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>empty</name>
+		<type>EMPTY</type>
+	</SpecialSquare>
+	<Property>
+		<name>Vermont Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>100</cost>
+		<propertyType>LIGHTBLUE</propertyType>
+	</Property>
+	<Property>
+		<name>Connecticut Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>120</cost>
+		<propertyType>LIGHTBLUE</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>Jail</name>
+		<type>JAIL</type>
+	</SpecialSquare>
+	<Property>
+		<name>St Charles Place</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>140</cost>
+		<propertyType>PINK</propertyType>
+	</Property>
+	<Property>
+		<name>Electrical Company</name>
+		<colourSetSize>2</colourSetSize>
+		<cost>150</cost>
+		<propertyType>UTILITY</propertyType>
+	</Property>
+	<Property>
+		<name>States Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>140</cost>
+		<propertyType>PINK</propertyType>
+	</Property>
+	<Property>
+		<name>Virginia Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>160</cost>
+		<propertyType>PINK</propertyType>
+	</Property>
+	<Property>
+		<name>Pennsylvania Railroad</name>
+		<colourSetSize>4</colourSetSize>
+		<cost>200</cost>
+		<propertyType>RAILROAD</propertyType>
+	</Property>
+	<Property>
+		<name>St James Place</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>180</cost>
+		<propertyType>ORANGE</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>empty</name>
+		<type>EMPTY</type>
+	</SpecialSquare>
+	<Property>
+		<name>Tennessee Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>180</cost>
+		<propertyType>ORANGE</propertyType>
+	</Property>
+	<Property>
+		<name>New York Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>200</cost>
+		<propertyType>ORANGE</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>Free Parking</name>
+		<type>FREEPARKING</type>
+	</SpecialSquare>
+	<Property>
+		<name>Kentucky Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>220</cost>
+		<propertyType>RED</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>empty</name>
+		<type>EMPTY</type>
+	</SpecialSquare>
+	<Property>
+		<name>Indiana Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>220</cost>
+		<propertyType>RED</propertyType>
+	</Property>
+	<Property>
+		<name>Illinois Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>240</cost>
+		<propertyType>RED</propertyType>
+	</Property>
+	<Property>
+		<name>B&amp;O Railroad</name>
+		<colourSetSize>2</colourSetSize>
+		<cost>150</cost>
+		<propertyType>RAILROAD</propertyType>
+	</Property>
+	<Property>
+		<name>Atlantic Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>260</cost>
+		<propertyType>YELLOW</propertyType>
+	</Property>
+	<Property>
+		<name>Ventnor Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>260</cost>
+		<propertyType>YELLOW</propertyType>
+	</Property>
+	<Property>
+		<name>Water Works</name>
+		<colourSetSize>2</colourSetSize>
+		<cost>150</cost>
+		<propertyType>UTILITY</propertyType>
+	</Property>
+	<Property>
+		<name>Marvin Gardens</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>280</cost>
+		<propertyType>YELLOW</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>Go To Jail</name>
+		<type>GOTOJAIL</type>
+	</SpecialSquare>
+	<Property>
+		<name>Pacific Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>300</cost>
+		<propertyType>GREEN</propertyType>
+	</Property>
+	<Property>
+		<name>North Carolina Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>300</cost>
+		<propertyType>GREEN</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>empty</name>
+		<type>EMPTY</type>
+	</SpecialSquare>
+	<Property>
+		<name>Pennsylvania Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>320</cost>
+		<propertyType>GREEN</propertyType>
+	</Property>
+	<Property>
+		<name>Short Line</name>
+		<colourSetSize>4</colourSetSize>
+		<cost>200</cost>
+		<propertyType>RAILROAD</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>empty</name>
+		<type>EMPTY</type>
+	</SpecialSquare>
+	<Property>
+		<name>Park Place</name>
+		<colourSetSize>2</colourSetSize>
+		<cost>350</cost>
+		<propertyType>BLUE</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>Luxury Tax</name>
+		<type>TAX</type>
+	</SpecialSquare>
+	<Property>
+		<name>Boardwalk</name>
+		<colourSetSize>2</colourSetSize>
+		<cost>400</cost>
+		<propertyType>BLUE</propertyType>
+	</Property>
+</board>
