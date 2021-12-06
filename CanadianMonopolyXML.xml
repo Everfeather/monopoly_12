@@ -1,0 +1,218 @@
+<board>
+	<SpecialSquare>
+		<name>Go</name>
+		<type>GO</type>
+	</SpecialSquare>
+	<Property>
+		<name>Duckworth Street</name>
+		<colourSetSize>2</colourSetSize>
+		<cost>60</cost>
+		<propertyType>BROWN</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>empty</name>
+		<type>EMPTY</type>
+	</SpecialSquare>
+	<Property>
+		<name>Signal Hill Road</name>
+		<colourSetSize>2</colourSetSize>
+		<cost>60</cost>
+		<propertyType>BROWN</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>Income Tax</name>
+		<type>TAX</type>
+	</SpecialSquare>
+	<Property>
+		<name>CN Rail</name>
+		<colourSetSize>4</colourSetSize>
+		<cost>200</cost>
+		<propertyType>RAILROAD</propertyType>
+	</Property>
+	<Property>
+		<name>Waterloo Row</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>100</cost>
+		<propertyType>LIGHTBLUE</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>empty</name>
+		<type>EMPTY</type>
+	</SpecialSquare>
+	<Property>
+		<name>King Street</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>100</cost>
+		<propertyType>LIGHTBLUE</propertyType>
+	</Property>
+	<Property>
+		<name>Queen Street</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>120</cost>
+		<propertyType>LIGHTBLUE</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>Jail</name>
+		<type>JAIL</type>
+	</SpecialSquare>
+	<Property>
+		<name>University Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>140</cost>
+		<propertyType>PINK</propertyType>
+	</Property>
+	<Property>
+		<name>Telephone Company</name>
+		<colourSetSize>2</colourSetSize>
+		<cost>150</cost>
+		<propertyType>UTILITY</propertyType>
+	</Property>
+	<Property>
+		<name>Barrington Street</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>140</cost>
+		<propertyType>PINK</propertyType>
+	</Property>
+	<Property>
+		<name>Spring Garden Road</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>160</cost>
+		<propertyType>PINK</propertyType>
+	</Property>
+	<Property>
+		<name>Ontario Northland</name>
+		<colourSetSize>4</colourSetSize>
+		<cost>200</cost>
+		<propertyType>RAILROAD</propertyType>
+	</Property>
+	<Property>
+		<name>Rue St-Jean</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>180</cost>
+		<propertyType>ORANGE</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>empty</name>
+		<type>EMPTY</type>
+	</SpecialSquare>
+	<Property>
+		<name>Rue St-Cathrine</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>180</cost>
+		<propertyType>ORANGE</propertyType>
+	</Property>
+	<Property>
+		<name>Rue St-Jacques</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>200</cost>
+		<propertyType>ORANGE</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>Free Parking</name>
+		<type>FREEPARKING</type>
+	</SpecialSquare>
+	<Property>
+		<name>Sussex Drive</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>220</cost>
+		<propertyType>RED</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>empty</name>
+		<type>EMPTY</type>
+	</SpecialSquare>
+	<Property>
+		<name>Younge Street</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>220</cost>
+		<propertyType>RED</propertyType>
+	</Property>
+	<Property>
+		<name>Bay Street</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>240</cost>
+		<propertyType>RED</propertyType>
+	</Property>
+	<Property>
+		<name>CP Rail</name>
+		<colourSetSize>2</colourSetSize>
+		<cost>150</cost>
+		<propertyType>RAILROAD</propertyType>
+	</Property>
+	<Property>
+		<name>Portage and Main</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>260</cost>
+		<propertyType>YELLOW</propertyType>
+	</Property>
+	<Property>
+		<name>Victoria Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>260</cost>
+		<propertyType>YELLOW</propertyType>
+	</Property>
+	<Property>
+		<name>Gas Company</name>
+		<colourSetSize>2</colourSetSize>
+		<cost>150</cost>
+		<propertyType>UTILITY</propertyType>
+	</Property>
+	<Property>
+		<name>Albert Street</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>280</cost>
+		<propertyType>YELLOW</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>Go To Jail</name>
+		<type>GOTOJAIL</type>
+	</SpecialSquare>
+	<Property>
+		<name>Jasper Avenue</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>300</cost>
+		<propertyType>GREEN</propertyType>
+	</Property>
+	<Property>
+		<name>St.Albert</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>300</cost>
+		<propertyType>GREEN</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>empty</name>
+		<type>EMPTY</type>
+	</SpecialSquare>
+	<Property>
+		<name>Macleod Trail</name>
+		<colourSetSize>3</colourSetSize>
+		<cost>320</cost>
+		<propertyType>GREEN</propertyType>
+	</Property>
+	<Property>
+		<name>BC Rail</name>
+		<colourSetSize>4</colourSetSize>
+		<cost>200</cost>
+		<propertyType>RAILROAD</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>empty</name>
+		<type>EMPTY</type>
+	</SpecialSquare>
+	<Property>
+		<name>Granville</name>
+		<colourSetSize>2</colourSetSize>
+		<cost>350</cost>
+		<propertyType>BLUE</propertyType>
+	</Property>
+	<SpecialSquare>
+		<name>Luxury Tax</name>
+		<type>TAX</type>
+	</SpecialSquare>
+	<Property>
+		<name>Douglas Street</name>
+		<colourSetSize>2</colourSetSize>
+		<cost>400</cost>
+		<propertyType>BLUE</propertyType>
+	</Property>
+</board>
