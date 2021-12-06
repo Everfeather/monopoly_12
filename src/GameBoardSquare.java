@@ -16,10 +16,6 @@ public abstract class GameBoardSquare implements Serializable {
 	/** The players currently on the square */
 	private List<Player> playersOnSquare;
 
-	public SquareType getType() {
-		return type;
-	}
-
 	/**
 	 * Only constructor
 	 * @param type The type of square
@@ -28,6 +24,22 @@ public abstract class GameBoardSquare implements Serializable {
 	public GameBoardSquare(SquareType type, String name){
 		this.type = type;
 		this.name = name;
+		this.playersOnSquare = new ArrayList<>();
+	}
+
+	public GameBoardSquare(){
+
+	}
+
+	public void setType(SquareType type) {
+		this.type = type;
+	}
+
+	public SquareType getType() {
+		return type;
+	}
+
+	public void initPlayersOnSquare(){
 		this.playersOnSquare = new ArrayList<>();
 	}
 
@@ -53,6 +65,10 @@ public abstract class GameBoardSquare implements Serializable {
 	 */
 	public List<Player> getPlayersOnSquare() {
 		return playersOnSquare;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
