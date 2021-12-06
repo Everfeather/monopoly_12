@@ -218,16 +218,13 @@ public class GameFrame extends JFrame implements GameView {
 
         for(PlayerPanel p: playerPanels){
             if(model.getPlayers().get(i).isBot()){
-                p.setMoney(model.getSTARTINGBALANCE());
                 p.setPiece(model.getPlayers().get(i).getPlayerPiece().toString() + "_bot");
-                p.setPlayerPiece(model.getPlayers().get(i).getPlayerPiece());
-                p.setCurPos(model.getPlayers().get(i).getCurrentPos());
             }else{
-                p.setMoney(model.getSTARTINGBALANCE());
                 p.setPiece(model.getPlayers().get(i).getPlayerPiece().toString());
-                p.setPlayerPiece(model.getPlayers().get(i).getPlayerPiece());
-                p.setCurPos(model.getPlayers().get(i).getCurrentPos());
             }
+            p.setMoney(model.getSTARTINGBALANCE());
+            p.setPlayerPiece(model.getPlayers().get(i).getPlayerPiece());
+            p.setCurPos(model.getPlayers().get(i).getCurrentPos());
             i++;
         }
         for(JButton b : buttons){
@@ -321,6 +318,10 @@ public class GameFrame extends JFrame implements GameView {
         int i = 0;
         System.out.println("updating view with loaded game");
 
+        //Adding board
+        board.createBoardPanel(model.getBoard(), model.getDice());
+        revalidate();
+
         for(PlayerPanel p: playerPanels){
             if(model.getPlayers().get(i).isBot()){
                 p.setPiece(model.getPlayers().get(i).getPlayerPiece().toString() + "_bot");
@@ -331,8 +332,6 @@ public class GameFrame extends JFrame implements GameView {
             p.setMoney(model.getPlayers().get(i).getBalance());
             p.setPlayerPiece(model.getPlayers().get(i).getPlayerPiece());
             p.setCurPos(model.getPlayers().get(i).getCurrentPos());
-            this.updatePlayerMoney(model.getPlayers().get(i));
-            this.updatePlayerPosition(model.getPlayers().get(i));
             System.out.println(model.getPlayers().get(i).toString());
             i++;
         }

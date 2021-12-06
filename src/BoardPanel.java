@@ -356,6 +356,9 @@ public class BoardPanel extends JPanel implements GameView{
                     diceRollPane.setText(model.getCurrentPlayer().getPlayerPiece() + " Rolled: " + model.getDice().getRollValue() + ". Nice, doubles!");
                 }
                 break;
+            case LOAD:
+                updatePlayerPositionSquare(model);
+                break;
         }
 
     }
