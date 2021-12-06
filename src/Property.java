@@ -44,6 +44,8 @@ public class Property extends GameBoardSquare implements Serializable {
 
     public Property(){
         super();
+        this.numBuildings = 0;
+        this.owner = null;
     }
 
     /**
@@ -73,6 +75,7 @@ public class Property extends GameBoardSquare implements Serializable {
 
     public void setCost(int cost) {
         this.cost = cost;
+        this.rent = (int) (cost * 0.1);
     }
 
     /**
@@ -158,8 +161,10 @@ public class Property extends GameBoardSquare implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Property property = (Property) o;
-        return super.getName() == property.getName();
+        return colourSetSize == property.colourSetSize && cost == property.cost && Objects.equals(owner, property.owner) && propertyType == property.propertyType;
     }
 
     @Override

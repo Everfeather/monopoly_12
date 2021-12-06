@@ -63,15 +63,6 @@ public class Dice implements Serializable {
         this.roll_double = rollDouble;
     }
 
-
-    /**
-     * setter for rollDouble field
-     * @param roll_double
-     */
-    public void setRoll_double(boolean roll_double) {
-        this.roll_double = roll_double;
-    }
-
     public boolean triple_Roll(){
         if (numDoublesRolled == 3){
             numDoublesRolled = 0;

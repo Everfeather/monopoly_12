@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -133,13 +134,13 @@ class GameModelTest {
         model.initializeGame(filename);
 
         model.getDice().setRollValue(10);
-        model.getDice().setRoll_double(true);
+        model.getDice().setRollDouble(true);
         model.movePlayer();
         model.getDice().setRollValue(10);
-        model.getDice().setRoll_double(true);
+        model.getDice().setRollDouble(true);
         model.movePlayer();
         model.getDice().setRollValue(10);
-        model.getDice().setRoll_double(true);
+        model.getDice().setRollDouble(true);
         model.movePlayer();
 
         assertEquals(true, model.getCurrentPlayer().getInJail());
@@ -192,18 +193,18 @@ class GameModelTest {
         model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
         model.nextTurn();
         model.movePlayer();
-        assertEquals(model.getSTARTINGBALANCE() - 15, model.getCurrentPlayer().getBalance());
+        assertEquals(model.getSTARTINGBALANCE() - 15, model.getCurrentPlayer().getBalance(), "First purchase wrong");
         //Goes back to player 1
         while(model.getCurrentPlayer().getPlayerPiece() != Piece.HORSE){
             model.nextTurn();
         }
         //First player again
-        model.getDice().setRollValue(16);
+        model.getDice().setRollValue(10);
         model.movePlayer();
         model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
         model.nextTurn();
         model.movePlayer();
-        assertEquals(model.getSTARTINGBALANCE() - 15 - 22, model.getCurrentPlayer().getBalance());
+        assertEquals(model.getSTARTINGBALANCE() - 15 - 30, model.getCurrentPlayer().getBalance(), "Second purchase wrong");
     }
 
     @org.junit.jupiter.api.Test
@@ -222,5 +223,20 @@ class GameModelTest {
         assertEquals(model.getCurrentPlayer().getCurrentPos(), pos);
         assertEquals(model.getGameOver(), gameDone);
         assertEquals(model.getCurrentPlayer().toString(), curP.toString());
+    }
+
+    @Test
+    void testLoadXML(){
+        Board board = new Board(filename);
+        Property test1 = new Property("Mediterranean Avenue", 60, 2, PropertyType.BROWN);
+        assertEquals(test1.getRent(),((Property)board.getSquare(1)).getRent(), "First square rent wrong!");
+        assertEquals(test1.getName(),((Property)board.getSquare(1)).getName(), "First square name wrong!");
+        assertEquals(test1.getCost(),((Property)board.getSquare(1)).getCost(), "First square rent wrong!");
+
+
+        Property test2 = new Property("Boardwalk", 400, 2, PropertyType.BLUE);
+        assertEquals(test2.getRent(),((Property)board.getSquare(39)).getRent(), "Second square rent wrong!");
+        assertEquals(test2.getName(),((Property)board.getSquare(39)).getName(), "Second square name wrong!");
+        assertEquals(test2.getCost(),((Property)board.getSquare(39)).getCost(), "Second square rent wrong!");
     }
 }

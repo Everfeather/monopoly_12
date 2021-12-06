@@ -20,8 +20,6 @@ import org.xml.sax.helpers.*;
 public class GameModel implements Serializable {
     /** The maximum number of players allowed */
     private static final int MAXNUMPLAYERS = 4;
-
-
     /** Starting balance of the players */
     private static final int STARTINGBALANCE = 1500;
     /** Counter to help decide player turn */
@@ -263,6 +261,8 @@ public class GameModel implements Serializable {
             if(prop.getPropertyType() == PropertyType.RAILROAD){
                 int numOwnedRailRoads = 0;
                 for(Map.Entry<Property, PropertyType> entry : curPlayer.getProperties().entrySet() ){
+                    System.out.println("PROPERTIES: \n------");
+                    System.out.println(curPlayer.getProperties().entrySet());
                     if( entry.getValue() == PropertyType.RAILROAD){
                         numOwnedRailRoads++;
                     }
@@ -333,15 +333,18 @@ public class GameModel implements Serializable {
     }
 
     private void handleLandedSquare(int landedSquareIndex, GameBoardSquare curSquare) {
+        System.out.println(curSquare);
         if(!(curSquare instanceof SpecialSquare)){
             if(((Property) curSquare).getOwner() != null){
                 Player owner = ((Property) curSquare).getOwner();
                 if(owner.getPlayerPiece() != curPlayer.getPlayerPiece()) {
+                    System.out.println(curPlayer.getPlayerPiece() + " is paying rent!\n---------");
                     if(((Property) curSquare).getPropertyType() == PropertyType.UTILITY){
                         curPlayer.payRent(owner, (Property) curSquare, dice.getRollValue());
                     } else {
                         curPlayer.payRent(owner, (Property) curSquare);
                     }
+                    System.out.println(curPlayer);
                 }
             }
 

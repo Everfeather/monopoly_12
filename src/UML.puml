@@ -20,7 +20,7 @@ class Dice {
     - rollValue: int
     - rand: Random
     - roll_double: boolean
-    - triple_Roll_Double_counter: int
+    - numDoublesRolled: int
     - dice: int[]
 
     + Dice():
@@ -28,7 +28,9 @@ class Dice {
     + getRollValue(): int
     + setRollValue(int):
     + getRollDouble(): boolean
+    + setRollDouble(boolean):
     + triple_roll: boolean
+    + getNumDoublesRolled(): int
     + rollDice():
 }
 
@@ -42,6 +44,8 @@ class GameController {
     - {static} REMOVE_BOT: String
     - {static} BAILOUT: String
     - {static} ROLL_DOUBLE: String
+    - {static} ORIGINAL_V: String
+    - {static} CANADIAN_V: String
     + GameController():
     + actionPerformed(ActionEvent):
 }
@@ -70,7 +74,8 @@ class MonopolyEvent {
 }
 
 class SpecialSquare {
-    + SpecialSquare(String, SquareType)
+    + SpecialSquare(String, SquareType):
+    + SpecialSquare():
 }
 
 class Player {
@@ -99,11 +104,14 @@ class Player {
     + isBankrupt(): boolean
     + setBankrupt(boolean): void
     + hasPropertySet(Property): boolean
+    + containsAPropertySet()
     + addProperty(Property): void
     + toString(): String
-    + goneBankrupt(): void
+    + isBankrupt(): void
     + payRent(Player,Property): void
     + payRent(Player,Property, int): void
+    + isBot(): boolean
+    + setBot(boolean):
 }
 
 abstract class GameBoardSquare {
@@ -112,13 +120,23 @@ abstract class GameBoardSquare {
     - playersOnSquare: List<Player>
 
     + GameBoardSquare(SquareType, String):
+    + initPlayersOnSquare():
+    + getPlayersOnSquare(): List<Player>
     + addPlayerToSquare(Player): void
     + removePlayerFromSquare(Player): void
-    + getPlayersOnSquare(): List<Player>
+    + setType(SquareType):
+    + getType(): SquareType
+    + setName(String):
     + getName(): String
     + toString(): String
     + equals(Object): boolean
     + hashCode(): int
+}
+
+class Bot {
+    - model: GameModel
+    + botTurn()
+    + Bot(Piece, int, GameModel):
 }
 
 class BoardPanel {
@@ -133,18 +151,30 @@ class BoardPanel {
     + getDiceRollPane(): JTextPane
     - findPropertyPanel(Property)
     + update(MonopolyEvent)
+    - playersOnSquare(GameBoardSquare): String
+    - updatePlayerPositionSquare(GameModel):
+    - findPropertyPanel(Property): PropertyPanel
 
 }
 
 class Board {
 
     - board: List<GameBoardSquare>
+    - tagContent: StringBuffer
+    - tempSquare: GameBoardSquare
 
     + Board():
     + addSquare(GameBoardSquare): void
     + getSize(): int
     + getSquare(int): GameBoardSquare
     + getBoard(): List<GameBoardSquare>
+    - getPropertyTypeFromString(String): PropertyType
+    - getSquareTypeFromString(String): SquareType
+    + startDocument():
+    + startElement(String, String, String, Attributes):
+    + endElement(String,String,String):
+    + characters(char[],int,int):
+    + endDocument():
 }
 
 class GameModel {
@@ -157,6 +187,13 @@ class GameModel {
     - players: List<Player>
     - curPlayer: Player
     - views: List<GameView>
+    - jailTurns: int
+    - jailBailAmount: int
+    - passGoAmount: int
+    - tax: int
+    - inJail: int
+    - fileName: String
+    - gameSaved: boolean
 
     + GameModel():
     + initializeGame(): void
@@ -177,6 +214,15 @@ class GameModel {
     + addBot():
     + removeBot()
 
+    + save():
+    + loadGame():
+    + isGameSaved(): boolean
+    + setGameSaved(boolean):
+    + importFile(String):
+    - handleLandedSquare(int,GameBoardSquare):
+    - handlePassGo():
+    - handleInJail():
+
 }
 
 class Property {
@@ -189,13 +235,18 @@ class Property {
     - numBuildings: int
 
     + Property(String, int, int, PropertyType):
+    + Property():
     + buildingPurchased(): void
+    + setColourSetSize(int):
     + getColourSetSize(): int
+    + setCost(int):
     + getCost(): int
     + getBuildingCost(): int
+    + setRent(int):
     + getRent(): int
     + getOwner(): Player
     + getPropertyType(): PropertyType
+    + setPropertyType(PropertyType):
     + getNumBuildings(): int
     + removeOwner(): void
     + setOwner(Player): void
@@ -222,9 +273,16 @@ class GameFrame {
     - {static} bgColour: Color = Color.PINK
 
     + GameFrame():
-    + {static} main(String[]): void
-    + update(MonopolyEvent): void
-    + getBoardPanel(): BoardPanel
+    + addButton(String,String,JPanel,ActionListener,JPanel):
+    - handleJail():
+    - updatePlayerMoney(Player):
+    - updatePlayerPosition(Player):
+    - handleGameOver():
+    - gameInitialization():
+    - handleRentOccurrance(Player,GameBoardSquare):
+    - handlePotentialDoubles():
+    + update(MonopolyEvent):
+    - gameLoad():
 }
 
 interface GameView {
@@ -270,6 +328,13 @@ JFrame <|-- GameFrame
 JPanel <|-- PlayerPanel
 JPanel <|-- SpecialSquarePanel
 
+java.io.Serializable <|.. Dice
+java.io.Serializable <|.. Player
+java.io.Serializable <|.. GameBoardSquare
+java.io.Serializable <|.. Bot
+java.io.Serializable <|.. SpecialSquare
+java.io.Serializable <|.. Property
+java.io.Serializable <|.. Board
 Player "n" --* GameModel
 GameModel o-- GameView
 GameModel o-- "1" Dice
@@ -281,8 +346,10 @@ Property o-- "1" Player
 
 Player *-- "1" Piece
 Player o-- "n" Property
+Player <|-- Bot
 
 Board *-- "40" GameBoardSquare
+org.xml.sax.helpers.DefaultHandler <|-- Board
 
 SpecialSquare --up|> GameBoardSquare
 

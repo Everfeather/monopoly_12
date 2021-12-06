@@ -257,6 +257,7 @@ public class Player implements Serializable {
         //testing val
 //        int rent = property.getBuildingCost();
         int rent = property.getRent();
+        System.out.println(rent + " is rent for property: " + property);
         if(this.getBalance() >= rent){
             this.decreaseBalance(rent);
             payee.increaseBalance(rent);
