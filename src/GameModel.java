@@ -417,22 +417,18 @@ public class GameModel implements Serializable {
             objectOutputStream.writeObject(counter);
             objectOutputStream.writeObject(board);
             objectOutputStream.writeObject(dice);
+            objectOutputStream.writeObject(gameOver);
             objectOutputStream.writeObject(numBots);
             objectOutputStream.writeObject(curPlayer);
-
             objectOutputStream.writeObject(players);
             objectOutputStream.writeObject(views);
 
-
             objectOutputStream.flush();
             objectOutputStream.close();
-        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
         }
         System.out.println("** Data Written to the file successfully **");
-
         this.setGameSaved(true);
     }
 
@@ -444,21 +440,10 @@ public class GameModel implements Serializable {
                     = new ObjectInputStream(fileInputStream);
                 try {
                     this.counter = (Integer) objectInputStream.readObject();
-//                    for (int i = 0; i <= 40; i++){
-//                        if (i % 10 == 0 || (i % 10 == 2 && i < 30 && i != 12) || (i % 10 == 7 && i < 20) || i == 4
-//                                || i == 7 || i == 17 || i == 33 || i == 36 || i == 38){
-//                            SpecialSquare ss = (SpecialSquare) objectInputStream.readObject();
-//                            this.board.addSquare(new SpecialSquare(ss.getName(), ss.getType()));
-//                        }else{
-//                            Property p = (Property) objectInputStream.readObject();
-//                            this.board.addSquare(new Property(p.getName(), p.getCost(), p.getColourSetSize(), p.getPropertyType()));
-//                        }
-//                    }
                     this.board = (Board) objectInputStream.readObject();
                     this.dice = (Dice) objectInputStream.readObject();
-                    this. numBots = (Integer) objectInputStream.readObject();
-                    this. curPlayer = (Player) objectInputStream.readObject();
-
+                    this.numBots = (Integer) objectInputStream.readObject();
+                    this.curPlayer = (Player) objectInputStream.readObject();
                     this.players = (List<Player>) objectInputStream.readObject();
                     this.views = (List<GameView>) objectInputStream.readObject();
                 }catch(IOException | ClassNotFoundException objectNotFoundException) {
@@ -467,6 +452,10 @@ public class GameModel implements Serializable {
             objectInputStream.close();
         } catch (IOException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
+        }
+
+        for(GameView v: this.views){
+            v.update(new MonopolyEvent(this,MonopolyEvent.EventType.LOAD));
         }
         System.out.println("*** Game loded ***");
     }

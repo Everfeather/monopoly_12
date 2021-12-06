@@ -311,7 +311,36 @@ public class GameFrame extends JFrame implements GameView {
                 handlePotentialDoubles();
                 handleRentOccurrance(curP, curSquare);
             }
+            case LOAD -> {
+                gameLoad();
+            }
         }
+    }
+
+    private void gameLoad() {
+        int i = 0;
+        System.out.println("updating view with loaded game");
+
+        for(PlayerPanel p: playerPanels){
+            if(model.getPlayers().get(i).isBot()){
+                p.setPiece(model.getPlayers().get(i).getPlayerPiece().toString() + "_bot");
+
+            }else{
+                p.setPiece(model.getPlayers().get(i).getPlayerPiece().toString());
+            }
+            p.setMoney(model.getPlayers().get(i).getBalance());
+            p.setPlayerPiece(model.getPlayers().get(i).getPlayerPiece());
+            p.setCurPos(model.getPlayers().get(i).getCurrentPos());
+            this.updatePlayerMoney(model.getPlayers().get(i));
+            this.updatePlayerPosition(model.getPlayers().get(i));
+            System.out.println(model.getPlayers().get(i).toString());
+            i++;
+        }
+        for(JButton b : buttons){
+            b.setEnabled(false);
+        }
+        eventView.setText(model.getCurrentPlayer().getPlayerPiece() + "'s turn");
+        buttons.get(ROLL).setEnabled(true);
     }
 
     public static void main(String[] args){
