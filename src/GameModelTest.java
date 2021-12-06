@@ -205,4 +205,22 @@ class GameModelTest {
         model.movePlayer();
         assertEquals(model.getSTARTINGBALANCE() - 15 - 22, model.getCurrentPlayer().getBalance());
     }
+
+    @org.junit.jupiter.api.Test
+    void testSaveAndLoad(){
+        model.initializeGame(filename);
+        model.getDice().setRollValue(5);
+        model.movePlayer();
+        int pos = model.getCurrentPlayer().getCurrentPos();
+        boolean gameDone = model.getGameOver();
+        Player curP = model.getCurrentPlayer();
+
+        model.save();
+        model = new GameModel();
+        model.loadGame();
+
+        assertEquals(model.getCurrentPlayer().getCurrentPos(), pos);
+        assertEquals(model.getGameOver(), gameDone);
+        assertEquals(model.getCurrentPlayer().toString(), curP.toString());
+    }
 }
