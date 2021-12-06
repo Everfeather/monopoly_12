@@ -442,6 +442,7 @@ public class GameModel implements Serializable {
                     this.counter = (Integer) objectInputStream.readObject();
                     this.board = (Board) objectInputStream.readObject();
                     this.dice = (Dice) objectInputStream.readObject();
+                    this.gameOver = (Boolean) objectInputStream.readObject();
                     this.numBots = (Integer) objectInputStream.readObject();
                     this.curPlayer = (Player) objectInputStream.readObject();
                     this.players = (List<Player>) objectInputStream.readObject();
