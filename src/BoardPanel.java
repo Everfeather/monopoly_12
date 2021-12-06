@@ -29,6 +29,11 @@ public class BoardPanel extends JPanel implements GameView{
      */
     public BoardPanel(Board board, Dice dice){
         super(new GridBagLayout());
+        createBoardPanel(board, dice);
+    }
+
+    public void createBoardPanel(Board board, Dice dice){
+        this.removeAll();
         this.board = board;
         this.dice = dice;
         this.squares = new ArrayList<>();
@@ -263,8 +268,7 @@ public class BoardPanel extends JPanel implements GameView{
         c.gridy = 10;
         this.add(squares.get(0), c);
         this.setSize(600,600);
-
-
+        revalidate();
     }
 
     /**

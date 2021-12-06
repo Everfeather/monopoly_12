@@ -211,13 +211,12 @@ public class GameFrame extends JFrame implements GameView {
     private void gameInitialization(){
         int i = 0;
         System.out.println("updating view");
-        JFrame jFrame = new JFrame();
-        //Custom button text
-        Object[] options = {"Canada Version",
-                "Original Version",
-                "Cancel"};
-        int n = JOptionPane.showOptionDialog(jFrame,"Choose your Monopoly Version", "Choose Version", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
-        //n will be 0,1,2, based on user selection of versions
+        //Removing view
+        //contentPane.remove(board);
+
+        //Adding board
+        board.createBoardPanel(model.getBoard(), model.getDice());
+        revalidate();
 
 
         for(PlayerPanel p: playerPanels){
