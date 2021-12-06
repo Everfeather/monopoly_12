@@ -124,6 +124,7 @@ public class Board extends DefaultHandler implements Serializable {
 				break;
 			case "SpecialSquare":
 			case "Property":
+				tempSquare.initPlayersOnSquare();
 				addSquare(tempSquare);
 				break;
 		}

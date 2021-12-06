@@ -39,6 +39,10 @@ public abstract class GameBoardSquare implements Serializable {
 		return type;
 	}
 
+	public void initPlayersOnSquare(){
+		this.playersOnSquare = new ArrayList<>();
+	}
+
 	/**
 	 * Adds a player to the square
 	 * @param p the player to add
