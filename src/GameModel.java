@@ -33,17 +33,17 @@ public class GameModel implements Serializable {
     /** number of bots in the game */
     private int numBots;
     /** constant for how many turns in jail */
-    final int jailTurns = 3;
+    private final int jailTurns = 3;
     /** amount to bail out of jail */
-    final int jailBailAmount = 50;
+    private final int jailBailAmount = 50;
     /** amount gained when passing go or when landing on $200 tax*/
-    final int passGoAmount = 200;
+    private final int passGoAmount = 200;
     /** amount to pay when landing on $75 tax */
-    final int tax = 75;
+    private final int tax = 75;
     /** in jail square number*/
-    final int inJail = 10;
+    private final int inJail = 10;
     /** save file name */
-    final String fileName = "gameModel.txt";
+    private final String fileName = "gameModel.txt";
     /** List of players */
     private List<Player> players;
     /** The current player*/
@@ -64,11 +64,7 @@ public class GameModel implements Serializable {
         this.gameOver = false;
 
         File f = new File(fileName);
-        if(f.exists() && !f.isDirectory()) {
-           this.setGameSaved(true);
-        }else {
-            this.setGameSaved(false);
-        }
+        this.setGameSaved(f.exists() && !f.isDirectory());
     }
     /**
      * Imports a game file
@@ -436,6 +432,7 @@ public class GameModel implements Serializable {
     }
 
     public void loadGame(){
+
         try {
             FileInputStream fileInputStream
                     = new FileInputStream(fileName);
@@ -449,7 +446,7 @@ public class GameModel implements Serializable {
                     this.numBots = (Integer) objectInputStream.readObject();
                     this.curPlayer = (Player) objectInputStream.readObject();
                     this.players = (List<Player>) objectInputStream.readObject();
-                    this.views = (List<GameView>) objectInputStream.readObject();
+                    //this.views = (List<GameView>) objectInputStream.readObject();
                 }catch(IOException | ClassNotFoundException objectNotFoundException) {
                     objectNotFoundException.printStackTrace();
                 }
@@ -461,7 +458,7 @@ public class GameModel implements Serializable {
         for(GameView v: this.views){
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.LOAD));
         }
-        System.out.println("*** Game loded ***");
+        System.out.println("*** Game loaded ***");
     }
 
     public boolean isGameSaved() {
