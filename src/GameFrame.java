@@ -331,7 +331,7 @@ public class GameFrame extends JFrame implements GameView {
         System.out.println("updating view with loaded game");
 
         //Adding board
-        //board.createBoardPanel(model.getBoard(), model.getDice());
+        board.createBoardPanel(model.getBoard(), model.getDice());
 
         for(PlayerPanel p: playerPanels){
             if(model.getPlayers().get(i).isBot()){
