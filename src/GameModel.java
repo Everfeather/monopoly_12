@@ -108,11 +108,11 @@ public class GameModel implements Serializable {
         availablePieces.add(Piece.CAR);
         availablePieces.add(Piece.BOAT);
         for( int i = 0; i < MAXNUMPLAYERS; i++){
-            Player addedPlayer = new Player(availablePieces.remove(0), STARTINGBALANCE);
             if (i < numBots){
-                addedPlayer.setBot(true);
+                players.add(new Bot(availablePieces.remove(0), STARTINGBALANCE, this));
+            }else{
+                players.add(new Player(availablePieces.remove(0), STARTINGBALANCE));
             }
-            players.add(addedPlayer);
         }
         curPlayer = players.get(0);
         if(views.size() > 0){
@@ -126,7 +126,7 @@ public class GameModel implements Serializable {
             v.update(new MonopolyEvent(this,MonopolyEvent.EventType.INIT));
         }
         if(curPlayer.isBot()){
-            botTurn();
+            ((Bot)curPlayer).botTurn();
         }
     }
 
@@ -187,28 +187,11 @@ public class GameModel implements Serializable {
         }
 
         if(curPlayer.isBot()){
-            botTurn();
+            ((Bot)curPlayer).botTurn();
         }
     }
 
-    public  void botTurn(){
-        boolean doubles = true;
-        GameBoardSquare curSquare;
-        while(doubles){
-            this.dice.rollDice();
-            this.movePlayer();
-            curSquare = this.getBoard().getSquare(this.getCurrentPlayer().getCurrentPos());
 
-            if( curSquare instanceof Property){
-                System.out.println(curPlayer.getPlayerPiece() + "_BOT IS BUYING PROPERTY");
-                this.buyProperty((Property) curSquare);
-                System.out.println(curPlayer.getBalance());
-            }
-
-            doubles = this.dice.getRollDouble();
-        }
-        this.nextTurn();
-    }
 
     /**
      * Checks if a player wins
