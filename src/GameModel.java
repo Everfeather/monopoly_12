@@ -97,11 +97,11 @@ public class GameModel implements Serializable {
     /**
      * Initializes the game
      */
-    public void initializeGame(){
+    public void initializeGame(String filename){
         System.out.println("initializeGame called");
         dice = new Dice();
         players = new ArrayList<>();
-        board = new Board("CanadianMonopolyXML.xml");
+        board = new Board(filename);
         List<Piece> availablePieces = new ArrayList<>();
         availablePieces.add(Piece.HORSE);
         availablePieces.add(Piece.SHOE);

@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,6 +21,9 @@ public class GameController implements ActionListener {
     private static final String ROLL_DOUBLE = "roll_double";
     private static final String SAVE = "save";
     private static final String LOAD = "load";
+
+    public static final String ORIGINAL_V = "monopolyXML.xml";
+    public static final String CANADIAN_V = "CanadianMonopolyXML.xml";
 
     /**
      * Default (and only) constructor
@@ -47,8 +51,15 @@ public class GameController implements ActionListener {
                 model.buyProperty((Property) model.getBoard().getSquare(model.getCurrentPlayer().getCurrentPos()));
             }
             case INIT -> {
+                JFrame jFrame = new JFrame();
+                //0 = Canadian Version, 1 = Original
+                Object[] options = {"Canada Version",
+                        "Original Version",
+                        "Cancel"};
+                int n = JOptionPane.showOptionDialog(jFrame,"Choose your Monopoly Version", "Choose Version", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+                String filename = (n==1) ? ORIGINAL_V: CANADIAN_V;
 
-                model.initializeGame();
+                model.initializeGame(filename);
                 //System.out.println("game initialized");
             }
             case NEXT_TURN ->{

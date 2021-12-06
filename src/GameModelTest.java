@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameModelTest {
 
     static GameModel model;
+    static String filename = GameController.ORIGINAL_V;
 
     @BeforeAll
     public static void setUp() {
@@ -25,7 +26,7 @@ class GameModelTest {
     @org.junit.jupiter.api.Test
     void initializeGame() {
         new GameFrame();
-        model.initializeGame();
+        model.initializeGame(filename);
         List<Player> players = model.getPlayers();
         assertEquals(4, players.size());
         for(Player p : players){
@@ -42,7 +43,7 @@ class GameModelTest {
     @org.junit.jupiter.api.Test
     void nextTurn() {
         new GameFrame();
-        model.initializeGame();
+        model.initializeGame(filename);
         Player curP = model.getCurrentPlayer();
         model.nextTurn();
         Player nextP = model.getCurrentPlayer();
@@ -52,7 +53,7 @@ class GameModelTest {
     @org.junit.jupiter.api.Test
     void win() {
         new GameFrame();
-        model.initializeGame();
+        model.initializeGame(filename);
         model.getCurrentPlayer().setBankrupt(true);
         model.nextTurn();
         model.getCurrentPlayer().setBankrupt(true);
@@ -66,7 +67,7 @@ class GameModelTest {
     @org.junit.jupiter.api.Test
     void buyProperty() {
         new GameFrame();
-        model.initializeGame();
+        model.initializeGame(filename);
         Property prop = new Property("test", 500, 2, PropertyType.PINK);
         model.buyProperty(prop);
         assertEquals( PropertyType.PINK, model.getCurrentPlayer().getProperties().get(prop));
@@ -75,7 +76,7 @@ class GameModelTest {
 
     @org.junit.jupiter.api.Test
     void movePlayer() {
-        model.initializeGame();
+        model.initializeGame(filename);
 
         model.getDice().rollDice();
         int moveVal = model.getDice().getRollValue();
@@ -90,7 +91,7 @@ class GameModelTest {
 
     @org.junit.jupiter.api.Test
     void testUtility(){
-        model.initializeGame();
+        model.initializeGame(filename);
         model.getDice().setRollValue(12);
         model.movePlayer();
         model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
@@ -112,7 +113,7 @@ class GameModelTest {
 
     @org.junit.jupiter.api.Test
     void passGo(){
-        model.initializeGame();
+        model.initializeGame(filename);
         int balance = model.getCurrentPlayer().getBalance();
 
         model.getDice().setRollValue(35);
@@ -129,7 +130,7 @@ class GameModelTest {
 
     @org.junit.jupiter.api.Test
     void goToJailTripleDoubles(){
-        model.initializeGame();
+        model.initializeGame(filename);
 
         model.getDice().setRollValue(10);
         model.getDice().setRoll_double(true);
@@ -147,7 +148,7 @@ class GameModelTest {
     @org.junit.jupiter.api.Test
     void goToJail(){
         new GameFrame();
-        model.initializeGame();
+        model.initializeGame(filename);
         model.getDice().setRollValue(30);
         model.movePlayer();
 
@@ -158,7 +159,7 @@ class GameModelTest {
     @org.junit.jupiter.api.Test
     void goToJailFor3Turns(){
         new GameFrame();
-        model.initializeGame();
+        model.initializeGame(filename);
         model.getDice().setRollValue(30);
         model.movePlayer();
         System.out.println(model.getCurrentPlayer().getPlayerPiece());
@@ -185,7 +186,7 @@ class GameModelTest {
 
     @org.junit.jupiter.api.Test
     void testRailroad(){
-        model.initializeGame();
+        model.initializeGame(filename);
         model.getDice().setRollValue(5);
         model.movePlayer();
         model.buyProperty((Property)model.getBoard().getBoard().get(model.getCurrentPlayer().getCurrentPos()));
