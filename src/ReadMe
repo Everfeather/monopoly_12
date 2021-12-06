@@ -47,6 +47,12 @@ java swing as well as java backend coding. railroads and utilities are now purch
 you to pay taxes and going to jail and bing in jail are both functioning events now. We also had to add bots to the game
 so that people can play by themselves and against the bots if they dont have other humans to play with.
 
+Milestone 4:
+In this milestone we needed to add save/ load features, we used JSON so save and load the game and XML with a SAX
+parser to have multiple game versions. We have 2 game versions, canadian board and a classic board. We added testing
+for all of these new features,fixed issues from M3 and added the new features. You can now save a game and load it
+to continue playing later.
+
 
 
 
