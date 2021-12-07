@@ -53,6 +53,10 @@ parser to have multiple game versions. We have 2 game versions, canadian board a
 for all of these new features,fixed issues from M3 and added the new features. You can now save a game and load it
 to continue playing later.
 
+KNOWN BUGS:
+after loading the game the bots do not act as expected, we are unsure reason for this issue. Potentially an issue with
+the counter in the nextTurn() func in the model. We preformed extensive debugging and were unable to fix the issue.
+
 
 
 
